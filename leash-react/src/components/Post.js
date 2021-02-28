@@ -15,19 +15,21 @@ const Input = styled.input`
 
 export const Post = () => {
 
-    const [postDetails, setPostDetails] = useState('')
+    const [postDetail, setPostDetail] = useState('')
 
     const addToFeed = () => {
         //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
-        axios.post("http://localhost:3001/createPost", {
-            postDetails: postDetails
-        });
+        axios.post("http://localhost:3001/post/createPost", {
+            postDetail: postDetail
+        })
+
         console.log("click post")
+        setPostDetail('')
     }
     return (
         <PostForm>
-            <Input placeholder="What do you want to ask?" type="text" onChange={(event) => {
-                setPostDetails(event.target.value)
+            <Input placeholder="What do you want to ask?" type="text" value={postDetail} onChange={(event) => {
+                setPostDetail(event.target.value)
             }} />
             <Input placeholder="links" type="text" />
             <button onClick={addToFeed}>add to mongo db via mongoose</button>
