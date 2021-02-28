@@ -3,33 +3,42 @@ const mongoose = require('mongoose')
 var cors = require('cors');
 const app = express()
 
-const PostModel = require('./models/Post.js');
+const port = process.env.port || 3001;
 
 app.use(express.json())
 app.use(cors())
 
+const postRoute = require('./routes/postRoute');
+
+app.use('/post', postRoute)
+
 mongoose.connect(
     "mongodb+srv://leashposts:leashmasterposts@leashposts.t5u93.mongodb.net/post?retryWrites=true&w=majority",
     {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true
-});
-
-
-app.post('/createPost', async (req, res) => {
-
-    const postDetails = req.body.postDetails
-    const post = new PostModel({postDetail: postDetails})
-
-    try {
-        await post.save();
-        res.send("imported data")
-    }catch(error){
-        console.log(error)
+        useNewUrlParser: true, 
+        useUnifiedTopology: true
+    }
+).then(() => {
+    error => {
+        console.log('Could not connect to database: ' + error)
     }
 });
+console.log('db connected')
 
-app.listen(3001, () => {
-    console.log('Yark Ja Norn on port 3001')
-
+app.listen(port, () => {
+    console.log('Yark Ja Norn on port ' + port)
 });
+
+//404 Error handler
+app.use((req, res, next) => {
+    next(createError(404))
+})
+
+//Exception handler
+app.use(function(err, req, res, next) {
+    console.error(err.message);
+    if(!err.statusCode){
+        err.statusCode = 500;
+    }
+    res.status(err.statusCode).send(err.message);
+})

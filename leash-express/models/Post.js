@@ -8,6 +8,8 @@ const PostSchema = mongoose.Schema({
     postPictureLink: {
         type: String
     }
+}, {
+    collection : "posts"
 });
 
 const Post = mongoose.model("Post", PostSchema)
