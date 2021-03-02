@@ -4,7 +4,7 @@ var cors = require('cors');
 const app = express()
 
 const port = process.env.port || 3001;
-const db = "mongodb+srv://leashposts:leashmasterposts@leash.t5u93.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const db = "mongodb+srv://leashposts:leashmasterposts@leash.t5u93.mongodb.net/Leash?retryWrites=true&w=majority";
 
 app.use(express.json())
 app.use(cors())
