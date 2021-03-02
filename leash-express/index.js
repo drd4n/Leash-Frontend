@@ -4,6 +4,7 @@ var cors = require('cors');
 const app = express()
 
 const port = process.env.port || 3001;
+const db = "mongodb+srv://leashposts:leashmasterposts@leash.t5u93.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 app.use(express.json())
 app.use(cors())
@@ -13,11 +14,7 @@ const postRoute = require('./routes/postRoute');
 app.use('/post', postRoute)
 
 mongoose.connect(
-    "mongodb+srv://leashposts:leashmasterposts@leashposts.t5u93.mongodb.net/post?retryWrites=true&w=majority",
-    {
-        useNewUrlParser: true, 
-        useUnifiedTopology: true
-    }
+    {db},{ useNewUrlParser: true, useUnifiedTopology: true }
 ).then(() => {
     error => {
         console.log('Could not connect to database: ' + error)
