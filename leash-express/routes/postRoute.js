@@ -14,10 +14,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-//aws config
-aws.config.update(config.credentials)
-const s3 = new aws.S3();
-
 //Post Models
 const PostModel = require('../models/Post');
 
@@ -33,6 +29,11 @@ router.route('/createPost').post((req, res, next) => {
         return next(error);
     }
 }) 
+
+
+//aws config
+aws.config.update(config.credentials)
+const s3 = new aws.S3();
 
 //setup where to upload piture to, before route
 var upload = multer({

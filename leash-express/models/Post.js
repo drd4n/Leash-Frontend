@@ -1,12 +1,24 @@
 const mongoose = require('mongoose')
 
 const PostSchema = mongoose.Schema({
-    postDetail: {
+    post_text: {
         type: String,
         required: true
     },
-    postPictureLink: {
+    picture_link: {
         type: String
+    },
+    upvote: {
+        type: [mongoose.Types._ObjectId]
+    },
+    downvote: {
+        type: [mongoose.Types._ObjectId]
+    },
+    tag: {
+        type: [String]
+    },
+    user_id: {
+        type: mongoose.Types._ObjectId
     }
 }, {
     collection : "posts"

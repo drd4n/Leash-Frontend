@@ -6,21 +6,21 @@ const app = express()
 const port = process.env.port || 3001;
 const db = "mongodb+srv://leashposts:leashmasterposts@leash.t5u93.mongodb.net/Leash?retryWrites=true&w=majority";
 
-app.use(express.json())
-app.use(cors())
-
-const postRoute = require('./routes/postRoute');
-
-app.use('/post', postRoute)
-
 mongoose.connect(
-    {db},{ useNewUrlParser: true, useUnifiedTopology: true }
+    db,{ useNewUrlParser: true, useUnifiedTopology: true }
 ).then(() => {
     error => {
         console.log('Could not connect to database: ' + error)
     }
 });
 console.log('db connected')
+
+app.use(express.json())
+app.use(cors())
+
+const postRoute = require('./routes/postRoute');
+
+app.use('/post', postRoute)
 
 app.listen(port, () => {
     console.log('Yark Ja Norn on port ' + port)
