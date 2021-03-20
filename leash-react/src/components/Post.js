@@ -16,6 +16,7 @@ const Input = styled.input`
 
 export const Post = () => {
 
+    const [showers, setShower] = useState([])
     const [postDetail, setPostDetail] = useState('')
     const [pictures, setPictures] = useState([])
 
@@ -31,15 +32,16 @@ export const Post = () => {
 
     const onDrop = (picture) => { 
         setPictures(pictures.concat(picture))
+        setShower(showers.concat(URL.createObjectURL(picture)))
     }
 
     const uploadImages = () => {
-         pictures.map(image => {
-            let data = new FormData();
-            data.append("image", image, image.name);
-            console.log(data)
-            return axios.post('http://localhost:3001/post/uploadImage', data);
-        })
+          pictures.map(image => {
+             let data = new FormData();
+             data.append("image", image, image.name);
+             console.log(data)
+             return axios.post('http://localhost:3001/post/uploadImage', data);
+         })
         console.log(pictures)
         setPictures([])
     }
@@ -50,7 +52,7 @@ export const Post = () => {
                 setPostDetail(event.target.value)
             }} />
             <Input placeholder="links" type="text" />
-            <ImageUploader
+            {/* <ImageUploader
                 withPreview={true}
                 withIcon={true}
                 name='name'
@@ -58,7 +60,18 @@ export const Post = () => {
                 onChange={onDrop}
                 imgExtension={['.jpg', '.gif', '.png']}
                 maxFileSize={5242880}
+            /> */}
+            <Input 
+                type="file" 
+                id="selectedFile"
+                onChange={(event) => {
+                onDrop(event.target.files[0])}} 
+                style={{display:'none'}}
             />
+        {showers.map(shower => 
+            <img key={shower.index} src={shower} alt={shower.name} />    
+        )}
+            <button onClick={() => {document.getElementById('selectedFile').click();}}>Pick File</button>
             <button onClick={addToFeed}>add to mongo db via mongoose</button>
             <button onClick={uploadImages}>Upload Images</button>
         </PostForm>
