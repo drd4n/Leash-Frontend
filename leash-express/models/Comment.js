@@ -11,10 +11,10 @@ const commentSchema = mongoose.Schema({
     downvote: {
         type: [mongoose.Types._ObjectId]
     },
-    user_id: {
-        type: mongoose.Types._ObjectId,
-        require: true
-    },
+    // user_id: {
+    //     type: mongoose.Types._ObjectId,
+    //     require: true
+    // },
     post_id: {
         type: mongoose.Types._ObjectId
     }
