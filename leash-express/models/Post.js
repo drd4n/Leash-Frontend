@@ -16,11 +16,11 @@ const PostSchema = mongoose.Schema({
     },
     tag: {
         type: [String]
-    },
-    user_id: {
-        type: mongoose.Types._ObjectId,
-        //require: true
     }
+    // user_id: {
+    //     type: mongoose.Types._ObjectId
+    //     require: true
+    // }
 }, 
     {
     collection : "posts"
