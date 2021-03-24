@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 var cors = require('cors');
 const app = express()
 
-const port = process.env.port || 3001;
 const db = "mongodb+srv://leashposts:leashmasterposts@leash.t5u93.mongodb.net/Leash?retryWrites=true&w=majority";
 
+//Connecting MongoDB
 mongoose.connect(
     db,{ useNewUrlParser: true, useUnifiedTopology: true }
 ).then(() => {
@@ -18,14 +18,17 @@ console.log('db connected')
 app.use(express.json())
 app.use(cors())
 
+//Express Route
 const postRoute = require('./routes/postRoute');
 
 app.use('/post', postRoute)
 
+//Port
+const port = process.env.port || 3001;
 app.listen(port, () => {
     console.log('Yark Ja Norn on port ' + port)
 });
-
+ 
 //404 Error handler
 app.use((req, res, next) => {
     next(createError(404))
