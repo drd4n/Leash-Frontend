@@ -5,6 +5,9 @@ const app = express()
 
 const db = "mongodb+srv://leashposts:leashmasterposts@leash.t5u93.mongodb.net/Leash?retryWrites=true&w=majority";
 
+app.use(express.json())
+app.use(cors())
+
 //Connecting MongoDB
 mongoose.connect(
     db,{ useNewUrlParser: true, useUnifiedTopology: true }
@@ -14,9 +17,6 @@ mongoose.connect(
     }
 });
 console.log('db connected')
-
-app.use(express.json())
-app.use(cors())
 
 //Express Route
 const postRoute = require('./routes/postRoute');
