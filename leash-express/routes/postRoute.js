@@ -3,24 +3,34 @@ const mongoose = require('mongoose')
 const router = express.Router();
 const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
-
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const config = require('../config/s3config')
-
+const createError = require('http-errors')
 const app = express()
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
+app.use(express.static('public'));
 
 //Post Models
 const PostModel = require('../models/Post');
 
 //route createPost
 router.route('/createPost').post((req, res, next) => {
-    const postDetail = req.body.postDetail
-    const post = new PostModel({postDetail: postDetail})
+    const post_text = req.body.post_text
+    const picture_link = []
+    console.log(req.body)
+    for (i in req.body.picture_link) {
+        picture_link.concat(req.body.picture_link[i]);
+      }
+    console.log("picture link array")
+    console.log(picture_link)
+    const post = new PostModel({post_text: post_text,
+                                picture_link: picture_link})
 
     try {
         post.save();
@@ -36,7 +46,7 @@ aws.config.update(config.credentials)
 const s3 = new aws.S3();
 
 //setup where to upload piture to, before route
-var upload = multer({
+var uploadPicture = multer({
     storage: multerS3({
       s3,
       bucket: 'leash-picture-posting',
@@ -49,12 +59,13 @@ var upload = multer({
     })
   })
 
+
 //define function upload to s3
-const singleFileUpload = upload.single('image');
+const singleFileUpload = uploadPicture.single('image');
 
 function uploadToS3(req, res){
     req.s3Key = uuidv4();
-    let downloadUrl = `https://s3-${config.region}.amazonaws.com/postpicture/${req.s3Key}`
+    let downloadUrl = `https://s3-${config.region}.amazonaws.com/leash-picture-posting/${req.s3Key}`
 
     return new Promise((reslove, reject) => {
         return singleFileUpload(req, res, err => {
@@ -70,10 +81,11 @@ router.route('/uploadImage').post((req, res, next) => {
     uploadToS3(req, res)
     .then(downloadUrl => {
         console.log(downloadUrl)
-        return res.status(200).send({ downloadUrl })
+        return res.json({ picture_link: downloadUrl})
     })
     .catch(e =>{
         console.log(e)
+        next(e)
     })
     
 })
