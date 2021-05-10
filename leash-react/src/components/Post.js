@@ -16,43 +16,58 @@ const Input = styled.input`
 
 export const Post = () => {
 
-    const [showers, setShower] = useState([])
     const [postDetail, setPostDetail] = useState('')
-    const [pictures, setPictures] = useState([])
+    const [uploadedpics, setUploadedpics] = useState([])
 
-    const addToFeed = () => {
-        //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
-        axios.post("http://localhost:3001/post/createPost", {
-            postDetail: postDetail
+    async function uploadText(arrayOfLinks) {
+        console.log("detail: " + postDetail)
+        console.log(arrayOfLinks[0])
+        console.log({
+            post_text: postDetail,
+            picture_link: arrayOfLinks
         })
+        const data = {
+            post_text: postDetail,
+            picture_link: arrayOfLinks
+        }
+        console.log("data = ")
+        console.log(JSON.stringify(data))
+        //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
+        axios.post("http://localhost:3001/post/createPost", data)
 
-        console.log("click post")
-        setPostDetail('')
+        //  setPostDetail('')
+        //  setPictures([])  
+        //  setPictureLink([])
     }
 
-    const onDrop = (picture) => { 
-        setPictures(pictures.concat(picture))
-        setShower(showers.concat(URL.createObjectURL(picture)))
-    }
+    function onDrop(selectedImage) {
+        let temp = [];
+        //pictures.map(image => {
+            let formData = new FormData()
+            formData.append("image", selectedImage, selectedImage.name)
+            console.log(formData)
+            axios.post('http://localhost:3001/post/uploadImage', formData)
+                //.then(res => console.log(res.data.post_link))
+                //.then(res => setPostLink(res.data.post_link))
+                .then(res => {
+                    uploadedpics.push(res.data.picture_link)
+                    console.log(JSON.stringify(uploadedpics))
+                })
+        //})
+        return temp;
+}
 
-    const uploadImages = () => {
-          pictures.map(image => {
-             let data = new FormData();
-             data.append("image", image, image.name);
-             console.log(data)
-             return axios.post('http://localhost:3001/post/uploadImage', data);
-         })
-        console.log(pictures)
-        setPictures([])
-    }
+// const onDrop = (picture) => {
+//     setPictures(pictures.concat(picture))
+// }
 
-    return (
-        <PostForm>
-            <Input placeholder="What do you want to ask?" type="text" value={postDetail} onChange={(event) => {
-                setPostDetail(event.target.value)
-            }} />
-            <Input placeholder="links" type="text" />
-            {/* <ImageUploader
+return (
+    <PostForm>
+        <Input placeholder="What do you want to ask?" type="text" value={postDetail} onChange={(event) => {
+            setPostDetail(event.target.value)
+        }} />
+        <Input placeholder="links" type="text" />
+        {/* <ImageUploader
                 withPreview={true}
                 withIcon={true}
                 name='name'
@@ -61,21 +76,22 @@ export const Post = () => {
                 imgExtension={['.jpg', '.gif', '.png']}
                 maxFileSize={5242880}
             /> */}
-            <Input 
-                type="file" 
-                id="selectedFile"
-                onChange={(event) => {
-                onDrop(event.target.files[0])}} 
-                style={{display:'none'}}
-            />
-        {showers.map(shower => 
-            <img key={shower.index} src={shower} alt={shower.name} />    
-        )}
-            <button onClick={() => {document.getElementById('selectedFile').click();}}>Pick File</button>
-            <button onClick={addToFeed}>add to mongo db via mongoose</button>
-            <button onClick={uploadImages}>Upload Images</button>
-        </PostForm>
-    )
+        <Input
+            type="file"
+            id="selectedFile"
+            onChange={(event) => {
+                onDrop(event.target.files[0])
+            }}
+            style={{ display: 'none' }}
+        />
+        {uploadedpics.map(shower =>{
+            return <img key={shower.index} src={shower} alt={shower.name} />
+        })}
+        <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
+        <button onClick={uploadText}>add to mongo db via mongoose</button>
+        {/* <button onClick={uploadImages}>Upload Images</button> */}
+    </PostForm>
+)
 }
 
 export default Post
