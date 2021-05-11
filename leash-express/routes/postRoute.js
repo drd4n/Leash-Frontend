@@ -22,11 +22,7 @@ const PostModel = require('../models/Post');
 //route createPost
 router.route('/createPost').post((req, res, next) => {
     const post_text = req.body.post_text
-    const picture_link = []
-    console.log(req.body)
-    for (i in req.body.picture_link) {
-        picture_link.concat(req.body.picture_link[i]);
-      }
+    const picture_link = req.body.picture_link
     console.log("picture link array")
     console.log(picture_link)
     const post = new PostModel({post_text: post_text,
@@ -65,8 +61,8 @@ const singleFileUpload = uploadPicture.single('image');
 
 function uploadToS3(req, res){
     req.s3Key = uuidv4();
-    let downloadUrl = `https://s3-${config.region}.amazonaws.com/leash-picture-posting/${req.s3Key}`
-
+    //let downloadUrl = `https://s3-${config.region}.amazonaws.com/leash-picture-posting/${req.s3Key}`
+    let downloadUrl = `${req.s3Key}`
     return new Promise((reslove, reject) => {
         return singleFileUpload(req, res, err => {
             if(err) return reject(err);
@@ -89,5 +85,34 @@ router.route('/uploadImage').post((req, res, next) => {
     })
     
 })
+
+router.route(`/showSelectedImage/:s3key`).get((req, res, next)=> {
+    const param = {
+      Bucket: "leash-picture-posting",
+      Key: req.params.s3key
+    }
+    s3.getObject(param, function(err, data){
+      if(err) console.log(err)
+    console.log(data)
+    const b64 = Buffer.from(data.Body).toString('base64');
+    const mimeType = 'image/jpg';
+    res.send(`<img src="data:${mimeType};base64,${b64}" />`);
+      }
+      )
+})
+
+// const params = {
+//   Bucket: "leash-picture-posting",
+//   Key: "210bea71-2d7a-4b59-8ed0-f8c45d848ceb"
+// }
+
+// s3.getObject(params, function(err, data){
+//   if(err) console.log(err, err.stack);
+//   else {
+//     const b64 = Buffer.from(data.Body).toString('base64');
+//         const mimeType = 'image/jpg';
+//         res.send(`<img src="data:${mimeType};base64,${b64}" />`);
+//   }
+// })
 
 module.exports = router;
