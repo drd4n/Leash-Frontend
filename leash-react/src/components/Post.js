@@ -18,6 +18,7 @@ export const Post = () => {
 
     const [postDetail, setPostDetail] = useState('')
     const [uploadedpics, setUploadedpics] = useState([])
+    const [shower, setShower] = useState([])
     const [isDirty, setisDirty] = useState(false)
 
     async function uploadText() {
@@ -45,6 +46,7 @@ export const Post = () => {
             console.log(formData)
             axios.post('http://localhost:3001/post/uploadImage', formData)
                 .then(res => {
+                    shower.push(res.data.src)
                     uploadedpics.push(res.data.picture_link)
                     console.log(JSON.stringify(uploadedpics)) 
                     setisDirty(true) 
@@ -54,12 +56,18 @@ export const Post = () => {
 
 useEffect(() => {
     if(isDirty){
-        setUploadedpics(uploadedpics)
-        axios.get(`http://localhost:3001/post/showSelectedImage/${uploadedpics[0]}`)
-        .then(res => console.log(res))
+        setShower(shower)
+        // uploadedpics.map(getShower => {
+        //     axios.get(`http://localhost:3001/post/showSelectedImage/${getShower}`)
+        //     .then(res => {
+        //         shower.push(res.data.src)
+        //     })
+        // return "Shown uploaded images"
+        // })
+        // console.log(JSON.stringify(shower))
         setisDirty(false)
     }
-},[isDirty, uploadedpics])
+},[isDirty, shower])
 
 return (
     <PostForm>
@@ -88,7 +96,7 @@ return (
             style={{ display: 'none' }}
         />
         {
-            uploadedpics.map(shower =>{
+            shower.map(shower =>{
                 return <img key={shower.index} src={shower} alt={shower.name} />
                     }
                 )
