@@ -77,7 +77,20 @@ router.route('/uploadImage').post((req, res, next) => {
     uploadToS3(req, res)
     .then(downloadUrl => {
         console.log(downloadUrl)
-        return res.json({ picture_link: downloadUrl})
+        const param = {
+          Bucket: "leash-picture-posting",
+          Key: downloadUrl
+        }
+        s3.getObject(param, function(err, data){
+          if(err) console.log(err)
+        console.log(data)
+        const b64 = Buffer.from(data.Body).toString('base64');
+        const mimeType = 'image/jpg';
+        return res.json({src :`data:${mimeType};base64,${b64}`,
+                         picture_link: downloadUrl});
+          }
+          )
+        //return res.json({ picture_link: downloadUrl})
     })
     .catch(e =>{
         console.log(e)
@@ -96,7 +109,7 @@ router.route(`/showSelectedImage/:s3key`).get((req, res, next)=> {
     console.log(data)
     const b64 = Buffer.from(data.Body).toString('base64');
     const mimeType = 'image/jpg';
-    res.send(`<img src="data:${mimeType};base64,${b64}" />`);
+    res.json({src :`data:${mimeType};base64,${b64}`});
       }
       )
 })
