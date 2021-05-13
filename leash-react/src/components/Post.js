@@ -97,7 +97,10 @@ return (
         />
         {
             shower.map(shower =>{
-                return <img key={shower.index} src={shower} alt={shower.name} />
+                return <div>
+                        <img key={shower.index} src={shower} alt={shower.name} />
+                        <button>Delete</button>
+                    </div>
                     }
                 )
         }
