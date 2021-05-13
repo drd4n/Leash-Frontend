@@ -33,9 +33,10 @@ export const Post = () => {
         //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
         axios.post("http://localhost:3001/post/createPost", data)
 
-        //  setPostDetail('')
-        //  setPictures([])  
-        //  setPictureLink([])
+        setPostDetail('')
+        setUploadedpics([])
+        setShower([])
+        return console.log("Successfully posted")
     }
 
     function onDrop(selectedImage) {
