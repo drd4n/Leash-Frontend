@@ -22,14 +22,10 @@ export const Post = () => {
     const [isDirty, setisDirty] = useState(false)
 
     async function uploadText() {
-        console.log("detail: " + postDetail)
-        console.log(uploadedpics)
         const data = {
             post_text: postDetail,
             picture_link: uploadedpics
         }
-        console.log("data = ")
-        console.log(JSON.stringify(data))
         //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
         axios.post("http://localhost:3001/post/createPost", data)
 
@@ -48,8 +44,7 @@ export const Post = () => {
             axios.post('http://localhost:3001/post/uploadImage', formData)
                 .then(res => {
                     shower.push(res.data.src)
-                    uploadedpics.push(res.data.picture_link)
-                    console.log(JSON.stringify(uploadedpics)) 
+                    uploadedpics.push(res.data.picture_link) 
                     setisDirty(true) 
                 })
         return temp;
