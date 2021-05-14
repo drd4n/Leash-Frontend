@@ -22,7 +22,10 @@ export const Post = () => {
     const [isDirty, setisDirty] = useState(false)
 
     async function uploadText() {
-        const data = {
+        if(!postDetail){
+            return alert('please fill out what you want to ask')
+        } else {
+            const data = {
             post_text: postDetail,
             picture_link: uploadedpics
         }
@@ -33,13 +36,15 @@ export const Post = () => {
         setUploadedpics([])
         setShower([])
         return console.log("Successfully posted")
+        }
+        
     }
 
     function onDrop(selectedImage) {
         let temp = [];
         //pictures.map(image => {
             let formData = new FormData()
-            formData.append("image", selectedImage, selectedImage.name)
+            formData.append("image", selectedImage, selectedImage)
             console.log(formData)
             axios.post('http://localhost:3001/post/uploadImage', formData)
                 .then(res => {
@@ -49,6 +54,18 @@ export const Post = () => {
                 })
         return temp;
 }
+
+    function removeSelectedImage(index) {
+        const key = uploadedpics[index]
+        axios.post(`http://localhost:3001/post/removeSelectedImage/${key}`)
+        .then(res => {
+            uploadedpics.splice(index, 1)
+            shower.splice(index, 1)
+            setisDirty(true)
+            console.log(JSON.stringify(uploadedpics))
+            console.log(res.data)
+        })
+    }
 
 useEffect(() => {
     if(isDirty){
@@ -92,14 +109,21 @@ return (
             style={{ display: 'none' }}
         />
         {
-            shower.map(shower =>{
-                return <div>
-                        <img key={shower.index} src={shower} alt={shower.name} />
-                        <button>Delete</button>
-                    </div>
+            shower.map(shwr =>{
+                        return <div>
+                            <img key={shower.indexOf(shwr)} src={shwr} alt={shower.indexOf(shwr)} />
+                            <button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</button>
+                        </div>
                     }
                 )
         }
+        {/* {
+            uploadedpics.map(remover => {
+                return <form key={uploadedpics.indexOf(remover)} action={removeSelectedImage(remover)}>
+                    <input type="submit" value="Remove"/>
+                </form>
+            })
+        } */}
         <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
         <button onClick={uploadText}>add to mongo db via mongoose</button>
         {/* <button onClick={uploadImages}>Upload Images</button> */}
