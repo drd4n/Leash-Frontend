@@ -17,6 +17,17 @@ app.use(cors())
 //Post Models
 const PostModel = require('../models/Post');
 
+//route to get all post
+router.route('/').get((req, res) => {
+    PostModel.find((error, data) => {
+        try{
+            res.json(data)
+        }catch(error){
+            return next(error)
+        }
+    })
+})
+
 //route createPost
 router.route('/createPost').post((req, res, next) => {
     const postDetail = req.body.postDetail
