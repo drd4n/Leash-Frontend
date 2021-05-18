@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import ImageUploader from 'react-images-upload'
 
-const PostForm = styled.div`
+const Form = styled.div`
     align-items: center;
     text-align: center;
     display: flex;
@@ -14,7 +14,7 @@ const Input = styled.input`
     width: 200px;
 `
 
-export const Post = () => {
+export const PostForm = () => {
 
     const [postDetail, setPostDetail] = useState('')
     const [uploadedpics, setUploadedpics] = useState([])
@@ -83,7 +83,7 @@ useEffect(() => {
 },[isDirty, shower])
 
 return (
-    <PostForm>
+    <Form>
         <Input 
             placeholder="What do you want to ask?" 
             type="text" 
@@ -127,9 +127,9 @@ return (
         <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
         <button onClick={uploadText}>add to mongo db via mongoose</button>
         {/* <button onClick={uploadImages}>Upload Images</button> */}
-    </PostForm>
+    </Form>
     )
 }
-export default Post
+export default PostForm
 
 
