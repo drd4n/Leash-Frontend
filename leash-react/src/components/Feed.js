@@ -1,7 +1,8 @@
 import React from 'react'
 import Post from './PostForm'
 
+export const Feed = () => {
 
-export const addToFeed = (postDetail) => {
-    alert(postDetail)
 }
+
+export default Feed
