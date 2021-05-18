@@ -6,7 +6,7 @@ const PostSchema = mongoose.Schema({
         required: true
     },
     picture_link: {
-        type: String
+        type: [String]
     },
     upvote: {
         type: [mongoose.Types._ObjectId]
