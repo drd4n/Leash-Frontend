@@ -76,6 +76,8 @@ function uploadToS3(req, res){
 router.route('/uploadImage').post((req, res, next) => {
     uploadToS3(req, res)
     .then(downloadUrl => {
+      
+        //get object to show and res to front end
         console.log(downloadUrl)
         const param = {
           Bucket: "leash-picture-posting",
@@ -90,7 +92,6 @@ router.route('/uploadImage').post((req, res, next) => {
                          picture_link: downloadUrl});
           }
           )
-        //return res.json({ picture_link: downloadUrl})
     })
     .catch(e =>{
         console.log(e)
@@ -99,33 +100,36 @@ router.route('/uploadImage').post((req, res, next) => {
     
 })
 
-router.route(`/showSelectedImage/:s3key`).get((req, res, next)=> {
-    const param = {
-      Bucket: "leash-picture-posting",
-      Key: req.params.s3key
-    }
-    s3.getObject(param, function(err, data){
-      if(err) console.log(err)
-    console.log(data)
-    const b64 = Buffer.from(data.Body).toString('base64');
-    const mimeType = 'image/jpg';
-    res.json({src :`data:${mimeType};base64,${b64}`});
-      }
-      )
-})
-
-// const params = {
-//   Bucket: "leash-picture-posting",
-//   Key: "210bea71-2d7a-4b59-8ed0-f8c45d848ceb"
-// }
-
-// s3.getObject(params, function(err, data){
-//   if(err) console.log(err, err.stack);
-//   else {
+//
+// router.route(`/showSelectedImage/:s3key`).get((req, res, next)=> {
+//     const param = {
+//       Bucket: "leash-picture-posting",
+//       Key: req.params.s3key
+//     }
+//     s3.getObject(param, function(err, data){
+//       if(err) console.log(err)
+//     console.log(data)
 //     const b64 = Buffer.from(data.Body).toString('base64');
-//         const mimeType = 'image/jpg';
-//         res.send(`<img src="data:${mimeType};base64,${b64}" />`);
-//   }
+//     const mimeType = 'image/jpg';
+//     res.json({src :`data:${mimeType};base64,${b64}`});
+//       }
+//       )
 // })
+
+//route to remove selected image from pre-post
+router.route(`/removeSelectedImage/:s3key`).post((req, res, next) => {
+
+  const params = {
+    Bucket: "leash-picture-posting",
+    Key: req.params.s3key
+  }
+
+  s3.deleteObject(params, function (err, data) {
+    if(err) return console.log(err)
+    else {
+      return res.send("successfully delete")
+    }
+  })
+})
 
 module.exports = router;
