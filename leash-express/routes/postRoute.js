@@ -71,8 +71,8 @@ function uploadToS3(req, res){
     })
 }
 
-//function to turn object into src pattern
-function objToSrc (s3Key) {
+//function to get s3 obj and turn object into src pattern
+function getS3Image (s3Key) {
   console.log(s3Key)
         const params = {
           Bucket: "leash-picture-posting",
@@ -94,7 +94,7 @@ router.route('/uploadImage').post((req, res, next) => {
     .then(downloadUrl => {
 
         //get object to show and res to front end
-        const src = objToSrc(downloadUrl)
+        const src = getS3Image(downloadUrl)
         return res.json({
           src: src,
           picture_link: downloadUrl
@@ -107,21 +107,11 @@ router.route('/uploadImage').post((req, res, next) => {
     
 })
 
-//
-// router.route(`/showSelectedImage/:s3key`).get((req, res, next)=> {
-//     const param = {
-//       Bucket: "leash-picture-posting",
-//       Key: req.params.s3key
-//     }
-//     s3.getObject(param, function(err, data){
-//       if(err) console.log(err)
-//     console.log(data)
-//     const b64 = Buffer.from(data.Body).toString('base64');
-//     const mimeType = 'image/jpg';
-//     res.json({src :`data:${mimeType};base64,${b64}`});
-//       }
-//       )
-// })
+//route to request 1 image
+router.route(`/showPostImage/:s3key`).get((req, res, next)=> {
+  const src = getS3Image(req.params.s3key)
+  return res.json({src: src})
+})
 
 //route to remove selected image from pre-post
 router.route(`/removeSelectedImage/:s3key`).post((req, res, next) => {
