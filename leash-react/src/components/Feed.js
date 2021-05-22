@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Component } from 'react'
 import axios from 'axios'
+import Post from './Post'
 
 export const Feed = () => {
     const [posts, setPosts] = useState([])
@@ -20,7 +21,7 @@ useEffect( () => {
         <div>
             {
                 posts.map((post,i) => {
-                    return <p key={i}>{post.post_text}</p>
+                    return <Post key={i} post={post}/>
                 })
             }
         </div>
