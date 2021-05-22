@@ -6,7 +6,7 @@ export const Feed = () => {
 
 useEffect( () => {
         // const feed = await axios('http://localhost:3001/post', );
-         axios('http://localhost:3001/post')
+         axios('http://localhost:3001/feed')
         // setPosts(feed.data)
         .then(res => {
             setPosts(res.data)
