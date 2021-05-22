@@ -20,8 +20,10 @@ console.log('db connected')
 
 //Express Route
 const postRoute = require('./routes/postRoute');
+const feedRoute = require('./routes/feedRoute')
 
 app.use('/post', postRoute)
+app.use('/feed', feedRoute)
 
 //Port
 const port = process.env.port || 3001;
