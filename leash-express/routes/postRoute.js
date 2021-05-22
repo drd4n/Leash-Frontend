@@ -71,26 +71,34 @@ function uploadToS3(req, res){
     })
 }
 
-//route and use the upload function
-router.route('/uploadImage').post((req, res, next) => {
-    uploadToS3(req, res)
-    .then(downloadUrl => {
-      
-        //get object to show and res to front end
-        console.log(downloadUrl)
-        const param = {
+//function to turn object into src pattern
+function objToSrc (s3Key) {
+  console.log(s3Key)
+        const params = {
           Bucket: "leash-picture-posting",
-          Key: downloadUrl
+          Key: s3Key
         }
-        s3.getObject(param, function(err, data){
+        s3.getObject(params, function(err, data){
           if(err) console.log(err)
         console.log(data)
         const b64 = Buffer.from(data.Body).toString('base64');
         const mimeType = 'image/jpg';
-        return res.json({src :`data:${mimeType};base64,${b64}`,
-                         picture_link: downloadUrl});
+        return `data:${mimeType};base64,${b64}`
           }
-          )
+      )
+}
+
+//route and use the upload function
+router.route('/uploadImage').post((req, res, next) => {
+    uploadToS3(req, res)
+    .then(downloadUrl => {
+
+        //get object to show and res to front end
+        const src = objToSrc(downloadUrl)
+        return res.json({
+          src: src,
+          picture_link: downloadUrl
+        })
     })
     .catch(e =>{
         console.log(e)
