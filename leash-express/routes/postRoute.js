@@ -107,10 +107,15 @@ router.route('/uploadImage').post((req, res, next) => {
     
 })
 
-//route to request 1 image
-router.route(`/showPostImage/:s3key`).get((req, res, next)=> {
-  const src = getS3Image(req.params.s3key)
-  return res.json({src: src})
+//route to request all images of 1 post
+router.route(`/showPostImage`).get((req, res, next)=> {
+  const arrayOfLinks = req.body.picture_link
+  const arrayOfSrc = []
+  arrayOfLinks.map((s3key) => {
+    const oneSrc = getS3Image(s3key)
+    arrayOfSrc.push(oneSrc)
+  })
+  return res.json({src: arrayOfSrc})
 })
 
 //route to remove selected image from pre-post
