@@ -103,7 +103,6 @@ router.route('/uploadImage').post((req, res, next) => {
       })
     })
     .catch(e => {
-      console.log(e)
       next(e)
     })
 
@@ -113,10 +112,14 @@ router.route('/uploadImage').post((req, res, next) => {
 router.route(`/showPostImage`).get((req, res, next) => {
   const arrayOfLinks = req.body.picture_link
   const arrayOfSrc = []
-  arrayOfLinks.map((s3key) => {
+  try {
+    arrayOfLinks.map((s3key) => {
     const oneSrc = getS3Image(s3key)
     arrayOfSrc.push(oneSrc)
   })
+  }catch(error) {
+    return next(error)
+  }
   return res.json({ src: arrayOfSrc })
 })
 
