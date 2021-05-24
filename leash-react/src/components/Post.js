@@ -32,7 +32,7 @@ export const Post = (props) => {
         }
         axios.post('http://localhost:3001/post/showPostImage', data)
         .then(res => {
-            console.log(res.data.picture_link)
+            console.log(JSON.stringify(res.data.src))
             setImgs(res.data.src);
         })
     }, [])
