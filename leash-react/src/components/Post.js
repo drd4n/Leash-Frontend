@@ -39,11 +39,11 @@ export const Post = (props) => {
 
     return ( 
         <Box>
-        <PostImg class="img" src="https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0213/1601/rr22solidmintgreen_shop_thumb.png"></PostImg>
         {
                 Imgs.map((img,i) => {
-                        console.log("this is img")
-                        console.log(img)
+                    return(
+                        <PostImg class="img" src={img}></PostImg>
+                    )
                 })
             }
             <PostText>{props.post.post_text}</PostText>
