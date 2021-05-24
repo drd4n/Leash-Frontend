@@ -73,22 +73,6 @@ function uploadToS3(req, res) {
   })
 }
 
-//function to get s3 obj and turn object into src pattern
-function getS3Image(s3Key) {
-  const params = {
-    Bucket: "leash-picture-posting",
-    Key: s3Key
-  }
-  s3.getObject(params, function (err, data) {
-    if (err) console.log(err)
-    console.log(data)
-    const b64 = Buffer.from(data.Body).toString('base64');
-    const mimeType = 'image/jpg';
-    return `data:${mimeType};base64,${b64}`
-  }
-  )
-}
-
 //route and use the upload function
 router.route('/uploadImage').post((req, res, next) => {
   uploadToS3(req, res)
@@ -116,20 +100,38 @@ router.route('/uploadImage').post((req, res, next) => {
     })
 })
 
-  //route to request all images of 1 post
-  router.route(`/showPostImage`).post((req, res, next) => {
-    const arrayOfLinks = req.body.picture_link
-    console.log(req.body.picture_link)
+async function getMultipleImages(arrayOfLinks) {
+
+  for (let index = 0; index < arrayOfLinks.length; index++) {
+
+    //get object to show and res to front end
     const arrayOfSrc = []
-    if (Array.isArray(arrayOfLinks)) {
-      try {
-        for (let index = 0; index < arrayOfLinks.length; index++) {
-          //get object to show and res to front end
+    const params = {
+      Bucket: "leash-picture-posting",
+      Key: arrayOfLinks[index]
+    }
+
+    s3.getObject(params, function (err, data) {
+      if (err) console.log(err)
+      console.log(data)
+      const b64 = Buffer.from(data.Body).toString('base64');
+      const mimeType = 'image/jpg';
+      arrayOfSrc.push(`data:${mimeType};base64,${b64}`)
+    })
+  }
+}
+
+//route to request all images of 1 post
+router.route(`/showPostImage`).post(async (req, res, next) => {
+  const arrayOfLinks = req.body.picture_link
+  const arrayOfSrc = []
+  if (Array.isArray(arrayOfLinks)) {
+    for (let index = 0; index < arrayOfLinks.length; index++) {
+      //get object to show and res to front end
       const params = {
         Bucket: "leash-picture-posting",
         Key: arrayOfLinks[index]
       }
-
       s3.getObject(params, function (err, data) {
         if (err) console.log(err)
         console.log(data)
@@ -137,28 +139,27 @@ router.route('/uploadImage').post((req, res, next) => {
         const mimeType = 'image/jpg';
         arrayOfSrc.push(`data:${mimeType};base64,${b64}`)
       })
-        }
-      } catch (error) {
-        next(error)
-      }
     }
-    return res.json({ src: arrayOfSrc })
-  })
+    setTimeout(() => {
+      return res.json({ src: arrayOfSrc })
+    }, 1500 * arrayOfLinks.length)
+  }
+})
 
 //route to remove selected image from pre-post
 router.route(`/removeSelectedImage/:s3key`).post((req, res, next) => {
 
-    const params = {
-      Bucket: "leash-picture-posting",
-      Key: req.params.s3key
-    }
+  const params = {
+    Bucket: "leash-picture-posting",
+    Key: req.params.s3key
+  }
 
-    s3.deleteObject(params, function (err, data) {
-      if (err) return console.log(err)
-      else {
-        return res.send("successfully delete")
-      }
-    })
+  s3.deleteObject(params, function (err, data) {
+    if (err) return console.log(err)
+    else {
+      return res.send("successfully delete")
+    }
   })
+})
 
 module.exports = router;
