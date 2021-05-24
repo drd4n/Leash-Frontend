@@ -24,16 +24,24 @@ const Time = styled.p`
 `
 
 export const Post = (props) => {
-    // const [post, setPost] = useState()
+    const [Imgs, setImgs] = useState([])
     
-    // useEffect(() => {
-    //     setPost(props.post);
-    // }, [props.post])
+    useEffect(() => {
+        axios.post('http://localhost:3001/post/showPostImage', props.post.picture_link)
+        .then(res => {
+            setImgs(res.data.src);
+        })
+    }, [])
 
-    // console.log(props.post.post_text)
+    console.log(props.post)
     return ( 
         <Box>
         <PostImg class="img" src="https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0213/1601/rr22solidmintgreen_shop_thumb.png"></PostImg>
+        {
+                Imgs.map((img,i) => {
+                    return console.log(img)
+                })
+            }
             <PostText>{props.post.post_text}</PostText>
             <Time>date XX/XX/XX time XX:XX</Time>
             
