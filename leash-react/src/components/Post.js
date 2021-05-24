@@ -27,19 +27,23 @@ export const Post = (props) => {
     const [Imgs, setImgs] = useState([])
     
     useEffect(() => {
-        axios.post('http://localhost:3001/post/showPostImage', props.post.picture_link)
+        const data = {
+            picture_link : props.post.picture_link
+        }
+        axios.post('http://localhost:3001/post/showPostImage', data)
         .then(res => {
+            console.log(res.data.picture_link)
             setImgs(res.data.src);
         })
     }, [])
 
-    console.log(props.post)
     return ( 
         <Box>
         <PostImg class="img" src="https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0213/1601/rr22solidmintgreen_shop_thumb.png"></PostImg>
         {
                 Imgs.map((img,i) => {
-                    return console.log(img)
+                        console.log("this is img")
+                        console.log(img)
                 })
             }
             <PostText>{props.post.post_text}</PostText>
