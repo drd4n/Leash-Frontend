@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, Component } from 'react'
 import styled, { css } from 'styled-components'
 import axios from 'axios'
 
@@ -23,15 +23,22 @@ const Time = styled.p`
     margin:5px;
 `
 
-export default class Post extends Component {
-    render() {
-        return (
-            <Box>
+export const Post = (props) => {
+    // const [post, setPost] = useState()
+    
+    // useEffect(() => {
+    //     setPost(props.post);
+    // }, [props.post])
+
+    // console.log(props.post.post_text)
+    return ( 
+        <Box>
         <PostImg class="img" src="https://s3.amazonaws.com/spoonflower/public/design_thumbnails/0213/1601/rr22solidmintgreen_shop_thumb.png"></PostImg>
-            <PostText>{this.props.post.post_text}</PostText>
+            <PostText>{props.post.post_text}</PostText>
             <Time>date XX/XX/XX time XX:XX</Time>
             
        </Box>
-        )
-    }
+    )
 }
+
+export default Post
