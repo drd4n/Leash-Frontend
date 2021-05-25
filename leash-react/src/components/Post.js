@@ -35,7 +35,7 @@ export const Post = (props) => {
             setImgs(res.data.src);
         })
     },[props.post.picture_link])
-
+console.log(props.post._id) //เอาอันนี้ส่งมาตอนเข้าหน้าโพสแยกกับตอนคอมเม้นด้วย
     return ( 
         <Box>
         {
