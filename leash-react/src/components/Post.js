@@ -32,17 +32,16 @@ export const Post = (props) => {
         }
         axios.post('http://localhost:3001/post/showPostImage', data)
         .then(res => {
-            console.log(JSON.stringify(res.data.src))
             setImgs(res.data.src);
         })
-    }, [])
+    },[props.post.picture_link])
 
     return ( 
         <Box>
         {
                 Imgs.map((img,i) => {
                     return(
-                        <PostImg class="img" src={img}></PostImg>
+                        <PostImg key={i} className="img" src={img}></PostImg>
                     )
                 })
             }
