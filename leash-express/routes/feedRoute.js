@@ -17,10 +17,20 @@ const PostModel = require('../models/Post');
 //route to get all post
 router.route('/').get((req, res) => {
     PostModel.find((error, data) => {
-        try{
+        if(error) return next(error)
+        else {
             res.json(data)
-        }catch(error){
-            return next(error)
+        }
+    })
+})
+
+//route to get specific post
+router.route('/:postId').get((req, res, next) => {
+    const _id = req.rarams.postId
+    PostModel.findById(_id, (error, data) => {
+        if(error) return next(error)
+        else {
+            res.json(data)
         }
     })
 })
