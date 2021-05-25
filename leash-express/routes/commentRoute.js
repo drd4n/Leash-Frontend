@@ -13,5 +13,20 @@ app.use(express.static('public'));
 //Post Models
 const CommentModel = require('../models/Comment');
 
+router.route('/createComment').post((req, res, next) => {
+    const commentText = req.body.comment_text
+    const postObjectId = req.body.postObjectId
+    const comment = new CommentModel({
+        comment_text: commentText,
+        postObjectId: postObjectId
+    })
+
+    try{
+        comment.save();
+        return res.json(comment)
+    }catch(error){
+        next(error)
+    }
+})
 
 module.exports = router;
