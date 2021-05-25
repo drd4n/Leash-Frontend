@@ -19,11 +19,13 @@ mongoose.connect(
 console.log('db connected')
 
 //Express Route
-const postRoute = require('./routes/postRoute');
+const postRoute = require('./routes/postRoute')
 const feedRoute = require('./routes/feedRoute')
+const commentRoute = require('./routes/commentRoute')
 
 app.use('/post', postRoute)
 app.use('/feed', feedRoute)
+app.use('/comment', commentRoute)
 
 //Port
 const port = process.env.port || 3001;
