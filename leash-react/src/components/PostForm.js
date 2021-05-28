@@ -43,7 +43,7 @@ const Textarea = styled.textarea`
     width: 350px;
 `
 
-export const PostForm = () => {
+export const PostForm = ({ setWillFetch }) => {
 
     const [postDetail, setPostDetail] = useState('')
     const [uploadedpics, setUploadedpics] = useState([])
@@ -60,6 +60,12 @@ export const PostForm = () => {
         }
         //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
         axios.post("http://localhost:3001/post/createPost", data)
+        .then(res => {
+            setWillFetch(true)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
 
         setPostDetail('')
         setUploadedpics([])
@@ -139,7 +145,8 @@ return (
         /><PictureLayout>
         {
             shower.map(shwr =>{
-                        return <Col>
+                        return 
+                            <Col>
                             <InputImg key={shower.indexOf(shwr)} src={shwr} alt={shower.indexOf(shwr)} />
                             <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
                             </Col>
