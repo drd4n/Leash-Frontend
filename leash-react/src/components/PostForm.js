@@ -14,23 +14,33 @@ const Input = styled.input`
     width: 200px;
 `
 const InputImg = styled.img`
-    width: 300px;
+    height: 250px;
+    margin:2px;
 `
 const PictureLayout = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 `
+const Col = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin:2px;
+`
 const Button = styled.button`
 background-color: yellowgreen;
   border: none;
-  /* color: white; */
   padding: 7px 12px;
   text-align: center;
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 10px;
   cursor: pointer;
   margin:2px;
+`
+const Textarea = styled.textarea`
+    resize:none;
+    height: 100px;
+    width: 350px;
 `
 
 export const PostForm = () => {
@@ -103,7 +113,7 @@ useEffect(() => {
 
 return (
     <Form>
-        <Input 
+        <Textarea 
             placeholder="What do you want to ask?" 
             type="text" 
             value={postDetail} 
@@ -126,16 +136,16 @@ return (
                 onDrop(event.target.files[0])
             }}
             style={{ display: 'none' }}
-        />
+        /><PictureLayout>
         {
             shower.map(shwr =>{
-                        return <PictureLayout>
+                        return <Col>
                             <InputImg key={shower.indexOf(shwr)} src={shwr} alt={shower.indexOf(shwr)} />
                             <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
-                        </PictureLayout>
+                            </Col>
                     }
                 )
-        }
+        }</PictureLayout>
         {/* {
             uploadedpics.map(remover => {
                 return <form key={uploadedpics.indexOf(remover)} action={removeSelectedImage(remover)}>
