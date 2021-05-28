@@ -13,6 +13,25 @@ const Form = styled.div`
 const Input = styled.input`
     width: 200px;
 `
+const InputImg = styled.img`
+    width: 300px;
+`
+const PictureLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`
+const Button = styled.button`
+background-color: yellowgreen;
+  border: none;
+  /* color: white; */
+  padding: 7px 12px;
+  text-align: center;
+  display: inline-block;
+  font-size: 10px;
+  cursor: pointer;
+  margin:2px;
+`
 
 export const PostForm = () => {
 
@@ -110,10 +129,10 @@ return (
         />
         {
             shower.map(shwr =>{
-                        return <div>
-                            <img key={shower.indexOf(shwr)} src={shwr} alt={shower.indexOf(shwr)} />
-                            <button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</button>
-                        </div>
+                        return <PictureLayout>
+                            <InputImg key={shower.indexOf(shwr)} src={shwr} alt={shower.indexOf(shwr)} />
+                            <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
+                        </PictureLayout>
                     }
                 )
         }
@@ -124,8 +143,8 @@ return (
                 </form>
             })
         } */}
-        <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
-        <button onClick={uploadText}>add to mongo db via mongoose</button>
+        <Button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</Button>
+        <Button onClick={uploadText}>add to mongo db via mongoose</Button>
         {/* <button onClick={uploadImages}>Upload Images</button> */}
     </Form>
     )
