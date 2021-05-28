@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Post from './Post'
 
-export const Feed = () => {
+export const Feed = (props) => {
     const [posts, setPosts] = useState([])
 
 useEffect( () => {
