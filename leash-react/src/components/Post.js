@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const Box = styled.div` 
     width: 600px;
-    height: 250px;
+    /* height: 300px; */
     margin: 20px;
     padding:10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
@@ -13,7 +13,6 @@ const PostImg = styled.img`
     width: 150px;
     height: 150px;
     padding: 5px;
-    margin: 0px;
   `
 const PostText = styled.h1`
     font-size: 15px;
@@ -26,6 +25,25 @@ const Time = styled.p`
 
 const PictureLayout = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`
+
+const ButtonLayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`
+
+const Button = styled.button`
+background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 7px 12px;
+  text-align: center;
+  display: inline-block;
+  font-size: 10px;
+  cursor: pointer;
 `
 
 export const Post = (props) => {
@@ -52,10 +70,15 @@ export const Post = (props) => {
                 })
             }
             </PictureLayout>
-            <p>{props.post._id}</p>
-            <PostText>{props.post.post_text}</PostText>
-            <Time>date XX/XX/XX time XX:XX</Time>
-            
+            <div>
+                <PostText>{props.post.post_text}</PostText>
+                <Time>date XX/XX/XX time XX:XX</Time>
+                <ButtonLayout>
+                <Button>UPVOTE</Button>
+                <Button>DOWNVOTE</Button>
+                <Button>COMMENT</Button>
+                </ButtonLayout>
+            </div>
        </Box>
     )
 }
