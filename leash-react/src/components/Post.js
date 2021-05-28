@@ -71,6 +71,7 @@ export const Post = (props) => {
             }
             </PictureLayout>
             <div>
+                <p>{props.post._id}</p>
                 <PostText>{props.post.post_text}</PostText>
                 <Time>date XX/XX/XX time XX:XX</Time>
                 <ButtonLayout>

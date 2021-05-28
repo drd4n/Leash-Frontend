@@ -142,17 +142,18 @@ return (
                 onDrop(event.target.files[0])
             }}
             style={{ display: 'none' }}
-        /><PictureLayout>
-        {
-            shower.map(shwr =>{
-                        return 
-                            <Col>
-                            <InputImg key={shower.indexOf(shwr)} src={shwr} alt={shower.indexOf(shwr)} />
-                            <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
+        />
+        <PictureLayout>
+            {
+                shower.map((shwr,i) =>{
+                            return <Col>
+                                <InputImg key={i} src={shwr} alt={shower.indexOf(shwr)} />
+                                <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
                             </Col>
-                    }
-                )
-        }</PictureLayout>
+                        }
+                    )
+            }
+        </PictureLayout>
         {/* {
             uploadedpics.map(remover => {
                 return <form key={uploadedpics.indexOf(remover)} action={removeSelectedImage(remover)}>
@@ -160,8 +161,8 @@ return (
                 </form>
             })
         } */}
-        <Button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</Button>
-        <Button onClick={uploadText}>add to mongo db via mongoose</Button>
+        <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
+        <button onClick={uploadText}>add to mongo db via mongoose</button>
         {/* <button onClick={uploadImages}>Upload Images</button> */}
     </Form>
     )
