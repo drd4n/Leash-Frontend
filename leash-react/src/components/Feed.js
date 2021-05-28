@@ -22,9 +22,10 @@ export const Feed = ({ willFetch, setWillFetch }) => {
     return (
         <div>
             {
-                posts.map((post, i) => {
+                posts.slice(0).reverse().map((post, i) => {
                     return <Post key={i} post={post} />
                 })
+
             }
         </div>
     )
