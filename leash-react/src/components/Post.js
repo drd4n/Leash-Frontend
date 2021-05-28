@@ -40,7 +40,7 @@ export const Post = (props) => {
             setImgs(res.data.src);
         })
     },[props.post.picture_link])
-console.log(props.post._id) //เอาอันนี้ส่งมาตอนเข้าหน้าโพสแยกกับตอนคอมเม้นด้วย
+
     return ( 
         <Box>
             <PictureLayout>
@@ -52,6 +52,7 @@ console.log(props.post._id) //เอาอันนี้ส่งมาตอ�
                 })
             }
             </PictureLayout>
+            <p>{props.post._id}</p>
             <PostText>{props.post.post_text}</PostText>
             <Time>date XX/XX/XX time XX:XX</Time>
             
