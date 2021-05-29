@@ -46,9 +46,10 @@ background-color: #008CBA;
   cursor: pointer;
 `
 
-export const Post = (props) => {
+export const PopUp = (props) => {
     const [Imgs, setImgs] = useState([])
-    
+    const [Comments, setComments] = useState([])
+
     useEffect(() => {
         const data = {
             picture_link : props.post.picture_link
@@ -59,9 +60,21 @@ export const Post = (props) => {
         })
     },[props.post.picture_link])
 
+    useEffect(() => {
+        const data = {
+            id : props.post.post_id
+        }
+        axios.post('http://localhost:3001/post/showComment', data)
+        .then(res => {
+            setComments(res.data.src);
+        })
+    },[])
+
     return ( 
+        <div>
         <Box>
-            <PictureLayout>
+                <p>{props.post._id}</p>
+                <PictureLayout>
             {
                 Imgs.map((img,i) => {
                     return(
@@ -70,18 +83,22 @@ export const Post = (props) => {
                 })
             }
             </PictureLayout>
-            <div>
-                <p>{props.post._id}</p>
                 <PostText>{props.post.post_text}</PostText>
                 <Time>date XX/XX/XX time XX:XX</Time>
                 <ButtonLayout>
-                <Button>UPVOTE</Button>
-                <Button>DOWNVOTE</Button>
-                <Button>COMMENT</Button>
+                    <Button>UPVOTE</Button>
+                    <Button>DOWNVOTE</Button>
                 </ButtonLayout>
-            </div>
-       </Box>
+                    {
+                    Comments.map((comment,i) => {
+                        return(
+                            <div>555</div>
+                        )
+                    })
+                    }   
+        </Box>
+        </div>
     )
 }
 
-export default Post
+export default PopUp
