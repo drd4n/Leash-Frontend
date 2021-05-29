@@ -53,7 +53,7 @@ export const Post = (props) => {
         const data = {
             picture_link : props.post.picture_link
         }
-        axios.post('http://localhost:3001/post/showPostImage', data)
+        axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data)
         .then(res => {
             setImgs(res.data.src);
         })
