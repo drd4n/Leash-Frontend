@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Post from './Post'
+import PopUp from './PopUp'
 
 export const Feed = ({ willFetch, setWillFetch }) => {
     const [posts, setPosts] = useState([])
@@ -23,7 +24,8 @@ export const Feed = ({ willFetch, setWillFetch }) => {
         <div>
             {
                 posts.slice(0).reverse().map((post, i) => {
-                    return <Post key={i} post={post} />
+                    // return <Post key={i} post={post} />
+                    return <PopUp key={i} post={post} />
                 })
 
             }
