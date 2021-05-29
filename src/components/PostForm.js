@@ -162,7 +162,7 @@ return (
             })
         } */}
         <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
-        <button onClick={uploadText}>add to mongo db via mongoose</button>
+        <button onClick={uploadText}>Post</button>
         {/* <button onClick={uploadImages}>Upload Images</button> */}
     </Form>
     )
