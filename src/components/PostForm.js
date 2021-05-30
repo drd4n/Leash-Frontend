@@ -7,8 +7,13 @@ const Form = styled.div`
     align-items: center;
     text-align: center;
     display: flex;
+    border-radius: 5px; 
+    width:35%;
+    margin:auto;
+    padding:5px;
     flex-direction: column;
     justify-content: center;
+    background-color: #aaaaaa;
 `
 const Input = styled.input`
     width: 200px;
