@@ -8,7 +8,7 @@ export const Feed = ({ willFetch, setWillFetch }) => {
 
     useEffect(() => {
         if (willFetch) {// const feed = await axios('http://localhost:3001/post', );
-            axios('http://13.229.71.180:3001/')
+            axios('https://leash-khakai-api.herokuapp.com/')
                 // setPosts(feed.data)
                 .then(res => {
                     setPosts(res.data)
