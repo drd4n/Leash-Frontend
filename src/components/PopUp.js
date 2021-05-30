@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Component } from 'react'
 import styled, { css } from 'styled-components'
 import axios from 'axios'
+import Comments from './Comments'
 
 const Box = styled.div` 
     width: 600px;
@@ -47,7 +48,7 @@ background-color: #008CBA;
   font-size: 10px;
   cursor: pointer;
 `
-const Comment = styled.div`
+const CommentBox = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -115,7 +116,12 @@ export const PopUp = (props) => {
                     <Button>UPVOTE</Button>
                     <Button>DOWNVOTE</Button>
                 </ButtonLayout>
-                <Comment>
+                {
+                    comments.map((comment, i) => {
+                        return <Comments key={i} comment={comment} />
+                    })
+                }
+                <CommentBox>
                     <input
                         placeholder="Write your comment?"
                         type="text"
@@ -126,12 +132,7 @@ export const PopUp = (props) => {
                     />
                     <Button onClick={createComment}>Comment</Button>
 
-                </Comment>
-                {
-                    comments.map((comment, i) => {
-                        return <p key={i}>{comment.comment_text}</p>
-                    })
-                }
+                </CommentBox>
             </Box>
         </>
     )
