@@ -54,7 +54,7 @@ export const PopUp = (props) => {
         const data = {
             picture_link : props.post.picture_link
         }
-        axios.post('https://52.77.230.105:3001/post/showPostImage', data)
+        axios.post('http://13.229.71.180:3001/post/showPostImage', data)
         .then(res => {
             setImgs(res.data.src);
         })
@@ -64,7 +64,7 @@ export const PopUp = (props) => {
         const data = {
             id : props.post.post_id
         }
-        axios.post('https://52.77.230.105:3001/post/showComment', data)
+        axios.post('http://13.229.71.180:3001/post/showComment', data)
         .then(res => {
             setComments(res.data.src);
         })

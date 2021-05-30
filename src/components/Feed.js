@@ -8,7 +8,7 @@ export const Feed = ({ willFetch, setWillFetch }) => {
 
     useEffect(() => {
         if (willFetch) {// const feed = await axios('http://localhost:3001/post', );
-            axios('https://52.77.230.105:3001/')
+            axios('http://13.229.71.180:3001/')
                 // setPosts(feed.data)
                 .then(res => {
                     setPosts(res.data)
