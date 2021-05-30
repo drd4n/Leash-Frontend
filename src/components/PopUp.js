@@ -4,10 +4,12 @@ import axios from 'axios'
 
 const Box = styled.div` 
     width: 600px;
-    /* height: 300px; */
-    margin: 20px;
+    border-radius: 15px; 
+    margin: auto;
+    margin-top: 20px;
     padding:10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    background-color: #fae3d9
   `
 const PostImg = styled.img`
     width: 150px;
@@ -45,26 +47,34 @@ background-color: #008CBA;
   font-size: 10px;
   cursor: pointer;
 `
+const Comment = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin:10px;
+    padding:5px;
+    background-color: #aaaaaa;
+`
 
 export const PopUp = (props) => {
     const [Imgs, setImgs] = useState([])
     const [Comments, setComments] = useState([])
 
     useEffect(() => {
-        const data = {
+        const data1 = {
             picture_link : props.post.picture_link
         }
-        axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data)
+        axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data1)
         .then(res => {
             setImgs(res.data.src);
         })
     },[props.post.picture_link])
 
     useEffect(() => {
-        const data = {
+        const data2 = {
             id : props.post.post_id
         }
-        axios.post('https://leash-khakai-api.herokuapp.com/post/showComment', data)
+        axios.post('https://leash-khakai-api.herokuapp.com/post/showComment', data2)
         .then(res => {
             setComments(res.data.src);
         })
@@ -89,10 +99,18 @@ export const PopUp = (props) => {
                     <Button>UPVOTE</Button>
                     <Button>DOWNVOTE</Button>
                 </ButtonLayout>
+                <Comment>
+        <input 
+            placeholder="Write your comment?" 
+            type="text" 
+            
+         />
+         <Button>Comment</Button>
+                </Comment>
                     {
                     Comments.map((comment,i) => {
                         return(
-                            <div>555</div>
+                            <div />
                         )
                     })
                     }   
