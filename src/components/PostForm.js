@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import ImageUploader from 'react-images-upload'
 
 const Form = styled.div`
     align-items: center;
     text-align: center;
     display: flex;
+    border-radius: 5px; 
+    width:35%;
+    margin:auto;
+    padding:5px;
     flex-direction: column;
     justify-content: center;
+    background-color: #aaaaaa;
 `
 const Input = styled.input`
     width: 200px;
@@ -126,15 +130,6 @@ return (
             onChange={(event) => {
             setPostDetail(event.target.value)
         }} />
-        {/* <ImageUploader
-                withPreview={true}
-                withIcon={true}
-                name='name'
-                buttonText='Choose images'
-                onChange={onDrop}
-                imgExtension={['.jpg', '.gif', '.png']}
-                maxFileSize={5242880}
-            /> */}
         <Input
             type="file"
             id="selectedFile"

@@ -1,4 +1,9 @@
 .App {
   text-align: center;
 }
+html, body {
+  height: 100%;
+  background-color:#6f97b1;
+  width: 99%;
+}
 

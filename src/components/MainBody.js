@@ -6,7 +6,6 @@ import PostForm from './PostForm'
 export const MainBody = () => {
 
     const [willFetch, setWillFetch] = useState(true)
-    console.log(willFetch)
     return (
         <>
             <Navbar setWillFetch={setWillFetch} />

@@ -25,7 +25,6 @@ export const Feed = ({ willFetch, setWillFetch }) => {
             {
                 posts.slice(0).reverse().map((post, i) => {
                     return <Post key={i} post={post} />
-                    // return <PopUp key={i} post={post} />
                 })
 
             }
