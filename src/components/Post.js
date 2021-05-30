@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Component } from 'react'
 import styled, { css } from 'styled-components'
 import axios from 'axios'
+import PopUp from './PopUp'
 
 const Box = styled.div` 
     width: 600px;
@@ -9,7 +10,8 @@ const Box = styled.div`
     margin-top: 20px;
     padding:10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    background-color: #fae3d9
+    background-color: #fae3d9;
+    display:block;
   `
 const PostImg = styled.img`
     width: 150px;
@@ -48,9 +50,14 @@ background-color: #008CBA;
   font-size: 10px;
   cursor: pointer;
 `
+const PopupBox = styled.div`
+display:none;
+`
 
 export const Post = (props) => {
     const [Imgs, setImgs] = useState([])
+    const PopId = props.post._id+"Popup"
+    const BoxId = props.post._id+"Box"
     
     useEffect(() => {
         const data = {
@@ -62,8 +69,17 @@ export const Post = (props) => {
         })
     },[props.post.picture_link])
 
+    const ShowPopup =() =>{
+    document.getElementById(PopId).style.display = "Block";
+    document.getElementById(BoxId).style.display = "none";
+}
+
     return ( 
-        <Box>
+        <div>
+        <PopupBox id={PopId}>
+        <PopUp post={props.post} />
+        </PopupBox>
+        <Box id={BoxId}>
             <PictureLayout>
             {
                 Imgs.map((img,i) => {
@@ -82,10 +98,11 @@ export const Post = (props) => {
                     <Button>UPVOTE</Button>
                     <Button>DOWNVOTE</Button>
                     </div>
-                    <Button>OPEN POST</Button>
+                    <Button onClick={ShowPopup}>OPEN POST</Button>
                 </ButtonLayout>
             </div>
        </Box>
+       </div>
     )
 }
 
