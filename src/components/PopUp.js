@@ -74,7 +74,7 @@ export const PopUp = (props) => {
             const data2 = {
                 post_id: props.post._id
             }
-            axios.post('http://localhost:3001/comment/showComment', data2)
+            axios.post('https://leash-khakai-api.herokuapp.com/comment/showComment', data2)
                 .then(res => {
                     setComments(res.data)
                 })
@@ -89,7 +89,7 @@ export const PopUp = (props) => {
             comment_text: comment,
             post_id: props.post._id
         }
-        axios.post("https://localhost:3001/comment/createComment", data)
+        axios.post("https://leash-khakai-api.herokuapp.com/comment/createComment", data)
             .then(res => {
                 setComment('')
             }
