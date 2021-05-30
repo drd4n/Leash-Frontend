@@ -59,6 +59,7 @@ const Comment = styled.div`
 export const PopUp = (props) => {
     const [Imgs, setImgs] = useState([])
     const [Comments, setComments] = useState([])
+    const [comment, setComment] = useState('')
 
     useEffect(() => {
         const data1 = {
@@ -68,9 +69,7 @@ export const PopUp = (props) => {
         .then(res => {
             setImgs(res.data.src);
         })
-    },[props.post.picture_link])
 
-    useEffect(() => {
         const data2 = {
             id : props.post.post_id
         }
@@ -79,6 +78,20 @@ export const PopUp = (props) => {
             setComments(res.data.src);
         })
     },[])
+
+    function createComment () {
+        if(!comment) {
+            return alert("please fill out!")
+        }
+        const data = {
+            comment_text: comment,
+            post_id: props.post._id
+        }
+        axios.post("https://leash-khakai-api.herokuapp.com/comment/createComment", data)
+        .then(
+            setComment('')
+        )
+    }
 
     return ( 
         <div>
@@ -94,7 +107,7 @@ export const PopUp = (props) => {
             }
             </PictureLayout>
                 <PostText>{props.post.post_text}</PostText>
-                <Time>date XX/XX/XX time XX:XX</Time>
+               <Time>date XX/XX/XX time XX:XX</Time>
                 <ButtonLayout>
                     <Button>UPVOTE</Button>
                     <Button>DOWNVOTE</Button>
@@ -103,9 +116,13 @@ export const PopUp = (props) => {
         <input 
             placeholder="Write your comment?" 
             type="text" 
-            
+            value={comment}
+            onChange={(event)=> {
+                setComment(event.target.value)
+            }}
          />
-         <Button>Comment</Button>
+         <Button onClick={createComment}>Comment</Button>
+
                 </Comment>
                     {
                     Comments.map((comment,i) => {
