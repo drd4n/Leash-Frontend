@@ -4,10 +4,12 @@ import axios from 'axios'
 
 const Box = styled.div` 
     width: 600px;
-    /* height: 300px; */
-    margin: 20px;
+    border-radius: 15px; 
+    margin: auto;
+    margin-top: 20px;
     padding:10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    background-color: #fae3d9
   `
 const PostImg = styled.img`
     width: 150px;
@@ -39,6 +41,7 @@ const Button = styled.button`
 background-color: #008CBA;
   border: none;
   color: white;
+  margin-left: 10px;
   padding: 7px 12px;
   text-align: center;
   display: inline-block;
@@ -75,9 +78,11 @@ export const Post = (props) => {
                 <PostText>{props.post.post_text}</PostText>
                 <Time>date XX/XX/XX time XX:XX</Time>
                 <ButtonLayout>
-                <Button>UPVOTE</Button>
-                <Button>DOWNVOTE</Button>
-                <Button>COMMENT</Button>
+                    <div>
+                    <Button>UPVOTE</Button>
+                    <Button>DOWNVOTE</Button>
+                    </div>
+                    <Button>OPEN POST</Button>
                 </ButtonLayout>
             </div>
        </Box>
