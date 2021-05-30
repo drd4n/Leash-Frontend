@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import ImageUploader from 'react-images-upload'
 
 const Form = styled.div`
     align-items: center;
@@ -131,15 +130,6 @@ return (
             onChange={(event) => {
             setPostDetail(event.target.value)
         }} />
-        {/* <ImageUploader
-                withPreview={true}
-                withIcon={true}
-                name='name'
-                buttonText='Choose images'
-                onChange={onDrop}
-                imgExtension={['.jpg', '.gif', '.png']}
-                maxFileSize={5242880}
-            /> */}
         <Input
             type="file"
             id="selectedFile"
