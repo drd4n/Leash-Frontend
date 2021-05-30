@@ -58,82 +58,82 @@ const Comment = styled.div`
 
 export const PopUp = (props) => {
     const [Imgs, setImgs] = useState([])
-    const [Comments, setComments] = useState([])
+    const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
+    const [isCommentDirty, setIsCommentDirty] = useState(true)
 
     useEffect(() => {
         const data1 = {
-            picture_link : props.post.picture_link
+            picture_link: props.post.picture_link
         }
         axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data1)
-        .then(res => {
-            setImgs(res.data.src);
-        })
-
-        const data2 = {
-            id : props.post.post_id
+            .then(res => {
+                setImgs(res.data.src);
+            })
+        if (isCommentDirty) {
+            const data2 = {
+                post_id: props.post._id
+            }
+            axios.post('http://localhost:3001/comment/showComment', data2)
+                .then(res => {
+                    setComments(res.data)
+                })
         }
-        axios.post('https://leash-khakai-api.herokuapp.com/post/showComment', data2)
-        .then(res => {
-            setComments(res.data.src);
-        })
-    },[])
+    }, [isCommentDirty, props.post.picture_link, props.post._id])
 
-    function createComment () {
-        if(!comment) {
+    function createComment() {
+        if (!comment) {
             return alert("please fill out!")
         }
         const data = {
             comment_text: comment,
             post_id: props.post._id
         }
-        axios.post("https://leash-khakai-api.herokuapp.com/comment/createComment", data)
-        .then(res => {
-            setComment('')
-        }   
-        )
+        axios.post("https://localhost:3001/comment/createComment", data)
+            .then(res => {
+                setComment('')
+            }
+            )
     }
 
-    return ( 
-        <div>
-        <Box>
+    return (
+        <>
+            <Box>
                 <p>{props.post._id}</p>
                 <PictureLayout>
-            {
-                Imgs.map((img,i) => {
-                    return(
-                        <PostImg key={i} className="img" src={img}></PostImg>
-                    )
-                })
-            }
-            </PictureLayout>
+                    {
+                        Imgs.map((img, i) => {
+                            return (
+                                <PostImg key={i} className="img" src={img}></PostImg>
+                            )
+                        })
+                    }
+                </PictureLayout>
                 <PostText>{props.post.post_text}</PostText>
-               <Time>date XX/XX/XX time XX:XX</Time>
+                <Time>date XX/XX/XX time XX:XX</Time>
                 <ButtonLayout>
                     <Button>UPVOTE</Button>
                     <Button>DOWNVOTE</Button>
                 </ButtonLayout>
                 <Comment>
-        <input 
-            placeholder="Write your comment?" 
-            type="text" 
-            value={comment}
-            onChange={(event)=> {
-                setComment(event.target.value)
-            }}
-         />
-         <Button onClick={createComment}>Comment</Button>
+                    <input
+                        placeholder="Write your comment?"
+                        type="text"
+                        value={comment}
+                        onChange={(event) => {
+                            setComment(event.target.value)
+                        }}
+                    />
+                    <Button onClick={createComment}>Comment</Button>
 
                 </Comment>
-                    {
-                    Comments.map((comment,i) => {
-                        return(
-                            <div />
-                        )
+                {
+                    comments.map((comment, i) => {
+                        return <p key={i}>{comment.comment_text}</p>
                     })
-                    }   
-        </Box>
-        </div>
+                }
+            </Box>
+        </>
     )
 }
 
