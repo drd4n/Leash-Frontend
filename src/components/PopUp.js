@@ -64,13 +64,6 @@ export const PopUp = (props) => {
     const [isCommentDirty, setIsCommentDirty] = useState(true)
 
     useEffect(() => {
-        const data1 = {
-            picture_link: props.post.picture_link
-        }
-        axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data1)
-            .then(res => {
-                setImgs(res.data.src);
-            })
         if (isCommentDirty) {
             const data2 = {
                 post_id: props.post._id
@@ -78,8 +71,18 @@ export const PopUp = (props) => {
             axios.post('https://leash-khakai-api.herokuapp.com/comment/showComment', data2)
                 .then(res => {
                     setComments(res.data)
+                    setIsCommentDirty(false)
                 })
         }
+
+        const data1 = {
+            picture_link: props.post.picture_link
+        }
+        axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data1)
+            .then(res => {
+                setImgs(res.data.src);
+            })
+        
     }, [isCommentDirty, props.post.picture_link, props.post._id])
 
     function createComment() {
@@ -93,6 +96,7 @@ export const PopUp = (props) => {
         axios.post("https://leash-khakai-api.herokuapp.com/comment/createComment", data)
             .then(res => {
                 setComment('')
+                setIsCommentDirty(true)
             }
             )
     }
