@@ -2,53 +2,61 @@ import React, { useState, useEffect } from 'react'
 import validator from 'validator'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import axios from 'axios'
 
 export const Register = () => {
 
     const [form, setForm] = useState({})
-    const [crPassword, setCrPassword] = useState('')
+    const [dob, setDob] = useState(new Date())
     const [error, setError] = useState('')
 
     function checkPassword() {
         if (!form.password) {
             return ""
         }
-        if (form.password !== crPassword) {
+        if (form.password !== form.crPassword) {
             return "password not match"
         } else {
             return ""
         }
     }
 
-    function validate() {
-        if (!form.firstname) {
-            return setError("Firstname must be filled")
-        }
-        if (!form.lastname) {
-            return setError("Lastname must be filled")
-        }
-        if (!form.email) {
-            return setError("E-mail must be filled")
-        }
-        if (!validator.isEmail(form.email)) {
-            return setError("E-mail is not valid")
-        }
-        if (!form.dob) {
-            return setError("Date of birth must be filled")
-        }
-        if (!validator.isDate(form.dob, { delimiters: '/' })) {
-            return setError("Date of birth is not in format")
-        }
-        if (!form.username) {
-            return setError("Username must be filled")
-        }
-        if (!form.password) {
-            return setError("Password must be filled")
-        }
-        return setError("passed")
-    }
+    async function validate() {
+        
+        console.log(form.dob)
+        // if (!form.firstname) {
+        //     return setError("Firstname must be filled")
+        // }
+        // if (!form.lastname) {
+        //     return setError("Lastname must be filled")
+        // }
+        // if (!form.email) {
+        //     return setError("E-mail must be filled")
+        // }
+        // if (!validator.isEmail(form.email)) {
+        //     return setError("E-mail is not valid")
+        // }
+        // if (!form.dob) {
+        //     return setError("Date of birth must be filled")
+        // }
+        // if (!validator.isDate(form.dob, { format:'DD/MM/YYYY' ,delimiters: '/', strictMode: true })) {
+        //     return setError("Date of birth is not in format")
+        // }
+        // if (!form.username) {
+        //     return setError("Username must be filled")
+        // }
+        // if (!form.password) {
+        //     return setError("Password must be filled")
+        // }
 
-    function register() {
+        axios.post('http://localhost:3001/auth/register', form)
+            .then((res) => {
+                console.log(res.data)
+                return res
+            }).catch((e) => {
+                console.log(e.response.data)
+                console.log(e.response.data.errors)
+            })
 
     }
 
@@ -80,7 +88,7 @@ export const Register = () => {
                 id="dob"
                 name="dob"
                 selected={form.dob}
-                onChange={(date) => { setForm({ ...form, dob: date }) }}
+                onChange={(date) => { setForm({...form, dob: date})}}
                 dateFormat='dd/MM/yyyy'
                 maxDate={new Date()}
                 showMonthDropdown
@@ -107,12 +115,14 @@ export const Register = () => {
                     type="password"
                     id="crPassword"
                     name="crPassword"
-                    onChange={(event) => { setCrPassword(event.target.value.trim()) }} />
-                    <label> {
+                    onChange={(event) => { setForm({ ...form, crPassword: event.target.value.trim() }) }} />
+
+                <label>
+                    {
                         // password !== crPassword ? "password not match" : ""
                         checkPassword()
                     }
-                    </label>
+                </label>
             </span>
             <div>
                 {

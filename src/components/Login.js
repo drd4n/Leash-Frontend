@@ -6,9 +6,9 @@ export const Login = () => {
         <>
         <form>
             <label for="username">Username</label><br />
-            <input type="text" id="username" name="username" /><br />
+            <input type="text" id="login-username" name="login-username" /><br />
             <label for="password">Password</label><br />
-            <input type="password" id="password" name="username" /><br />
+            <input type="password" id="login-password" name="login-username" /><br />
             <input type="submit" value="Submit" />
         </form>
         <a>Register</a>
