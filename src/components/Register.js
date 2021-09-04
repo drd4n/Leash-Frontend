@@ -7,7 +7,6 @@ import axios from 'axios'
 export const Register = () => {
 
     const [form, setForm] = useState({})
-    const [dob, setDob] = useState(new Date())
     const [error, setError] = useState('')
 
     function checkPassword() {
@@ -23,6 +22,7 @@ export const Register = () => {
 
     async function validate() {
         
+        console.log(JSON.stringify(form.dob))
         console.log(form.dob)
         // if (!form.firstname) {
         //     return setError("Firstname must be filled")
@@ -52,9 +52,7 @@ export const Register = () => {
         axios.post('http://localhost:3001/auth/register', form)
             .then((res) => {
                 console.log(res.data)
-                return res
             }).catch((e) => {
-                console.log(e.response.data)
                 console.log(e.response.data.errors)
             })
 
@@ -89,7 +87,7 @@ export const Register = () => {
                 name="dob"
                 selected={form.dob}
                 onChange={(date) => { setForm({...form, dob: date})}}
-                dateFormat='dd/MM/yyyy'
+                dateFormat='dd-MM-yyyy'
                 maxDate={new Date()}
                 showMonthDropdown
                 showYearDropdown
