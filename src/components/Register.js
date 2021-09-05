@@ -49,12 +49,12 @@ export const Register = () => {
         //     return setError("Password must be filled")
         // }
 
-        axios.post('http://localhost:3001/auth/register', form)
-            .then((res) => {
-                console.log(res.data)
-            }).catch((e) => {
-                console.log(e.response.data.errors)
-            })
+        // axios.post('http://localhost:3001/auth/register', form)
+        //     .then((res) => {
+        //         console.log(res.data)
+        //     }).catch((e) => {
+        //         console.log(e.response.data.errors)
+        //     })
 
     }
 

@@ -63,7 +63,7 @@ export const PostForm = ({ setWillFetch }) => {
             picture_link: uploadedpics
         }
         //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
-        axios.post("http://localhost:3001/post/createPost", data)
+        axios.post("https://leash-khakai-api.herokuapp.com/post/createPost", data)
         .then(res => {
             setWillFetch(true)
         })
@@ -85,7 +85,7 @@ export const PostForm = ({ setWillFetch }) => {
             let formData = new FormData()
             formData.append("image", selectedImage, selectedImage)
             console.log(formData)
-            axios.post('http://localhost:3001/post/uploadImage', formData)
+            axios.post('https://leash-khakai-api.herokuapp.com/post/uploadImage', formData)
                 .then(res => {
                     shower.push(res.data.src)
                     uploadedpics.push(res.data.picture_link) 
@@ -96,7 +96,7 @@ export const PostForm = ({ setWillFetch }) => {
 
     function removeSelectedImage(index) {
         const key = uploadedpics[index]
-        axios.post(`http://localhost:3001/post/removeSelectedImage/${key}`)
+        axios.post(`https://leash-khakai-api.herokuapp.com/post/removeSelectedImage/${key}`)
         .then(res => {
             uploadedpics.splice(index, 1)
             shower.splice(index, 1)
