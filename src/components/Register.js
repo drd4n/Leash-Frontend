@@ -53,6 +53,7 @@ export const Register = () => {
             .then((res) => {
                 console.log(res.data)
             }).catch((e) => {
+                console.log(JSON.stringify(e))
                 console.log(e.response.data.errors)
             })
 
