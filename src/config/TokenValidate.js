@@ -1,11 +1,7 @@
 import jwt from 'jsonwebtoken'
-const AuthValidate = class {
-    constructor(){
-        
-    }
+const TokenValidate = () => {
 
-    isAuth () {
-        const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     try {
         const { exp } = jwt.decode(token);
         console.log(exp)
@@ -17,7 +13,7 @@ const AuthValidate = class {
         return false;
     }
     return true;
-    }
+
 }
 
-export default AuthValidate
+export default TokenValidate

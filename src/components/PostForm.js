@@ -56,7 +56,7 @@ export const PostForm = ({ setWillFetch }) => {
     const [isDirty, setisDirty] = useState(false)
 
     async function uploadText() {
-        if(!new TokenValidate().isAuth()){
+        if(!TokenValidate()){
             return alert("Session is out of date, please login again")
         }
         if (!postDetail) {
