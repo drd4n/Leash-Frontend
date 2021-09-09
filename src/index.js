@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Login from './components/Login';
-import Register from './components/Register';
+import Ping from './components/Ping'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-      <Login />
-      <Register />
-    </BrowserRouter>
+    <Router>
+      <App/>
+    {/* <Switch>
+        <Route path="/ping">
+          <Ping />
+        </Route>
+        <Route path="/login" component={Login} />
+        <Route path="/" component={App} />
+      </Switch> */}
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
