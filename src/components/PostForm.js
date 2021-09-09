@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import TokenValidate from '../config/TokenValidate'
 
 const Form = styled.div`
     align-items: center;
@@ -55,111 +56,110 @@ export const PostForm = ({ setWillFetch }) => {
     const [isDirty, setisDirty] = useState(false)
 
     async function uploadText() {
-        if(!postDetail){
+        if(!new TokenValidate().isAuth()){
+            return alert("Session is out of date, please login again")
+        }
+        if (!postDetail) {
             return alert('please fill out what you want to ask')
         } else {
             const data = {
-            post_text: postDetail,
-            picture_link: uploadedpics
-        }
-        //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
-        axios.post("http://localhost:3001/post/createPost", data)
-        .then(res => {
-            setWillFetch(true)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+                post_text: postDetail,
+                picture_link: uploadedpics
+            }
+            //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
+            axios.post("http://localhost:3001/post/createPost", data,{
+                headers : {'x-access-token':localStorage.getItem('token')}
+            })
+                .then(res => {
+                    setWillFetch(true)
+                    console.log("Successfully posted")
+                })
+                .catch((error) => {
+                    // console.log(error)
+                    console.log(error.response.data.errors)
+                })
 
-        setPostDetail('')
-        setUploadedpics([])
-        setShower([])
-        return console.log("Successfully posted")
+            setPostDetail('')
+            setUploadedpics([])
+            setShower([])
+            return
         }
-        
+
     }
 
     function onDrop(selectedImage) {
         let temp = [];
         //pictures.map(image => {
-            let formData = new FormData()
-            formData.append("image", selectedImage, selectedImage)
-            console.log(formData)
-            axios.post('http://localhost:3001/post/uploadImage', formData)
-                .then(res => {
-                    shower.push(res.data.src)
-                    uploadedpics.push(res.data.picture_link) 
-                    setisDirty(true) 
-                })
+        let formData = new FormData()
+        formData.append("image", selectedImage, selectedImage)
+        console.log(formData)
+        axios.post('http://localhost:3001/post/uploadImage', formData)
+            .then(res => {
+                shower.push(res.data.src)
+                uploadedpics.push(res.data.picture_link)
+                setisDirty(true)
+            })
         return temp;
-}
+    }
 
     function removeSelectedImage(index) {
         const key = uploadedpics[index]
         axios.post(`http://localhost:3001/post/removeSelectedImage/${key}`)
-        .then(res => {
-            uploadedpics.splice(index, 1)
-            shower.splice(index, 1)
-            setisDirty(true)
-            console.log(JSON.stringify(uploadedpics))
-            console.log(res.data)
-        })
+            .then(res => {
+                uploadedpics.splice(index, 1)
+                shower.splice(index, 1)
+                setisDirty(true)
+                console.log(JSON.stringify(uploadedpics))
+                console.log(res.data)
+            })
     }
 
-useEffect(() => {
-    if(isDirty){
-        setShower(shower)
-        // uploadedpics.map(getShower => {
-        //     axios.get(`http://localhost:3001/post/showSelectedImage/${getShower}`)
-        //     .then(res => {
-        //         shower.push(res.data.src)
-        //     })
-        // return "Shown uploaded images"
-        // })
-        // console.log(JSON.stringify(shower))
-        setisDirty(false)
-    }
-},[isDirty, shower])
+    useEffect(() => {
+        if (isDirty) {
+            setShower(shower)
+            setisDirty(false)
+        }
+    }, [isDirty, shower])
 
-return (
-    <Form>
-        <Textarea 
-            placeholder="What do you want to ask?" 
-            type="text" 
-            value={postDetail} 
-            onChange={(event) => {
-            setPostDetail(event.target.value)
-        }} />
-        <Input
-            type="file"
-            id="selectedFile"
-            onChange={(event) => {
-                onDrop(event.target.files[0])
-            }}
-            style={{ display: 'none' }}
-        />
-        <PictureLayout>
-            {
-                shower.map((shwr,i) =>{
-                            return <Col>
-                                <InputImg key={i} src={shwr} alt={shower.indexOf(shwr)} />
-                                <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
-                            </Col>
-                        }
+    return (
+        <Form>
+            <Textarea
+                placeholder="What do you want to ask?"
+                type="text"
+                value={postDetail}
+                onChange={(event) => {
+                    setPostDetail(event.target.value)
+                }} />
+            <Input
+                type="file"
+                id="selectedFile"
+                onChange={(event) => {
+                    onDrop(event.target.files[0])
+                }}
+                style={{ display: 'none' }}
+            />
+            <PictureLayout>
+                {
+                    shower.map((shwr, i) => {
+                        return <Col>
+                            <InputImg key={i} src={shwr} alt={shower.indexOf(shwr)} />
+                            <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
+                        </Col>
+                    }
                     )
-            }
-        </PictureLayout>
-        {/* {
+                }
+            </PictureLayout>
+            {/* {
             uploadedpics.map(remover => {
                 return <form key={uploadedpics.indexOf(remover)} action={removeSelectedImage(remover)}>
                     <input type="submit" value="Remove"/>
                 </form>
             })
         } */}
-        <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
-        <button onClick={uploadText}>Post</button>
-        {/* <button onClick={uploadImages}>Upload Images</button> */}
-    </Form>
+            <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
+            <button onClick={uploadText}>Post</button>
+            {/* <button onClick={uploadImages}>Upload Images</button> */}
+        </Form>
     )
 }
 export default PostForm

@@ -50,6 +50,9 @@ export const Register = () => {
         // }
 
         axios.post('http://localhost:3001/auth/register', form)
+        // ,{
+        //     headers: { 'content-type': 'application/x-www-form-urlencoded' }
+        // }
             .then((res) => {
                 console.log(res.data)
             }).catch((e) => {
@@ -61,28 +64,28 @@ export const Register = () => {
 
     return (
         <>
-            <label for="firstname">First name</label><br />
+            <label htmlFor="firstname">First name</label><br />
             <input
                 type="text"
                 id="firstname"
                 name="firstname"
                 onChange={(event) => { setForm({ ...form, firstname: event.target.value.trim() }) }} /><br />
 
-            <label for="lastname">Last name</label><br />
+            <label htmlFor="lastname">Last name</label><br />
             <input
                 type="text"
                 id="lastname"
                 name="lastname"
                 onChange={(event) => { setForm({ ...form, lastname: event.target.value.trim() }) }} /><br />
 
-            <label for="email">E-mail</label><br />
+            <label htmlFor="email">E-mail</label><br />
             <input
                 type="email"
                 id="email"
                 name="email"
                 onChange={(event) => { setForm({ ...form, email: event.target.value.trim() }) }} /><br />
 
-            <label for="dob">Birth date</label><br />
+            <label htmlFor="dob">Birth date</label><br />
             <DatePicker
                 id="dob"
                 name="dob"
@@ -94,21 +97,21 @@ export const Register = () => {
                 showYearDropdown
                 dropdownMode="select" /><br />
 
-            <label for="username">Username</label><br />
+            <label htmlFor="username">Username</label><br />
             <input
                 type="text"
                 id="username"
                 name="username"
                 onChange={(event) => { setForm({ ...form, username: event.target.value.trim() }) }} /><br />
 
-            <label for="password">Password</label><br />
+            <label htmlFor="password">Password</label><br />
             <input
                 type="password"
                 id="password"
                 name="username"
                 onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
 
-            <label for="crPassword">Confirm Password</label><br />
+            <label htmlFor="crPassword">Confirm Password</label><br />
             <span>
                 <input
                     type="password"
