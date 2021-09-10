@@ -9,10 +9,6 @@ export const Feed = ({ willFetch, setWillFetch }) => {
     useEffect(() => {
         if (willFetch) {// const feed = await axios('http://localhost:3001/post', );
             // axios('https://leash-khakai-api.herokuapp.com/')
-            axios.get("http://localhost:3001/auth/isLoggedin")
-            .then((res) => {
-                console.log(res)
-            })
             axios('http://localhost:3001')
                 // setPosts(feed.data)
                 .then(res => {

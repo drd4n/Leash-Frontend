@@ -26,7 +26,6 @@ async function login() {
 
     return (
         <>
-        <div>{localStorage.getItem('token')}</div>
         <label htmlFor="username">username</label><br />
             <input
                 type="text"
