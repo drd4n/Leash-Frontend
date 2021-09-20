@@ -10,7 +10,8 @@ const Box = styled.div`
     margin-top: 20px;
     padding:10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    background-color: #fae3d9
+    background-color: #fae3d9;
+    z-index: 99px;
   `
 const PostImg = styled.img`
     width: 150px;
@@ -65,25 +66,15 @@ export const PopUp = (props) => {
 
     useEffect(() => {
         if (isCommentDirty) {
-            const data2 = {
-                post_id: props.post._id
-            }
-            axios.post('http://localhost:3001/comment/showComment', data2)
+            
+            axios.get(`http://localhost:3001/comment/showComment/${props._id}`)
                 .then(res => {
                     setComments(res.data)
                     setIsCommentDirty(false)
                 })
         }
-
-        const data1 = {
-            picture_link: props.post.picture_link
-        }
-        axios.post('http://localhost:3001/post/showPostImage', data1)
-            .then(res => {
-                setImgs(res.data.src);
-            })
         
-    }, [isCommentDirty, props.post.picture_link, props.post._id])
+    }, [isCommentDirty, props.picture_link, props._id])
 
     function createComment() {
         if (!comment) {
@@ -91,7 +82,7 @@ export const PopUp = (props) => {
         }
         const data = {
             comment_text: comment,
-            post_id: props.post._id
+            post_id: props._id
         }
         axios.post("http://localhost:3001/comment/createComment", data)
             .then(res => {
@@ -102,9 +93,8 @@ export const PopUp = (props) => {
     }
 
     return (
-        <>
             <Box>
-                <p>{props.post._id}</p>
+                <p>{props._id}</p>
                 <PictureLayout>
                     {
                         Imgs.map((img, i) => {
@@ -114,12 +104,8 @@ export const PopUp = (props) => {
                         })
                     }
                 </PictureLayout>
-                <PostText>{props.post.post_text}</PostText>
+                <PostText>{props.post_text}</PostText>
                 <Time>date XX/XX/XX time XX:XX</Time>
-                <ButtonLayout>
-                    <Button>UPVOTE</Button>
-                    <Button>DOWNVOTE</Button>
-                </ButtonLayout>
                 {
                     comments.map((comment, i) => {
                         return <Comments key={i} comment={comment} />
@@ -138,7 +124,6 @@ export const PopUp = (props) => {
 
                 </CommentBox>
             </Box>
-        </>
     )
 }
 

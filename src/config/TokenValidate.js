@@ -2,6 +2,9 @@ import jwt from 'jsonwebtoken'
 const TokenValidate = () => {
 
     const token = localStorage.getItem('token');
+    if(!token){
+        return false
+    }
     try {
         const { exp } = jwt.decode(token);
         console.log(exp)

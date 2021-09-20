@@ -1,9 +1,14 @@
 import React from 'react'
+import { useLocation } from 'react-router'
 
 export const Profile = () => {
+    const location = useLocation()
+    const profile = location.profile
+
     return (
         <div>
-         OK
+         {JSON.stringify(profile)}
+         PROFILE
         </div>
     )
 }

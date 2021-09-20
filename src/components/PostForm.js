@@ -93,7 +93,9 @@ export const PostForm = ({ setWillFetch }) => {
         let formData = new FormData()
         formData.append("image", selectedImage, selectedImage)
         console.log(formData)
-        axios.post('http://localhost:3001/post/uploadImage', formData)
+        axios.post('http://localhost:3001/post/uploadImage', formData,{
+            headers:{'x-access-token':localStorage.getItem('token')}
+        })
             .then(res => {
                 shower.push(res.data.src)
                 uploadedpics.push(res.data.picture_link)

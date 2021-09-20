@@ -56,55 +56,91 @@ display:none;
 
 export const Post = (props) => {
     const [Imgs, setImgs] = useState([])
-    const PopId = props.post._id+"Popup"
-    const BoxId = props.post._id+"Box"
-    
+    const [popup, setPopup] = useState()
+    const PopId = props.post._id + "Popup"
+    const BoxId = props.post._id + "Box"
+
     useEffect(() => {
         const data = {
-            picture_link : props.post.picture_link
+            picture_link: props.post.picture_link
         }
         axios.post('http://localhost:3001/post/showPostImage', data)
-        // axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data)
-        .then(res => {
-            setImgs(res.data.src);
+            // axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data)
+            .then(res => {
+                setImgs(res.data.src);
+            })
+
+        axios.get(`http://localhost:3001/interaction/showInteraction/${props.post._id}`, {
+            headers: { 'x-access-token': localStorage.getItem('token') }
+        }).then((res) => {
+            console.log(res.data.interaction)
         })
-    },[props.post.picture_link])
 
-    const ShowPopup =() =>{
-    document.getElementById(PopId).style.display = "Block";
-    document.getElementById(BoxId).style.display = "none";
-}
+    }, [props.post.picture_link])
 
-    return ( 
-        <div>
-        <PopupBox id={PopId}>
-        <PopUp post={props.post} />
-        </PopupBox>
-        <Box id={BoxId}>
-            <PictureLayout>
+    const ShowPopup = () => {
+        const post = props.post
+        post.picture_link = Imgs
+        setPopup(<PopUp props={post} />)
+        // document.getElementById(PopId).style.display = "Block";
+        // document.getElementById(BoxId).style.display = "none";
+    }
+
+    function upvote() {
+        axios.post('http://localhost:3001/interaction/upvote', {
+            post_id: props.post._id
+        },
             {
-                Imgs.map((img,i) => {
-                    return(
-                        <PostImg key={i} className="img" src={img}></PostImg>
-                    )
-                })
-            }
-            </PictureLayout>
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then((res) => {
+                console.log(res.data)
+            })
+    }
+
+    function downvote() {
+        axios.post('http://localhost:3001/interaction/downvote', {
+            post_id: props.post._id
+        },
+            {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then((res) => {
+                console.log(res.data)
+            })
+    }
+
+    return (
+        <div>
             <div>
-                <p>{props.post._id}</p>
-                <PostText>{props.post.post_text}</PostText>
-               <Time>date XX/XX/XX time XX:XX</Time>
-               <p>{props.post.owner.username}</p>
-                <ButtonLayout>
-                    <div>
-                    <Button>UPVOTE</Button>
-                    <Button>DOWNVOTE</Button>
-                    </div>
-                    <Button onClick={ShowPopup}>OPEN POST</Button>
-                </ButtonLayout>
+                {popup}
             </div>
-       </Box>
-       </div>
+            <PopupBox id={PopId}>
+                <PopUp post={props.post} />
+            </PopupBox>
+            <Box id={BoxId}>
+                <PictureLayout>
+                    {
+                        Imgs.map((img, i) => {
+                            return (
+                                <PostImg key={i} className="img" src={img}></PostImg>
+                            )
+                        })
+                    }
+                </PictureLayout>
+                <div>
+                    <p>{props.post._id}</p>
+                    <PostText>{props.post.post_text}</PostText>
+                    <Time>date XX/XX/XX time XX:XX</Time>
+                    <span>{props.post.owner.firstname} {props.post.owner.lastname}</span>
+                    <ButtonLayout>
+                        <div>
+                            <Button onClick={() => { upvote() }}>UPVOTE</Button>
+                            <Button onClick={() => { downvote() }}>DOWNVOTE</Button>
+                        </div>
+                        <Button onClick={ShowPopup}>OPEN POST</Button>
+                    </ButtonLayout>
+                </div>
+            </Box>
+        </div>
     )
 }
 
