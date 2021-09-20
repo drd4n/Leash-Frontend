@@ -110,12 +110,10 @@ export const Post = (props) => {
 
     return (
         <div>
-            <div>
                 {popup}
-            </div>
-            <PopupBox id={PopId}>
-                <PopUp post={props.post} />
-            </PopupBox>
+            {/* <PopupBox id={PopId}> */}
+                {/* <PopUp post={props.post} /> */}
+            {/* </PopupBox> */}
             <Box id={BoxId}>
                 <PictureLayout>
                     {
@@ -136,7 +134,7 @@ export const Post = (props) => {
                             <Button onClick={() => { upvote() }}>UPVOTE</Button>
                             <Button onClick={() => { downvote() }}>DOWNVOTE</Button>
                         </div>
-                        <Button onClick={ShowPopup}>OPEN POST</Button>
+                        <Button onClick={() => ShowPopup()}>OPEN POST</Button>
                     </ButtonLayout>
                 </div>
             </Box>
