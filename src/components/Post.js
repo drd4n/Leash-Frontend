@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component } from 'react'
 import styled, { css } from 'styled-components'
 import axios from 'axios'
 import PopUp from './PopUp'
+import { Link } from 'react-router-dom'
 
 const Box = styled.div` 
     width: 600px;
@@ -55,6 +56,8 @@ display:none;
 `
 
 export const Post = (props) => {
+    
+    const [owner, setOwner] = useState({})
     const [profilePicture, setProfilePicture] = useState()
     const [Imgs, setImgs] = useState([])
     const [popup, setPopup] = useState()
@@ -116,6 +119,21 @@ export const Post = (props) => {
             })
     }
 
+    async function toProfile() {
+        try{
+            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`,{
+                headers: {'x-access-token':localStorage.getItem('token')}
+            })
+            .then((res) =>{
+                
+            })
+            setOwner(data.data)
+            document.getElementById("toProfile").click()
+        }catch(error){
+            console.log(error.response.data.errors)
+        }
+    }
+
     return (
         <div>
                 {popup}
@@ -123,7 +141,8 @@ export const Post = (props) => {
                 {/* <PopUp post={props.post} /> */}
             {/* </PopupBox> */}
             <Box id={BoxId}>
-                <PostImg src={profilePicture} />
+            <button onClick={toProfile}><PostImg src={profilePicture} /></button> 
+            <Link id="toProfile" to="/profile" props={owner}></Link>
                 <span>{props.post.owner.firstname} {props.post.owner.lastname}</span>
                 <PictureLayout>
                     {
