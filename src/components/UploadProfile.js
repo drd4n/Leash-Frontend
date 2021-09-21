@@ -38,10 +38,10 @@ export const UploadProfile = () => {
                 headers:{'x-access-token':localStorage.getItem('token')}
             })
             .then((res)=>{
-                window.location.href = "http://localhost:3000/feed"
+                window.location.href = "http://localhost:3000/"
             }).catch((error)=> {console.log(error)})
         }else{
-            window.location.href = "http://localhost:3000/feed"
+            window.location.href = "http://localhost:3000/"
         }
         
     }
