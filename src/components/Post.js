@@ -55,6 +55,7 @@ display:none;
 `
 
 export const Post = (props) => {
+    const [profilePicture, setProfilePicture] = useState()
     const [Imgs, setImgs] = useState([])
     const [popup, setPopup] = useState()
     const PopId = props.post._id + "Popup"
@@ -75,6 +76,13 @@ export const Post = (props) => {
         }).then((res) => {
             console.log(res.data.interaction)
         })
+
+        if(props.post.owner.profile_picture){
+            axios.get(`http://localhost:3001/auth/showProfileImage/${props.post.owner.profile_picture}`)
+            .then((res)=>{
+                setProfilePicture(res.data.profile_src)
+            })
+        }
 
     }, [props.post.picture_link])
 
@@ -115,6 +123,8 @@ export const Post = (props) => {
                 {/* <PopUp post={props.post} /> */}
             {/* </PopupBox> */}
             <Box id={BoxId}>
+                <PostImg src={profilePicture} />
+                <span>{props.post.owner.firstname} {props.post.owner.lastname}</span>
                 <PictureLayout>
                     {
                         Imgs.map((img, i) => {
@@ -128,7 +138,6 @@ export const Post = (props) => {
                     <p>{props.post._id}</p>
                     <PostText>{props.post.post_text}</PostText>
                     <Time>date XX/XX/XX time XX:XX</Time>
-                    <span>{props.post.owner.firstname} {props.post.owner.lastname}</span>
                     <ButtonLayout>
                         <div>
                             <Button onClick={() => { upvote() }}>UPVOTE</Button>

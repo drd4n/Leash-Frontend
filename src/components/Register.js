@@ -54,8 +54,9 @@ export const Register = () => {
         //     headers: { 'content-type': 'application/x-www-form-urlencoded' }
         // }
             .then((res) => {
-                console.log(res.data)
-                window.location.href = "http://localhost:3000/login"
+                localStorage.clear()
+                localStorage.setItem('token', res.data.token)
+                return window.location.href = "http://localhost:3000/finishYourProfile"
             }).catch((e) => {
                 console.log(JSON.stringify(e))
                 console.log(e.response.data.errors)

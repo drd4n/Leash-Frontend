@@ -42,6 +42,10 @@ export const Login = () => {
     function showToken() {
         console.log(localStorage.getItem('token'))
     }
+
+    function goToRegister() {
+        window.location.href = "http://localhost:3000/register"
+    }
     return (
         <>
             <label htmlFor="username">username</label><br />
@@ -59,7 +63,8 @@ export const Login = () => {
                 onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
             <button onClick={() => login()}>Login</button><br />
             <button onClick={() => logout()}>logout</button><br />
-            <button onClick={() => showToken()}>showToken</button>
+            <button onClick={() => showToken()}>showToken</button><br />
+            <button onClick={() => goToRegister()}>Register</button><br />
         </>
     )
 }
