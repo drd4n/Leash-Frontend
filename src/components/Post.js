@@ -81,7 +81,9 @@ export const Post = (props) => {
         })
 
         if(props.post.owner.profile_picture){
-            axios.get(`http://localhost:3001/auth/showProfileImage/${props.post.owner.profile_picture}`)
+            axios.get(`http://localhost:3001/auth/showProfileImage/${props.post.owner.profile_picture}`,{
+                headers: {'x-access-token':localStorage.getItem('token')}
+            })
             .then((res)=>{
                 setProfilePicture(res.data.profile_src)
             })
@@ -121,16 +123,15 @@ export const Post = (props) => {
 
     async function toProfile() {
         try{
-            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.profile_picture}`,{
+            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`,{
                 headers: {'x-access-token':localStorage.getItem('token')}
             })
-            .then((res) =>{
-                
-            })
+            console.log(data.data)
             setOwner(data.data)
-            document.getElementById("toProfile").click()
+            return document.getElementById("toProfile").click()
         }catch(error){
-            console.log(error.response.data.errors)
+            // console.log(error.response.data.errors)
+            console.log(error)
         }
     }
 
@@ -142,7 +143,7 @@ export const Post = (props) => {
             {/* </PopupBox> */}
             <Box id={BoxId}>
             <button onClick={toProfile}><PostImg src={profilePicture} /></button> 
-            <Link id="toProfile" to="/profile" props={owner}></Link>
+            <Link id="toProfile" to={{pathname:"/profile", profile:owner}}></Link>
                 <span>{props.post.owner.firstname} {props.post.owner.lastname}</span>
                 <PictureLayout>
                     {
