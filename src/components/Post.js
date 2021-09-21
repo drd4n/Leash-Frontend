@@ -121,7 +121,7 @@ export const Post = (props) => {
 
     async function toProfile() {
         try{
-            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`,{
+            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.profile_picture}`,{
                 headers: {'x-access-token':localStorage.getItem('token')}
             })
             .then((res) =>{
