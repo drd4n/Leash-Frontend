@@ -34,7 +34,9 @@ export const UploadProfile = () => {
             const data = {
                 profile_picture:uploadedpics
             }
-            axios.post('http://localhost:3001/saveProfilePicture', data)
+            axios.post('http://localhost:3001/auth/saveProfilePicture', data,{
+                headers:{'x-access-token':localStorage.getItem('token')}
+            })
             .then((res)=>{
                 window.location.href = "http://localhost:3000/feed"
             }).catch((error)=> {console.log(error)})
