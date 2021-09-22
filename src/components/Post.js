@@ -61,6 +61,7 @@ export const Post = (props) => {
     const [profilePicture, setProfilePicture] = useState()
     const [Imgs, setImgs] = useState([])
     const [popup, setPopup] = useState()
+    const [willClose, setWillClose] = useState(false)
     const PopId = props.post._id + "Popup"
     const BoxId = props.post._id + "Box"
 
@@ -89,12 +90,17 @@ export const Post = (props) => {
             })
         }
 
-    }, [props.post.picture_link])
+        if(willClose){
+            setPopup()
+            setWillClose(false)
+        }
+
+    }, [props.post.picture_link,willClose])
 
     const ShowPopup = () => {
         const post = props.post
-        post.picture_link = Imgs
-        setPopup(<PopUp props={post} />)
+        post.src = Imgs
+        setPopup(<PopUp props={post} setWillClose={setWillClose} />)
         // document.getElementById(PopId).style.display = "Block";
         // document.getElementById(BoxId).style.display = "none";
     }
@@ -157,7 +163,6 @@ export const Post = (props) => {
                 <div>
                     <p>{props.post._id}</p>
                     <PostText>{props.post.post_text}</PostText>
-                    <Time>date XX/XX/XX time XX:XX</Time>
                     <ButtonLayout>
                         <div>
                             <Button onClick={() => { upvote() }}>UPVOTE</Button>

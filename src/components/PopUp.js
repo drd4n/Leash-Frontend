@@ -79,13 +79,18 @@ export const PopUp = (props) => {
     useEffect(async() => {
         if (isCommentDirty) {
 
-            await axios.get(`http://localhost:3001/comment/showComment/${props._id}`)
+            await axios.get(`http://localhost:3001/comment/showComment/${props.props._id}`)
                 .then(res => {
                     setComments(res.data)
                     setIsCommentDirty(false)
                 })
         }
-    }, [isCommentDirty, props.picture_link, props._id])
+
+        if(props.props.src){
+            setImgs(props.props.src)
+        }
+       
+    }, [isCommentDirty, props.props.src, props.props._id])
 
     function createComment() {
         if (!comment) {
@@ -93,22 +98,29 @@ export const PopUp = (props) => {
         }
         const data = {
             comment_text: comment,
-            post_id: props._id
+            post_id: props.props._id
         }
-        axios.post("http://localhost:3001/comment/createComment", data)
-            .then(res => {
+        axios.post("http://localhost:3001/comment/createComment", data,
+        {
+            headers: { 'x-access-token': localStorage.getItem('token') }
+        }).then(res => {
                 setComment('')
                 setIsCommentDirty(true)
             }
             )
     }
 
+    function close() {
+        props.setWillClose(true)
+    }
+    
     return (
         <Background>
             <Box>
-                <p>{props._id}</p>
-                {/* <PictureLayout> */}
-                    {/* {
+                <button onClick={close}>X</button>
+                <p>{props.props._id}</p>
+                <PictureLayout>
+                    {
                         Imgs.map((img, i) => {
                             return (
                                 <PostImg key={i} className="img" src={img}></PostImg>
@@ -116,14 +128,13 @@ export const PopUp = (props) => {
                         })
                     }
                 </PictureLayout>
-                <PostText>{props.post_text}</PostText>
-                <Time>date XX/XX/XX time XX:XX</Time> */}
+                <PostText>{props.props.post_text}</PostText>
                 {
                     comments.map((comment, i) => {
                         return <Comments key={i} comment={comment} />
                     })
                 }
-                {/* <CommentBox>
+                <CommentBox>
                     <input
                         placeholder="Write your comment?"
                         type="text"
@@ -132,9 +143,9 @@ export const PopUp = (props) => {
                             setComment(event.target.value)
                         }}
                     />
-                    <Button onClick={createComment}>Comment</Button> */}
+                    <Button onClick={createComment}>Comment</Button>
 
-                {/* </CommentBox> */}
+                </CommentBox>
             </Box>
         </Background>
     )
