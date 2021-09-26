@@ -38,10 +38,12 @@ export const UploadProfile = () => {
                 headers:{'x-access-token':localStorage.getItem('token')}
             })
             .then((res)=>{
-                window.location.href = "http://localhost:3000/"
+                document.getElementById("tofeed").click()
+                // window.location.href = "http://localhost:3000/"
             }).catch((error)=> {console.log(error)})
         }else{
-            window.location.href = "http://localhost:3000/"
+            document.getElementById("tofeed").click()
+            // window.location.href = "http://localhost:3000/"
         }
         
     }
@@ -74,6 +76,7 @@ export const UploadProfile = () => {
 
             <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
             <button onClick={done}>Done</button>
+            <Link id="tofeed" to="/"></Link>
             {/* <button onClick={uploadImages}>Upload Images</button> */}
         </>
     )
