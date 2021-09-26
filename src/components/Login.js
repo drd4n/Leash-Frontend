@@ -41,7 +41,6 @@ const Container = styled.section`
 `;
 
 const WrapperContainer1 = styled.section`
-    
     display: flex;
     flex-direction: column;
     align-item: center;
@@ -54,7 +53,6 @@ const WrapperContainer1 = styled.section`
 `;
 
 const WrapperContainer2 = styled.section`
-    
     display: flex;
     flex-direction: column;
     align-item: center;
@@ -63,45 +61,29 @@ const WrapperContainer2 = styled.section`
     flex-shrink: 0;
     flex-grow: 1;
     align-self: center;
-  
-  
 `;
 
 const Wrapper = styled.section`
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  flex-shrink: 0;
-  align-self: center;
-  
-`;
-
-const Wrapper1 = styled.section`
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  flex-shrink: 0;
-  align-self: center;
-  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-shrink: 0;
+    align-self: center;
 `;
 
 const Form = styled.form`
-  
-  width: 100%;
-  max-width: 414px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+    width: 100%;
+    max-width: 414px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 `;
 
 const Label = styled.label`
-  color: #FFFFFF;
-  margin-bottom: -0.8rem;
+    color: #FFFFFF;
+    margin-bottom: -0.8rem;
 `;
 
 const FontTitle1 = styled.label`
@@ -109,10 +91,8 @@ const FontTitle1 = styled.label`
     font-weight: 500;
     font-size: 42px;
     line-height: 75px;
-
     text-align: center;
     letter-spacing: 0.05em;
-
     color: #FFFFFF;
 `;
 
@@ -121,10 +101,8 @@ const FontTitle2 = styled.label`
     font-weight: 500;
     font-size: 38px;
     line-height: 75px;
-
     text-align: center;
     letter-spacing: 0.05em;
-
     color: #FFFFFF;
 `;
 
@@ -157,33 +135,33 @@ const BoxButton = styled.section`
   `;
 
 const Button = styled.button`
-  max-width: 100%;
-  min-width: 45%;
-  padding: 11px 35px;
-  color: ${(props) => props.textColor};
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: ${(props) => props.backgroundColor};
-  border: none;
-  border-radius: 44px;
-  outline: 0;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  margin-Bottom: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-out;
-  :hover {
-    background: #A1D3CD;
-    color: #FFFFFF;
-    animation: ${jump} 0.2s ease-out forwards;
-  }
+    max-width: 100%;
+    min-width: 45%;
+    padding: 11px 35px;
+    color: ${(props) => props.textColor};
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: ${(props) => props.backgroundColor};
+    border: none;
+    border-radius: 44px;
+    outline: 0;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    margin-Bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-out;
+    :hover {
+        background: #A1D3CD;
+        color: #FFFFFF;
+        animation: ${jump} 0.2s ease-out forwards;
+    }
 `;
 
 const Border = styled.h2`
-  border-style: solid;
-  border-width: 1px;
-  border-color: #5D8888;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #5D8888;
 `;
 
 export const Login = () => {
