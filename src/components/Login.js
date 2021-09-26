@@ -23,22 +23,74 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body, html, #root {
+    font-family: 'Roboto', sans-serif;
     height: 100%;
     width: 100%;
     ;
   }
 `;
 
+const Container = styled.section`
+    display: flex;
+    justify-content: space-around;
+    align-item: center;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  
+`;
+
+const WrapperContainer1 = styled.section`
+    
+    display: flex;
+    flex-direction: column;
+    align-item: center;
+    align-content: center;
+    justify-content: center;
+    flex-shrink: 0;
+    flex-grow: 2;
+    align-self: center;
+  
+`;
+
+const WrapperContainer2 = styled.section`
+    
+    display: flex;
+    flex-direction: column;
+    align-item: center;
+    align-content: center;
+    justify-content: center;
+    flex-shrink: 0;
+    flex-grow: 1;
+    align-self: center;
+  
+  
+`;
+
 const Wrapper = styled.section`
+  
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
+  align-content: center;
+  flex-shrink: 0;
+  align-self: center;
+  
+`;
+
+const Wrapper1 = styled.section`
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-shrink: 0;
+  align-self: center;
+  
 `;
 
 const Form = styled.form`
-  margin: 0 auto;
+  
   width: 100%;
   max-width: 414px;
   padding: 1rem;
@@ -52,26 +104,37 @@ const Label = styled.label`
   margin-bottom: -0.8rem;
 `;
 
-const FontTitle = styled.label`
-    font-family: Roboto;
-    font-style: normal;
+const FontTitle1 = styled.label`
+    font-style: medium;
     font-weight: 500;
-    font-size: 48px;
+    font-size: 42px;
     line-height: 75px;
 
     text-align: center;
     letter-spacing: 0.05em;
 
     color: #FFFFFF;
-    `;
+`;
+
+const FontTitle2 = styled.label`
+    font-style: medium;
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 75px;
+
+    text-align: center;
+    letter-spacing: 0.05em;
+
+    color: #FFFFFF;
+`;
 
 const Input = styled.input`
     max-width: 100%;
     padding: 11px 13px;
     background: #f9f9fa;
     color: #000000;
-    margin-bottom: 0.2rem;
-    border-radius: 4px;
+    margin-bottom: 0rem;
+    border-radius: 10px;
     outline: 0;
     border: 1px solid rgba(245, 245, 245, 0.7);
     font-size: 14px;
@@ -83,18 +146,31 @@ const Input = styled.input`
     }
     `;
 
+
+const BoxButton = styled.section`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin: 0rem;
+    padding: 0;
+  `;
+
 const Button = styled.button`
-  max-width: 38%;
-  padding: 11px 13px;
+  max-width: 100%;
+  min-width: 45%;
+  padding: 11px 35px;
   color: ${(props) => props.textColor};
   font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   background: ${(props) => props.backgroundColor};
   border: none;
   border-radius: 44px;
   outline: 0;
   cursor: pointer;
-  margin-top: 0.6rem;
+  margin-top: 0.5rem;
+  margin-Bottom: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-out;
   :hover {
@@ -102,13 +178,6 @@ const Button = styled.button`
     color: #FFFFFF;
     animation: ${jump} 0.2s ease-out forwards;
   }
-`;
-
-const Title = styled.h2`
-  font-weight: normal;
-  color: #2a2a29;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
-  text-align: center;
 `;
 
 const Border = styled.h2`
@@ -162,9 +231,13 @@ export const Login = () => {
     return (
         <>
             <GlobalStyle />
+
+            <Container>
+            <WrapperContainer1>
+
             <Wrapper>
                 <Form>
-                <FontTitle>Login</FontTitle>
+                <FontTitle1>Login1</FontTitle1>
                 <Label htmlFor="username">Username</Label><br />
                 <Input
                     type="text"
@@ -177,14 +250,55 @@ export const Login = () => {
                     id="password"
                     name="password"
                     onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
+                <BoxButton>
                 <Button textColor="#FFFFFF" backgroundColor="#5D8888" onClick={() => login()}>Login</Button><br />
+                </BoxButton>
                             {/*<Button onClick={() => logout()}>logout</Button><br /> */}
                             {/*<Button onClick={() => showToken()}>showToken</Button><br /> */} 
                 <Border></Border>
-                <FontTitle>Wanna join us?</FontTitle>
+                <FontTitle2>Wanna join us?</FontTitle2>
+                <BoxButton>
                 <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => goToRegister()}>SIGN UP</Button><br />
-            </Form>
+                </BoxButton>
+                </Form>
             </Wrapper>
+
+            </WrapperContainer1>
+
+            
+
+            <WrapperContainer2>
+            
+            <Wrapper>
+                <Form>
+                <FontTitle1>Login2</FontTitle1>
+                <Label htmlFor="username">Username</Label><br />
+                <Input
+                    type="text"
+                    id="username"
+                    name="username"
+                    onChange={(event) => { setForm({ ...form, username: event.target.value.trim() }) }} /><br />
+                <Label htmlFor="password">Password</Label><br />
+                <Input
+                    type="text"
+                    id="password"
+                    name="password"
+                    onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
+                <BoxButton>
+                <Button textColor="#FFFFFF" backgroundColor="#5D8888" onClick={() => login()}>Login</Button><br />
+                </BoxButton>
+                            {/*<Button onClick={() => logout()}>logout</Button><br /> */}
+                            {/*<Button onClick={() => showToken()}>showToken</Button><br /> */} 
+                <Border></Border>
+                <FontTitle2>Wanna join us?</FontTitle2>
+                <BoxButton>
+                <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => goToRegister()}>SIGN UP</Button><br />
+                </BoxButton>
+                </Form>
+            </Wrapper>
+            
+            </WrapperContainer2>
+            </Container>
             
         </>
     )
