@@ -272,7 +272,7 @@ export const Login = () => {
             
             <Wrapper>
                 <Form>
-                <FontTitle1>Login2</FontTitle1>
+                <FontTitle1>Login</FontTitle1>
                 <Label htmlFor="username">Username</Label><br />
                 <Input
                     type="text"
