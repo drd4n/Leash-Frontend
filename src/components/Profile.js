@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect, Component } from 'react'
+import axios from 'axios'
 import { useLocation } from 'react-router'
 import styled, { keyframes, createGlobalStyle, css } from 'styled-components'
 
