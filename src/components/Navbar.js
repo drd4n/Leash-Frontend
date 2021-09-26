@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
+import styled, { keyframes, createGlobalStyle, css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const Navbar = ({setWillFetch}) => {
@@ -20,31 +20,62 @@ export const Navbar = ({setWillFetch}) => {
         
     }
 
-    const Wrapper = styled.div`
+    const jump = keyframes`
+        from{
+            transform: translateY(0)
+        }
+        to{
+            transform: translateY(-3px)
+        }
+    `;
+
+    const Container = styled.section`
         display: flex;
-        position: relative;
-    `
-    const Sidebar = styled.div`
+        justify-content: left;
+        justify-item: center;
+        flex-wrap: wrap;
+        flex-shrink: 0;
+        height: 100%;
+        width: 100%;
+
+    `;
+
+    const SidebarItem = styled.div`
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        
+        justify-item: center;
         width: 250px;
         height: 100%;
         background: #242526;
-        padding: 30px 0px;
-        position: fixed;
-        flex-direction: column;
-        display: flex;
-        justify-content:space-evenly;
-    `
-    const Col = styled.div`
-        flex-direction: column;
-        display: flex;
-        /* justify-content:space-evenly; */
     `
     const Button = styled.button`
-        background-color: #FFFFFF;
-        padding: 7px 12px;
+        max-width: 100%;
+        min-width: 50%;
+        align-self: center;
+        position: bottom;
+        padding: 11px 20px;
+        color: ${(props) => props.textColor};
         font-weight: 600;
-        border-radius: 15px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: ${(props) => props.backgroundColor};
+        border: none;
+        border-radius: 44px;
+        outline: 0;
         cursor: pointer;
+        margin-top: 0.5rem;
+        margin-Bottom: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-out;
+        :hover {
+            background: ${(props) => props.hoverBackgroundColor};
+            color: #FFFFFF;
+            animation: ${jump} 0.2s ease-out forwards;
+        }
+
+
      `
     const A = styled.button`
         align-self: center;
@@ -58,6 +89,7 @@ export const Navbar = ({setWillFetch}) => {
         border-radius: 15px;
         margin:10px;
         width:100px;
+
     `
     
     function logout() {
@@ -76,24 +108,22 @@ export const Navbar = ({setWillFetch}) => {
     }
 
     return (
-        <Wrapper>
-            <Sidebar>
-            <Col>
-                <Button onClick={() => setWillFetch(true)}>Leash</Button>
-                <A><Link id="profile" to={{pathname:"/profile", profile:profile}}>UserImage</Link></A>
-            </Col>
-            <Col>
-            <A onClick={() => whoAmI()}>profile</A>
-            <A>Setting</A>
-            <A onClick={() => logout()}>Logout</A>
-            <Link id="logout" to="/login"></Link>
-            </Col>
-            <Col>
-            <Button onClick={() => logout()}>Logout</Button>
-            </Col>
-            <Link id="logout" to="/login"></Link> 
-            </Sidebar>
-        </Wrapper>
+        
+        <Container>
+            <SidebarItem>
+            
+                {/*<Button onClick={() => setWillFetch(true)}>Leash</Button>*/}
+                <Link id="profile" to={{pathname:"/profile", profile:profile}}>UserImage</Link>
+            
+                <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" onClick={() => whoAmI()}>profile</Button>
+                <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" >Setting</Button>
+                <Button textColor="#FFFFFF" backgroundColor="#FF7272" hoverBackgroundColor="#FF7272" onClick={() => logout()}>Logout</Button>
+                
+                <Link id="logout" to="/login"></Link> 
+            
+            </SidebarItem>
+        </Container>
+        
     )
 }
 
