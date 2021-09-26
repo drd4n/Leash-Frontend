@@ -37,6 +37,8 @@ const Container = styled.section`
     align-content: center;
     flex-wrap: wrap;
     flex-shrink: 0;
+    height: 100%;
+    width: 100%;
   
 `;
 
@@ -108,19 +110,21 @@ const FontTitle2 = styled.label`
 
 const Input = styled.input`
     max-width: 100%;
-    padding: 11px 13px;
-    background: #f9f9fa;
-    color: #000000;
+    min-width: 100%;
+    padding: 8px 10px;
+    background: #000000;
+    color: #FFFFFF;
     margin-bottom: 0rem;
     border-radius: 10px;
     outline: 0;
-    border: 1px solid rgba(245, 245, 245, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0);
     font-size: 14px;
     transition: all 0.3s ease-out;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
     :focus,
     :hover {
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.15), 0 1px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.15), 0 0px 2.5px rgba(255, 255, 255, 255);
+        
     }
     `;
 
@@ -164,6 +168,8 @@ const Border = styled.h2`
     border-color: #5D8888;
 `;
 
+
+
 export const Login = () => {
 
     const [form, setForm] = useState({})
@@ -206,12 +212,26 @@ export const Login = () => {
     function goToRegister() {
         window.location.href = "http://localhost:3000/register"
     }
+    
+    function showPwd(id, el) {
+        let x = document.getElementById(id);
+        if (x.type === "password") {
+          x.type = "text";
+          el.className = 'fa fa-eye-slash showpwd';
+        } else {
+          x.type = "password";
+          el.className = 'fa fa-eye showpwd';
+
+        }
+    }
+
     return (
         <>
+            
             <GlobalStyle />
 
             <Container>
-            <WrapperContainer1>
+            {/*<WrapperContainer1>
 
             <Wrapper>
                 <Form>
@@ -224,15 +244,15 @@ export const Login = () => {
                     onChange={(event) => { setForm({ ...form, username: event.target.value.trim() }) }} /><br />
                 <Label htmlFor="password">Password</Label><br />
                 <Input
-                    type="text"
+                    type="password"
                     id="password"
                     name="password"
                     onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
+                
                 <BoxButton>
                 <Button textColor="#FFFFFF" backgroundColor="#5D8888" onClick={() => login()}>Login</Button><br />
                 </BoxButton>
-                            {/*<Button onClick={() => logout()}>logout</Button><br /> */}
-                            {/*<Button onClick={() => showToken()}>showToken</Button><br /> */} 
+ 
                 <Border></Border>
                 <FontTitle2>Wanna join us?</FontTitle2>
                 <BoxButton>
@@ -242,6 +262,7 @@ export const Login = () => {
             </Wrapper>
 
             </WrapperContainer1>
+        */}
 
             
 
@@ -258,15 +279,15 @@ export const Login = () => {
                     onChange={(event) => { setForm({ ...form, username: event.target.value.trim() }) }} /><br />
                 <Label htmlFor="password">Password</Label><br />
                 <Input
-                    type="text"
+                    type="password"
                     id="password"
                     name="password"
                     onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
+                
                 <BoxButton>
                 <Button textColor="#FFFFFF" backgroundColor="#5D8888" onClick={() => login()}>Login</Button><br />
                 </BoxButton>
-                            {/*<Button onClick={() => logout()}>logout</Button><br /> */}
-                            {/*<Button onClick={() => showToken()}>showToken</Button><br /> */} 
+                            
                 <Border></Border>
                 <FontTitle2>Wanna join us?</FontTitle2>
                 <BoxButton>
@@ -277,7 +298,8 @@ export const Login = () => {
             
             </WrapperContainer2>
             </Container>
-            
+            {/*<Button onClick={() => logout()}>logout</Button><br /> */}
+            {/*<Button onClick={() => showToken()}>showToken</Button><br /> */}
         </>
     )
 }
