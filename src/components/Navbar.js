@@ -3,21 +3,37 @@ import React, { useState, useEffect } from 'react'
 import styled, { keyframes, createGlobalStyle, css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const Navbar = ({setWillFetch}) => {
+export const Navbar = ({ setWillFetch }) => {
 
     const [profile, setProfile] = useState({})
+    const [src, setSrc] = useState("")
 
-    const whoAmI = async() => {
-        try{
-            const data = await axios.get('http://localhost:3001/auth/whoAmI',{
-                headers: {'x-access-token':localStorage.getItem('token')}
+    useEffect(() => {
+        axios.get('http://localhost:3001/auth/whoAmI', {
+            headers: { 'x-access-token': localStorage.getItem('token') }
+        }).then(async (res) => {
+            setProfile(res.data)
+            await axios.get(`http://localhost:3001/auth/showProfileImage/${profile.profile_picture}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
             })
-            setProfile(data.data)
+                .then((res) => {
+                    console.log(res.data)
+                    setSrc(res.data.profile_src)
+                })
+        })
+    }, [])
+
+    const whoAmI = async () => {
+        try {
+            // const data = await axios.get('http://localhost:3001/auth/whoAmI', {
+            //     headers: { 'x-access-token': localStorage.getItem('token') }
+            // })
+            // setProfile(data.data)
             document.getElementById("profile").click()
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
-        
+
     }
 
     const jump = keyframes`
@@ -91,16 +107,16 @@ export const Navbar = ({setWillFetch}) => {
         width:100px;
 
     `
-    
+
     function logout() {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
         // }
-         axios.post("http://localhost:3001/auth/logout", {
-                token: localStorage.getItem('token')
-            })
+        axios.post("http://localhost:3001/auth/logout", {
+            token: localStorage.getItem('token')
+        })
             .then((res) => {
-                if(res.status === 200){
+                if (res.status === 200) {
                     localStorage.clear()
                     return document.getElementById("logout").click()
                 }
@@ -108,28 +124,28 @@ export const Navbar = ({setWillFetch}) => {
     }
 
     return (
-        
+
         <Container>
             <SidebarItem>
 
                 <A></A>
-            
+
                 {/*<Button onClick={() => setWillFetch(true)}>Leash</Button>*/}
-                <Link id="profile" to={{pathname:"/profile", profile:profile}}>UserImage</Link>
-            
+                <Link id="profile" to={{ pathname: "/profile", profile: profile }}>UserImage</Link>
+
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" onClick={() => whoAmI()}>profile</Button>
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" >Setting</Button>
-                
+                {/* <p>{src}</p> */}
                 <A></A>
                 <A></A>
                 <A></A>
                 <Button textColor="#FFFFFF" backgroundColor="#FF7272" hoverBackgroundColor="#FF7272" onClick={() => logout()}>Logout</Button>
                 
-                <Link id="logout" to="/login"></Link> 
-            
+                <Link id="logout" to="/login"></Link>
+
             </SidebarItem>
         </Container>
-        
+
     )
 }
 
