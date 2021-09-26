@@ -4,29 +4,59 @@ import axios from 'axios'
 import PopUp from './PopUp'
 import { Link } from 'react-router-dom'
 
+const Flex = styled.div` 
+    display:flex;
+`
+
+
 const Box = styled.div` 
     width: 600px;
     border-radius: 15px; 
     margin: auto;
     margin-top: 20px;
     padding:10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    background-color: #fae3d9;
-    display:block;
+    background-color: #242526;
+    display: flex;
+    flex-direction: column;
   `
+const PostOwnerImg = styled.img`
+transform: translateX(-50px);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid #FFFFFF;
+    display:flex;
+`
+const PostOwner = styled.div`
+    display:flex;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 30px;
+  `
+
+const OwnerName = styled.div`
+margin-left: 10px;
+color: #FFFFFF;
+font-size: 25px;
+`
 const PostImg = styled.img`
-    width: 150px;
-    height: 150px;
+    height: 200px;
     padding: 5px;
   `
-const PostText = styled.h1`
+
+const TextBox = styled.div`
     font-size: 15px;
     padding: 5px;
+    color: white;
+    width: 550px;
+    border-radius: 15px; 
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding:10px;
+    background-color: #3A3B3C;
 `
-const Time = styled.p`
-    font-size: 10px;
-    margin:5px;
-`
+
 
 const PictureLayout = styled.div`
   display: flex;
@@ -34,22 +64,28 @@ const PictureLayout = styled.div`
   justify-content: space-evenly;
 `
 
-const ButtonLayout = styled.div`
+const Spacebetween = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
 `
 
-const Button = styled.button`
-background-color: #008CBA;
-  border: none;
-  color: white;
-  margin-left: 10px;
+const Spacearound = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+`
+
+const VoteButton = styled.button`
+  background-color: #FFFFFF;
   padding: 7px 12px;
-  text-align: center;
-  display: inline-block;
-  font-size: 10px;
   cursor: pointer;
+`
+const OpenButton = styled.button`
+  background-color: #FFFFFF;
+  padding: 7px 12px;
+  cursor: pointer;
+  height: 50px;
 `
 const PopupBox = styled.div`
 display:none;
@@ -148,9 +184,15 @@ export const Post = (props) => {
                 {/* <PopUp post={props.post} /> */}
             {/* </PopupBox> */}
             <Box id={BoxId}>
-            <button onClick={toProfile}><PostImg src={profilePicture} /></button> 
-            <Link id="toProfile" to={{pathname:"/profile", profile:owner}}></Link>
-                <span>{props.post.owner.firstname} {props.post.owner.lastname}</span>
+                <Spacebetween>
+                    <PostOwner>
+                        <PostOwnerImg src={profilePicture} onClick={toProfile}/>
+                        <Link id="toProfile" to={{pathname:"/profile", profile:owner}}></Link>
+                        <OwnerName>{props.post.owner.firstname} {props.post.owner.lastname}</OwnerName>
+                    </PostOwner>
+                <OpenButton onClick={() => ShowPopup()}>OPEN POST</OpenButton>
+                </Spacebetween>
+                <TextBox>{props.post.post_text}</TextBox>
                 <PictureLayout>
                     {
                         Imgs.map((img, i) => {
@@ -161,15 +203,11 @@ export const Post = (props) => {
                     }
                 </PictureLayout>
                 <div>
-                    <p>{props.post._id}</p>
-                    <PostText>{props.post.post_text}</PostText>
-                    <ButtonLayout>
-                        <div>
-                            <Button onClick={() => { upvote() }}>UPVOTE</Button>
-                            <Button onClick={() => { downvote() }}>DOWNVOTE</Button>
-                        </div>
-                        <Button onClick={() => ShowPopup()}>OPEN POST</Button>
-                    </ButtonLayout>
+                    {/* <p>{props.post._id}</p> */}
+                    <Spacearound>
+                            <VoteButton onClick={() => { upvote() }}>UPVOTE</VoteButton>
+                            <VoteButton onClick={() => { downvote() }}>DOWNVOTE</VoteButton>
+                    </Spacearound>
                 </div>
             </Box>
         </div>

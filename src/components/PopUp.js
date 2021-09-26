@@ -7,14 +7,11 @@ const Box = styled.div`
     width: 600px;
     border-radius: 15px; 
     margin: auto;
-    /* margin-top: 20px; */
-    /* transform: translate(50vh,50vh); */
+    margin-top: 20px;
     padding:10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    background-color: #fae3d9;
-    /* display: block; */
-    margin: 0 auto;
-    margin-top: calc(100vh - 85vh + 200px);
+    background-color: #242526;
+    display: flex;
+    flex-direction: column;
   `
 const Background = styled.div`
     position: fixed;
@@ -26,13 +23,20 @@ const Background = styled.div`
 
 
 const PostImg = styled.img`
-    width: 150px;
-    height: 150px;
+    height: 200px;
     padding: 5px;
   `
-const PostText = styled.h1`
-    font-size: 15px;
-    padding: 5px;
+const TextBox = styled.div`
+font-size: 15px;
+padding: 5px;
+color: white;
+width: 550px;
+border-radius: 15px; 
+margin: auto;
+margin-top: 10px;
+margin-bottom: 10px;
+padding:10px;
+background-color: #3A3B3C;
 `
 const Time = styled.p`
     font-size: 10px;
@@ -52,13 +56,8 @@ const ButtonLayout = styled.div`
 `
 
 const Button = styled.button`
-background-color: #008CBA;
-  border: none;
-  color: white;
+  background-color: #FFFFFF;
   padding: 7px 12px;
-  text-align: center;
-  display: inline-block;
-  font-size: 10px;
   cursor: pointer;
 `
 const CommentBox = styled.div`
@@ -128,7 +127,7 @@ export const PopUp = (props) => {
                         })
                     }
                 </PictureLayout>
-                <PostText>{props.props.post_text}</PostText>
+                <TextBox>{props.props.post_text}</TextBox>
                 {
                     comments.map((comment, i) => {
                         return <Comments key={i} comment={comment} />

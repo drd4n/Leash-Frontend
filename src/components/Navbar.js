@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const Navbar = ({setWillFetch}) => {
@@ -19,6 +20,44 @@ export const Navbar = ({setWillFetch}) => {
         
     }
 
+    const Wrapper = styled.div`
+        display: flex;
+        position: relative;
+    `
+    const Sidebar = styled.div`
+        width: 250px;
+        height: 100%;
+        background: #242526;
+        padding: 30px 0px;
+        position: fixed;
+        flex-direction: column;
+        display: flex;
+        justify-content:space-evenly;
+    `
+    const Col = styled.div`
+        flex-direction: column;
+        display: flex;
+        /* justify-content:space-evenly; */
+    `
+    const Button = styled.button`
+        background-color: #FFFFFF;
+        padding: 7px 12px;
+        cursor: pointer;
+        margin:20px;
+     `
+    const A = styled.button`
+        align-self: center;
+        width: 170px;
+        background: #bdb8d;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin: 0 5px;
+        color: black;
+        border-radius: 15px;
+        margin:10px;
+    `
+    
     function logout() {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
@@ -35,13 +74,24 @@ export const Navbar = ({setWillFetch}) => {
     }
 
     return (
-        <>
-            <button onClick={() => setWillFetch(true)}>Leash</button>
-            <button onClick={() => whoAmI()}>profile</button>
-            <button onClick={() => logout()}>Logout</button>
-            <Link id="profile" to={{pathname:"/profile", profile:profile}}></Link>
+        <Wrapper>
+            <Sidebar>
+            <Col>
+                <Button onClick={() => setWillFetch(true)}>Leash</Button>
+                <A><Link id="profile" to={{pathname:"/profile", profile:profile}}>UserImage</Link></A>
+            </Col>
+            <Col>
+            <A onClick={() => whoAmI()}>profile</A>
+            <A>Setting</A>
+            <A onClick={() => logout()}>Logout</A>
             <Link id="logout" to="/login"></Link>
-        </>
+            </Col>
+            <Col>
+            <Button onClick={() => logout()}>Logout</Button>
+            </Col>
+            <Link id="logout" to="/login"></Link> 
+            </Sidebar>
+        </Wrapper>
     )
 }
 

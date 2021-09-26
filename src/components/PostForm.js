@@ -8,14 +8,25 @@ const Form = styled.div`
     align-items: center;
     text-align: center;
     display: flex;
-    border-radius: 5px; 
-    width:35%;
-    margin:auto;
-    padding:5px;
+    width: 600px;
+    border-radius: 15px; 
+    margin: auto;
+    margin-top: 20px;
+    padding:10px;
+    background-color: #242526;
     flex-direction: column;
     justify-content: center;
-    background-color: #aaaaaa;
 `
+const Selector = styled.select`
+    width: 100%;
+`
+
+const Row = styled.div`
+    display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
 const Input = styled.input`
     width: 200px;
 `
@@ -44,10 +55,33 @@ background-color: yellowgreen;
   margin:2px;
 `
 const Textarea = styled.textarea`
-    resize:none;
-    height: 100px;
-    width: 350px;
+    background-color: #dddddd;
+  color: #666666;
+  padding: 1em;
+  border-radius: 10px;
+  margin:20px;
+  border: 2px solid transparent;
+  outline: none;
+  font-family: "Heebo", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.4;
+  width: 500px;
+  height: 100px;
+  transition: all 0.2s;
 `
+const A = styled.button`
+        align-self: center;
+        width: 170px;
+        background: #bdb8d;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin: 0 5px;
+        color: black;
+        border-radius: 15px;
+        margin:10px;
+    `
 
 export const PostForm = ({ setWillFetch }) => {
 
@@ -167,17 +201,6 @@ export const PostForm = ({ setWillFetch }) => {
                         </Col> 
                 })
             }
-            <select onChange={(event)=>{addTags(event.target.value)}}>
-                <option value="Dogs" >Dogs</option>
-                <option value="Cats" >Cats</option>
-                <option value="Fishes">Fishes</option>
-                <option value="Mammals">Mammals</option>
-                <option value="Insects">Insects</option>
-                <option value="Reptiles">Reptiles</option>
-                <option value="Birds">Birds</option>
-                <option value="Amphibians">Amphibians</option>
-                <option selected disabled ></option>
-            </select>
             <Input
                 type="file"
                 id="selectedFile"
@@ -197,6 +220,26 @@ export const PostForm = ({ setWillFetch }) => {
                     )
                 }
             </PictureLayout>
+            <Row>
+                <Selector onChange={(event)=>{addTags(event.target.value)}}>
+                <option value="Dogs" >Dogs</option>
+                <option value="Cats" >Cats</option>
+                <option value="Fishes">Fishes</option>
+                <option value="Mammals">Mammals</option>
+                <option value="Insects">Insects</option>
+                <option value="Reptiles">Reptiles</option>
+                <option value="Birds">Birds</option>
+                <option value="Amphibians">Amphibians</option>
+                <option selected disabled ></option>
+            </Selector>
+            <Input
+                type="file"
+                id="selectedFile"
+                onChange={(event) => {
+                    onDrop(event.target.files[0])
+                }}
+                style={{ display: 'none' }}
+            />
             {/* {
             uploadedpics.map(remover => {
                 return <form key={uploadedpics.indexOf(remover)} action={removeSelectedImage(remover)}>
@@ -204,8 +247,9 @@ export const PostForm = ({ setWillFetch }) => {
                 </form>
             })
         } */}
-            <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
-            <button onClick={uploadText}>Post</button>
+            <A onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</A>
+            <A onClick={uploadText}>Post</A>
+            </Row>
             {/* <button onClick={uploadImages}>Upload Images</button> */}
         </Form>
     )
