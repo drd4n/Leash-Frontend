@@ -13,7 +13,7 @@ export const UploadProfile = () => {
         let formData = new FormData()
         formData.append("image", selectedImage, selectedImage)
         console.log(formData)
-        axios.post('http://localhost:3001/auth/uploadProfileImage', formData)
+        axios.post('https://54.169.181.65/auth/uploadProfileImage', formData)
             .then(res => {
                 setShower(res.data.src)
                 setUploadedpics(res.data.picture_link)
@@ -21,7 +21,7 @@ export const UploadProfile = () => {
     }
 
     function removeSelectedImage(key) {
-        axios.post(`http://localhost:3001/auth/removeSelectedImage/${key}`)
+        axios.post(`https://54.169.181.65/auth/removeSelectedImage/${key}`)
             .then(res => {
                 setUploadedpics()
                 setShower()
@@ -34,7 +34,7 @@ export const UploadProfile = () => {
             const data = {
                 profile_picture:uploadedpics
             }
-            axios.post('http://localhost:3001/auth/saveProfilePicture', data,{
+            axios.post('https://54.169.181.65/auth/saveProfilePicture', data,{
                 headers:{'x-access-token':localStorage.getItem('token')}
             })
             .then((res)=>{

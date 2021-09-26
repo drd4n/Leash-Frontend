@@ -176,7 +176,7 @@ export const Login = () => {
     const [form, setForm] = useState({})
 
     async function login() {
-        axios.post("http://localhost:3001/auth/login", form
+        axios.post("https://54.169.181.65/auth/login", form
             // ,{
             //     headers: { 'content-type': 'application/x-www-form-urlencoded'}
             // }
@@ -196,7 +196,7 @@ export const Login = () => {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
         // }
-         axios.post("http://localhost:3001/auth/logout", {
+         axios.post("https://54.169.181.65/auth/logout", {
                 token: localStorage.getItem('token')
             })
             .then((res) => {

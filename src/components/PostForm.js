@@ -96,7 +96,7 @@ export const PostForm = ({ setWillFetch }) => {
                 tags:tags
             }
             //post ไปที่ url ,object ใน format ของ json (เรียกว่า body)
-            axios.post("http://localhost:3001/post/createPost", data,{
+            axios.post("https://54.169.181.65/post/createPost", data,{
                 headers : {'x-access-token':localStorage.getItem('token')}
             })
                 .then(res => {
@@ -123,7 +123,7 @@ export const PostForm = ({ setWillFetch }) => {
         let formData = new FormData()
         formData.append("image", selectedImage, selectedImage)
         console.log(formData)
-        axios.post('http://localhost:3001/post/uploadImage', formData,{
+        axios.post('https://54.169.181.65/post/uploadImage', formData,{
             headers:{'x-access-token':localStorage.getItem('token')}
         })
             .then(res => {
@@ -136,7 +136,7 @@ export const PostForm = ({ setWillFetch }) => {
 
     function removeSelectedImage(index) {
         const key = uploadedpics[index]
-        axios.post(`http://localhost:3001/post/removeSelectedImage/${key}`)
+        axios.post(`https://54.169.181.65/post/removeSelectedImage/${key}`)
             .then(res => {
                 uploadedpics.splice(index, 1)
                 shower.splice(index, 1)
