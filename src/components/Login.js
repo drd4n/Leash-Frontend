@@ -75,7 +75,7 @@ const Wrapper = styled.section`
     align-self: center;
 `;
 
-const Form = styled.form`
+const TextForm = styled.form`
     width: 100%;
     max-width: 414px;
     padding: 1rem;
@@ -271,7 +271,7 @@ export const Login = () => {
             <WrapperContainer2>
             
             <Wrapper>
-                <Form>
+                <TextForm>
                 <FontTitle1>Login</FontTitle1>
                 <Label htmlFor="username">Username</Label><br />
                 <Input
@@ -296,7 +296,7 @@ export const Login = () => {
                 <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={goToRegister}>SIGN UP</Button><br />
                 <Link id="register" to="/register"></Link>
                 </BoxButton>
-                </Form>
+                </TextForm>
             </Wrapper>
             
             </WrapperContainer2>
