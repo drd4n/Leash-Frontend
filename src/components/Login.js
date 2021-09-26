@@ -185,7 +185,7 @@ export const Login = () => {
                 console.log(res)
                 localStorage.clear()
                 localStorage.setItem('token', res.data.token)
-                return window.location.href = 'http://localhost:3000/'
+                return document.getElementById("tofeed").click()
             }).catch((e) => {
                 console.log(JSON.stringify(e))
                 console.log(e.response.data.errors)
@@ -298,7 +298,7 @@ export const Login = () => {
                 </BoxButton>
                 </Form>
             </Wrapper>
-            
+            <Link id="tofeed" to="/"></Link>
             </WrapperContainer2>
             </Container>
             {/*<Button onClick={() => logout()}>logout</Button><br /> */}

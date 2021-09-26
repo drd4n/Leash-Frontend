@@ -3,6 +3,7 @@ import validator from 'validator'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export const Register = () => {
 
@@ -56,7 +57,9 @@ export const Register = () => {
             .then((res) => {
                 localStorage.clear()
                 localStorage.setItem('token', res.data.token)
-                return window.location.href = "http://localhost:3000/finishYourProfile"
+                document.getElementById("tofinish").click()
+                return
+                // return window.location.href = "http://localhost:3000/finishYourProfile"
             }).catch((e) => {
                 console.log(JSON.stringify(e))
                 console.log(e.response.data.errors)
@@ -133,6 +136,7 @@ export const Register = () => {
                     error
                 }
             </div>
+            <Link id="tofinish" to="/finishYourProfile"></Link>
             <button onClick={() => validate()}>Register</button>
         </>
     )
