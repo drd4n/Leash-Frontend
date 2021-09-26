@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useHistory } from 'react-router'
 import TokenValidate from '../config/TokenValidate'
 import styled, { keyframes, createGlobalStyle } from "styled-components";
+import { Link } from 'react-router-dom';
 
 const jump = keyframes`
   from{
@@ -210,7 +211,8 @@ export const Login = () => {
     }
 
     function goToRegister() {
-        window.location.href = "http://localhost:3000/register"
+        // return window.location.href = "http://localhost:3000/register"
+        return document.getElementById("register").click()
     }
     
     function showPwd(id, el) {
@@ -291,7 +293,8 @@ export const Login = () => {
                 <Border></Border>
                 <FontTitle2>Wanna join us?</FontTitle2>
                 <BoxButton>
-                <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => goToRegister()}>SIGN UP</Button><br />
+                <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={goToRegister}>SIGN UP</Button><br />
+                <Link id="register" to="/register"></Link>
                 </BoxButton>
                 </Form>
             </Wrapper>
