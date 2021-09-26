@@ -44,16 +44,7 @@ const Col = styled.div`
   flex-direction: column;
   margin:2px;
 `
-const Button = styled.button`
-background-color: yellowgreen;
-  border: none;
-  padding: 7px 12px;
-  text-align: center;
-  /* display: inline-block; */
-  font-size: 10px;
-  cursor: pointer;
-  margin:2px;
-`
+
 const Textarea = styled.textarea`
     background-color: #dddddd;
   color: #666666;
@@ -70,18 +61,16 @@ const Textarea = styled.textarea`
   height: 100px;
   transition: all 0.2s;
 `
-const A = styled.button`
-        align-self: center;
-        width: 170px;
-        background: #bdb8d;
-        height: 30px;
-        line-height: 30px;
-        text-align: center;
-        margin: 0 5px;
-        color: black;
-        border-radius: 15px;
-        margin:10px;
+const Button = styled.button`
+    width:100px;
+    padding: 10px 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
     `
+    
 
 export const PostForm = ({ setWillFetch }) => {
 
@@ -247,8 +236,8 @@ export const PostForm = ({ setWillFetch }) => {
                 </form>
             })
         } */}
-            <A onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</A>
-            <A onClick={uploadText}>Post</A>
+            <Button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</Button>
+            <Button onClick={uploadText}>Post</Button>
             </Row>
             {/* <button onClick={uploadImages}>Upload Images</button> */}
         </Form>

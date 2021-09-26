@@ -12,6 +12,7 @@ const Box = styled.div`
     background-color: #242526;
     display: flex;
     flex-direction: column;
+    border: 3px solid whitesmoke;
   `
 const Background = styled.div`
     position: fixed;
@@ -37,10 +38,6 @@ margin-top: 10px;
 margin-bottom: 10px;
 padding:10px;
 background-color: #3A3B3C;
-`
-const Time = styled.p`
-    font-size: 10px;
-    margin:5px;
 `
 
 const PictureLayout = styled.div`

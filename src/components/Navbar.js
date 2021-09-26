@@ -42,8 +42,9 @@ export const Navbar = ({setWillFetch}) => {
     const Button = styled.button`
         background-color: #FFFFFF;
         padding: 7px 12px;
+        font-weight: 600;
+        border-radius: 15px;
         cursor: pointer;
-        margin:20px;
      `
     const A = styled.button`
         align-self: center;
@@ -56,6 +57,7 @@ export const Navbar = ({setWillFetch}) => {
         color: black;
         border-radius: 15px;
         margin:10px;
+        width:100px;
     `
     
     function logout() {

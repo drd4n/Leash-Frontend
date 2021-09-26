@@ -35,9 +35,9 @@ const PostOwner = styled.div`
   `
 
 const OwnerName = styled.div`
-margin-left: 10px;
-color: #FFFFFF;
-font-size: 25px;
+    margin: 20px;
+    color: #FFFFFF;
+    font-size: 25px;
 `
 const PostImg = styled.img`
     height: 200px;
@@ -76,20 +76,17 @@ const Spacearound = styled.div`
   justify-content: space-around;
 `
 
-const VoteButton = styled.button`
-  background-color: #FFFFFF;
-  padding: 7px 12px;
-  cursor: pointer;
+const Button = styled.button`
+    height: 50px;
+    padding: 12px 7px;
+    margin:20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
 `
-const OpenButton = styled.button`
-  background-color: #FFFFFF;
-  padding: 7px 12px;
-  cursor: pointer;
-  height: 50px;
-`
-const PopupBox = styled.div`
-display:none;
-`
+
 
 export const Post = (props) => {
     
@@ -190,7 +187,7 @@ export const Post = (props) => {
                         <Link id="toProfile" to={{pathname:"/profile", profile:owner}}></Link>
                         <OwnerName>{props.post.owner.firstname} {props.post.owner.lastname}</OwnerName>
                     </PostOwner>
-                <OpenButton onClick={() => ShowPopup()}>OPEN POST</OpenButton>
+                <Button onClick={() => ShowPopup()}>OPEN POST</Button>
                 </Spacebetween>
                 <TextBox>{props.post.post_text}</TextBox>
                 <PictureLayout>
@@ -205,8 +202,8 @@ export const Post = (props) => {
                 <div>
                     {/* <p>{props.post._id}</p> */}
                     <Spacearound>
-                            <VoteButton onClick={() => { upvote() }}>UPVOTE</VoteButton>
-                            <VoteButton onClick={() => { downvote() }}>DOWNVOTE</VoteButton>
+                            <Button onClick={() => { upvote() }}>UPVOTE</Button>
+                            <Button onClick={() => { downvote() }}>DOWNVOTE</Button>
                     </Spacearound>
                 </div>
             </Box>
