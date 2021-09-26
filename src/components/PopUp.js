@@ -9,21 +9,35 @@ const Box = styled.div`
     margin: auto;
     margin-top: 20px;
     padding:10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-    background-color: #fae3d9
+    background-color: #242526;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid whitesmoke;
   `
+const Background = styled.div`
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+  `
+
+
 const PostImg = styled.img`
-    width: 150px;
-    height: 150px;
+    height: 200px;
     padding: 5px;
   `
-const PostText = styled.h1`
-    font-size: 15px;
-    padding: 5px;
-`
-const Time = styled.p`
-    font-size: 10px;
-    margin:5px;
+const TextBox = styled.div`
+font-size: 15px;
+padding: 5px;
+color: white;
+width: 550px;
+border-radius: 15px; 
+margin: auto;
+margin-top: 10px;
+margin-bottom: 10px;
+padding:10px;
+background-color: #3A3B3C;
 `
 
 const PictureLayout = styled.div`
@@ -39,13 +53,8 @@ const ButtonLayout = styled.div`
 `
 
 const Button = styled.button`
-background-color: #008CBA;
-  border: none;
-  color: white;
+  background-color: #FFFFFF;
   padding: 7px 12px;
-  text-align: center;
-  display: inline-block;
-  font-size: 10px;
   cursor: pointer;
 `
 const CommentBox = styled.div`
@@ -63,27 +72,21 @@ export const PopUp = (props) => {
     const [comment, setComment] = useState('')
     const [isCommentDirty, setIsCommentDirty] = useState(true)
 
-    useEffect(() => {
+    useEffect(async() => {
         if (isCommentDirty) {
-            const data2 = {
-                post_id: props.post._id
-            }
-            axios.post('https://leash-khakai-api.herokuapp.com/comment/showComment', data2)
+
+            await axios.get(`http://localhost:3001/comment/showComment/${props.props._id}`)
                 .then(res => {
                     setComments(res.data)
                     setIsCommentDirty(false)
                 })
         }
 
-        const data1 = {
-            picture_link: props.post.picture_link
+        if(props.props.src){
+            setImgs(props.props.src)
         }
-        axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data1)
-            .then(res => {
-                setImgs(res.data.src);
-            })
-        
-    }, [isCommentDirty, props.post.picture_link, props.post._id])
+       
+    }, [isCommentDirty, props.props.src, props.props._id])
 
     function createComment() {
         if (!comment) {
@@ -91,20 +94,27 @@ export const PopUp = (props) => {
         }
         const data = {
             comment_text: comment,
-            post_id: props.post._id
+            post_id: props.props._id
         }
-        axios.post("https://leash-khakai-api.herokuapp.com/comment/createComment", data)
-            .then(res => {
+        axios.post("http://localhost:3001/comment/createComment", data,
+        {
+            headers: { 'x-access-token': localStorage.getItem('token') }
+        }).then(res => {
                 setComment('')
                 setIsCommentDirty(true)
             }
             )
     }
 
+    function close() {
+        props.setWillClose(true)
+    }
+    
     return (
-        <>
+        <Background>
             <Box>
-                <p>{props.post._id}</p>
+                <button onClick={close}>X</button>
+                <p>{props.props._id}</p>
                 <PictureLayout>
                     {
                         Imgs.map((img, i) => {
@@ -114,12 +124,7 @@ export const PopUp = (props) => {
                         })
                     }
                 </PictureLayout>
-                <PostText>{props.post.post_text}</PostText>
-                <Time>date XX/XX/XX time XX:XX</Time>
-                <ButtonLayout>
-                    <Button>UPVOTE</Button>
-                    <Button>DOWNVOTE</Button>
-                </ButtonLayout>
+                <TextBox>{props.props.post_text}</TextBox>
                 {
                     comments.map((comment, i) => {
                         return <Comments key={i} comment={comment} />
@@ -138,7 +143,7 @@ export const PopUp = (props) => {
 
                 </CommentBox>
             </Box>
-        </>
+        </Background>
     )
 }
 
