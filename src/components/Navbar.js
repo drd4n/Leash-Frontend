@@ -13,7 +13,7 @@ export const Navbar = ({ setWillFetch }) => {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then(async (res) => {
             setProfile(res.data)
-            await axios.get(`http://54.169.181.65/auth/showProfileImage/${res.data.profile_picture}`, {
+            await axios.get(`https://54.169.181.65/auth/showProfileImage/${res.data.profile_picture}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             })
                 .then((res) => {
