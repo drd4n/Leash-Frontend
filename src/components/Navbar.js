@@ -13,7 +13,7 @@ export const Navbar = ({ setWillFetch }) => {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then(async (res) => {
             setProfile(res.data)
-            await axios.get(`http://localhost:3001/auth/showProfileImage/${profile.profile_picture}`, {
+            await axios.get(`http://localhost:3001/auth/showProfileImage/${res.data.profile_picture}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             })
                 .then((res) => {
@@ -134,7 +134,7 @@ export const Navbar = ({ setWillFetch }) => {
             <A></A>
 
                 {/*<Button onClick={() => setWillFetch(true)}>Leash</Button>*/}
-                <Link id="profile" to={{ pathname: "/profile", profile: profile }}><ProfileImg src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'/></Link>
+                <Link id="profile" to={{ pathname: "/profile", profile: profile }}><ProfileImg src={src}/></Link>
 
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" onClick={() => whoAmI()}>profile</Button>
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" >Setting</Button>

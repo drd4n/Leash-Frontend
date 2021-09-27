@@ -177,6 +177,7 @@ export const Post = (props) => {
 
     return (
         <div>
+            {popup}
             <Box id={BoxId}>
                 <Spacebetween>
                     <PostOwner>

@@ -68,9 +68,12 @@ export const Profile = () => {
     return (
         <ProfileRow>
             <Row>
-                <ProfileImg src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'/>
+                <ProfileImg src={src}/>
                 <div><Name>{profile.firstname} {profile.lastname} </Name> <Username>{profile.username}</Username>
                 </div>
+                {
+                   console.log({src}) 
+                }
             </Row>
             <Button>setting</Button>
         </ProfileRow>
