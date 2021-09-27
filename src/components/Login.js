@@ -73,7 +73,7 @@ const Wrapper = styled.section`
     align-self: center;
 `;
 
-const TextForm = styled.form`
+const TextForm = styled.div`
     width: 100%;
     max-width: 414px;
     padding: 1rem;

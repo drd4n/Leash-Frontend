@@ -93,6 +93,8 @@ export const Post = (props) => {
     const [profilePicture, setProfilePicture] = useState()
     const [Imgs, setImgs] = useState([])
     const [popup, setPopup] = useState()
+    const [upVoted, setUpVoted] = useState(false)
+    const [downVoted, setDownVoted] = useState(false)
     const [willClose, setWillClose] = useState(false)
     const PopId = props.post._id + "Popup"
     const BoxId = props.post._id + "Box"
