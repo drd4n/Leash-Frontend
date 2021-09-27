@@ -56,7 +56,7 @@ export const Profile = () => {
     const [src, setSrc] = useState("")
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/auth/showProfileImage/${profile.profile_picture}`, {
+        axios.get(`https://54.169.181.65/auth/showProfileImage/${profile.profile_picture}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
         .then((res) => {
