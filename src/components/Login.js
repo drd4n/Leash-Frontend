@@ -19,12 +19,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background: #18191A;
     ;
   }
 
   body, html, #root {
-    font-family: 'Roboto', sans-serif;
     height: 100%;
     width: 100%;
     ;
@@ -236,7 +234,7 @@ export const Login = () => {
             {/*<WrapperContainer1>
 
             <Wrapper>
-                <Form>
+                <TextForm>
                 <FontTitle1>Login1</FontTitle1>
                 <Label htmlFor="username">Username</Label><br />
                 <Input
@@ -260,7 +258,7 @@ export const Login = () => {
                 <BoxButton>
                 <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => goToRegister()}>SIGN UP</Button><br />
                 </BoxButton>
-                </Form>
+                </TextForm>
             </Wrapper>
 
             </WrapperContainer1>

@@ -20,12 +20,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background: #18191A;
     ;
   }
 
   body, html, #root {
-    font-family: 'Roboto', sans-serif;
     height: 100%;
     width: 100%;
     ;
@@ -61,7 +59,7 @@ const Wrapper = styled.section`
     align-items: center;
     align-content: center;
     flex-shrink: 0;
-    align-self: center;
+    
 `;
 
 const Form = styled.form`
@@ -71,11 +69,22 @@ const Form = styled.form`
     display: flex;
     flex-direction: column;
     position: relative;
+    flex-shrink: 0;
 `;
 
 const Label = styled.label`
     color: #FFFFFF;
     margin-bottom: -0.8rem;
+`;
+
+const Label2 = styled.label`
+    max-height: 100%;
+    color: #FFFFFF;
+    margin-bottom: -0.3rem;
+    font-style: light;
+    font-weight: 200;
+    font-size: 14px;
+    flex-shrink: 0;
 `;
 
 const FontTitle1 = styled.label`
@@ -130,7 +139,7 @@ const Button = styled.button`
     border-radius: 44px;
     outline: 0;
     cursor: pointer;
-    margin-top: 0.5rem;
+    margin-top: 2rem;
     margin-Bottom: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-out;
@@ -142,23 +151,17 @@ const Button = styled.button`
 `;
 
 
-const Border = styled.h2`
-    border-style: solid;
-    border-width: 1px;
-    border-color: #5D8888;
-`;
-
 export const Register = () => {
 
     const [form, setForm] = useState({})
     const [error, setError] = useState('')
 
     function checkPassword() {
-        if (!form.password) {
+        if (!form.crPassword) {
             return ""
         }
-        if (form.password !== form.crPassword) {
-            return "password not match"
+        if (form.crPassword !== form.password) {
+            return "Please make sure your passwords match."
         } else {
             return ""
         }
@@ -277,12 +280,12 @@ export const Register = () => {
                             name="crPassword"
                             onChange={(event) => { setForm({ ...form, crPassword: event.target.value.trim() }) }} />
 
-                        <Label>
+                        <Label2>
                             {
                                 // password !== crPassword ? "password not match" : ""
                                 checkPassword()
                             }
-                        </Label>
+                        </Label2>
                     </span>
                     <div>
                         {
