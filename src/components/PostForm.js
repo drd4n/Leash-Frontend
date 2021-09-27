@@ -1,8 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes, createGlobalStyle } from 'styled-components'
 import axios from 'axios'
 import TokenValidate from '../config/TokenValidate'
 import Tag from './Tag'
+
+const jump = keyframes`
+  from{
+    transform: translateY(0)
+  }
+  to{
+    transform: translateY(-3px)
+  }
+`;
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    ;
+  }
+
+  body, html, #root {
+    height: 100%;
+    width: 100%;
+    ;
+  }
+`;
 
 const Form = styled.div`
     align-items: center;
@@ -16,34 +40,42 @@ const Form = styled.div`
     background-color: #242526;
     flex-direction: column;
     justify-content: center;
-`
+`;
+
 const Selector = styled.select`
     width: 100%;
-`
+`;
 
-const Row = styled.div`
+const Row = styled.section`
     display: flex;
   flex-direction: row;
-  justify-content: space-between;
-`
+  justify-content: space-around;
+  flex-shrink: 0;
+    height: 100%;
+    width: 100%;
+`;
 
 const Input = styled.input`
-    width: 200px;
-`
+    max-width: 20px;
+    margin: 5px;
+`;
+
 const InputImg = styled.img`
     height: 250px;
-    margin:2px;
-`
+    margin: 2px;
+`;
+
 const PictureLayout = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-`
+`;
+
 const Col = styled.div`
   display: flex;
   flex-direction: column;
   margin:2px;
-`
+`;
 
 const Textarea = styled.textarea`
     background-color: #dddddd;
@@ -60,16 +92,33 @@ const Textarea = styled.textarea`
   width: 500px;
   height: 100px;
   transition: all 0.2s;
-`
+`;
 const Button = styled.button`
-    width:100px;
+    width: 250px;
+    height: 40px;
     padding: 10px 10px;
     font-weight: 600;
     text-transform: uppercase;
-    border-radius: 15px;
+    border-radius: 44px;
+    color: ${(props) => props.textColor};
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: ${(props) => props.backgroundColor};
+    border: none;
+    outline: 0;
     cursor: pointer;
+    margin-top: 0.5rem;
+    margin-Bottom: 1.5rem;
+    margin-left: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-out;
-    `
+    :hover {
+        background: #A1D3CD;
+        color: #FFFFFF;
+        animation: ${jump} 0.2s ease-out forwards;
+    }
+`;
     
 
 export const PostForm = ({ setWillFetch }) => {
@@ -191,6 +240,7 @@ export const PostForm = ({ setWillFetch }) => {
                 })
             }
             <Input
+                placeholder="choose categorie(s)"
                 type="file"
                 id="selectedFile"
                 onChange={(event) => {
