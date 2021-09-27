@@ -19,12 +19,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background: #18191A;
     ;
   }
 
   body, html, #root {
-    font-family: 'Roboto', sans-serif;
     height: 100%;
     width: 100%;
     ;
