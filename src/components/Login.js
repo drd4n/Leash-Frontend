@@ -19,12 +19,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background: #18191A;
     ;
   }
 
   body, html, #root {
-    font-family: 'Roboto', sans-serif;
     height: 100%;
     width: 100%;
     ;
@@ -75,7 +73,7 @@ const Wrapper = styled.section`
     align-self: center;
 `;
 
-const Form = styled.form`
+const TextForm = styled.div`
     width: 100%;
     max-width: 414px;
     padding: 1rem;
@@ -236,7 +234,7 @@ export const Login = () => {
             {/*<WrapperContainer1>
 
             <Wrapper>
-                <Form>
+                <TextForm>
                 <FontTitle1>Login1</FontTitle1>
                 <Label htmlFor="username">Username</Label><br />
                 <Input
@@ -260,7 +258,7 @@ export const Login = () => {
                 <BoxButton>
                 <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => goToRegister()}>SIGN UP</Button><br />
                 </BoxButton>
-                </Form>
+                </TextForm>
             </Wrapper>
 
             </WrapperContainer1>
@@ -271,8 +269,8 @@ export const Login = () => {
             <WrapperContainer2>
             
             <Wrapper>
-                <Form>
-                <FontTitle1>Login2</FontTitle1>
+                <TextForm>
+                <FontTitle1>Login</FontTitle1>
                 <Label htmlFor="username">Username</Label><br />
                 <Input
                     type="text"
@@ -296,7 +294,7 @@ export const Login = () => {
                 <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={goToRegister}>SIGN UP</Button><br />
                 <Link id="register" to="/register"></Link>
                 </BoxButton>
-                </Form>
+                </TextForm>
             </Wrapper>
             <Link id="tofeed" to="/"></Link>
             </WrapperContainer2>

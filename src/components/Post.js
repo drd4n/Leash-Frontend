@@ -21,10 +21,10 @@ const Box = styled.div`
   `
 const PostOwnerImg = styled.img`
 transform: translateX(-50px);
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    border: 1px solid #FFFFFF;
+    border: 3px solid #FFFFFF;
     display:flex;
 `
 const PostOwner = styled.div`
@@ -56,7 +56,6 @@ const TextBox = styled.div`
     padding:10px;
     background-color: #3A3B3C;
 `
-
 
 const PictureLayout = styled.div`
   display: flex;
@@ -94,6 +93,8 @@ export const Post = (props) => {
     const [profilePicture, setProfilePicture] = useState()
     const [Imgs, setImgs] = useState([])
     const [popup, setPopup] = useState()
+    const [upVoted, setUpVoted] = useState(false)
+    const [downVoted, setDownVoted] = useState(false)
     const [willClose, setWillClose] = useState(false)
     const PopId = props.post._id + "Popup"
     const BoxId = props.post._id + "Box"
@@ -176,10 +177,7 @@ export const Post = (props) => {
 
     return (
         <div>
-                {popup}
-            {/* <PopupBox id={PopId}> */}
-                {/* <PopUp post={props.post} /> */}
-            {/* </PopupBox> */}
+            {popup}
             <Box id={BoxId}>
                 <Spacebetween>
                     <PostOwner>
