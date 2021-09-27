@@ -118,6 +118,7 @@ export const Navbar = ({ setWillFetch }) => {
         axios.post("http://localhost:3001/auth/logout", {
             token: localStorage.getItem('token')
         })
+
             .then((res) => {
                 if (res.status === 200) {
                     localStorage.clear()

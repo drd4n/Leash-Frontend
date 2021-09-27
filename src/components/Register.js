@@ -3,6 +3,7 @@ import validator from 'validator'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import styled, { keyframes, createGlobalStyle } from "styled-components";
 
 
@@ -151,7 +152,6 @@ const Button = styled.button`
     }
 `;
 
-
 export const Register = () => {
 
     const [form, setForm] = useState({})
@@ -197,14 +197,16 @@ export const Register = () => {
             return setError("Password must be filled")
         }
 
-        axios.post('http://localhost:3001/auth/register', form)
+        axios.post('https://54.169.181.65/auth/register', form)
         // ,{
         //     headers: { 'content-type': 'application/x-www-form-urlencoded' }
         // }
             .then((res) => {
                 localStorage.clear()
                 localStorage.setItem('token', res.data.token)
-                return window.location.href = "http://localhost:3000/finishYourProfile"
+                document.getElementById("tofinish").click()
+                return
+                // return window.location.href = "http://localhost:3000/finishYourProfile"
             }).catch((e) => {
                 console.log(JSON.stringify(e))
                 console.log(e.response.data.errors)
@@ -214,6 +216,7 @@ export const Register = () => {
 
     return (
         <>
+
             
             
             <GlobalStyle />
@@ -295,6 +298,7 @@ export const Register = () => {
                     </Label2>
                     
                     <BoxButton>
+                    <Link id="tofinish" to="/finishYourProfile"></Link>
                     <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => validate()}>Confirm</Button>
                     </BoxButton>
                 </Form>
@@ -302,6 +306,7 @@ export const Register = () => {
             
             </WrapperContainer2>
             </Container>
+
         </>
     )
 }

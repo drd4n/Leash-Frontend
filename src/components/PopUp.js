@@ -93,7 +93,7 @@ export const PopUp = (props) => {
     useEffect(async() => {
         if (isCommentDirty) {
 
-            await axios.get(`http://localhost:3001/comment/showComment/${props.props._id}`)
+            await axios.get(`https://54.169.181.65/comment/showComment/${props.props._id}`)
                 .then(res => {
                     setComments(res.data)
                     setIsCommentDirty(false)
@@ -114,7 +114,7 @@ export const PopUp = (props) => {
             comment_text: comment,
             post_id: props.props._id
         }
-        axios.post("http://localhost:3001/comment/createComment", data,
+        axios.post("https://54.169.181.65/comment/createComment", data,
         {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then(res => {
