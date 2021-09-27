@@ -100,8 +100,8 @@ export const Navbar = ({ setWillFetch }) => {
         margin: 0 5px;
         color: black;
         border-radius: 15px;
-        margin:10px;
-        width:100px;
+        margin: 8px;
+        width: 100px;
     `
     const ProfileImg = styled.img`
         width: 150px;
@@ -131,7 +131,7 @@ export const Navbar = ({ setWillFetch }) => {
         <Container>
             <SidebarItem>
 
-                <A></A>
+            <A></A>
 
                 {/*<Button onClick={() => setWillFetch(true)}>Leash</Button>*/}
                 <Link id="profile" to={{ pathname: "/profile", profile: profile }}><ProfileImg src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'/></Link>
@@ -142,9 +142,14 @@ export const Navbar = ({ setWillFetch }) => {
                 <A></A>
                 <A></A>
                 <A></A>
+                <A></A>
+                <A></A>
+                <A></A>
+                <A></A>
                 <Button textColor="#FFFFFF" backgroundColor="#FF7272" hoverBackgroundColor="#FF7272" onClick={() => logout()}>Logout</Button>
                 
                 <Link id="logout" to="/login"></Link>
+                <A></A>
 
             </SidebarItem>
         </Container>
