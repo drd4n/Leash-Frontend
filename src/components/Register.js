@@ -62,7 +62,7 @@ const Wrapper = styled.section`
     
 `;
 
-const Form = styled.form`
+const Form = styled.div`
     width: 100%;
     max-width: 414px;
     padding: 1rem;
@@ -79,12 +79,13 @@ const Label = styled.label`
 
 const Label2 = styled.label`
     max-height: 100%;
-    color: #FFFFFF;
     margin-bottom: -0.3rem;
     font-style: light;
     font-weight: 200;
     font-size: 14px;
     flex-shrink: 0;
+    margin:10px;
+    color:red;
 `;
 
 const FontTitle1 = styled.label`
@@ -223,7 +224,7 @@ export const Register = () => {
             
             <Wrapper>
                 <Form>
-                <FontTitle1>Login</FontTitle1>
+                <FontTitle1>Register</FontTitle1>
                 
                     <Label htmlFor="firstname">First name</Label><br />
                     <Input
@@ -287,11 +288,11 @@ export const Register = () => {
                             }
                         </Label2>
                     </span>
-                    <div>
+                    <Label2>
                         {
                             error
                         }
-                    </div>
+                    </Label2>
                     
                     <BoxButton>
                     <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => validate()}>Confirm</Button>
