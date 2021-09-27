@@ -48,7 +48,6 @@ export const Navbar = ({ setWillFetch }) => {
     const Container = styled.section`
         display: flex;
         justify-content: left;
-        justify-item: center;
         flex-wrap: wrap;
         flex-shrink: 0;
         height: 100%;
@@ -60,12 +59,12 @@ export const Navbar = ({ setWillFetch }) => {
         display: flex;
         flex-direction: column;
         position: fixed;
-        
-        justify-item: center;
+        align-items: center;
         width: 250px;
         height: 100%;
         background: #242526;
     `
+    
     const Button = styled.button`
         max-width: 100%;
         min-width: 50%;
@@ -91,11 +90,9 @@ export const Navbar = ({ setWillFetch }) => {
             animation: ${jump} 0.2s ease-out forwards;
         }
 
-
      `
     const A = styled.div`
         align-self: center;
-        
         background: #bdb8d;
         height: 150px;
         line-height: 30px;
@@ -105,7 +102,13 @@ export const Navbar = ({ setWillFetch }) => {
         border-radius: 15px;
         margin:10px;
         width:100px;
-
+    `
+    const ProfileImg = styled.img`
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        display:flex;
+        margin: 20px;
     `
 
     function logout() {
@@ -131,7 +134,7 @@ export const Navbar = ({ setWillFetch }) => {
                 <A></A>
 
                 {/*<Button onClick={() => setWillFetch(true)}>Leash</Button>*/}
-                <Link id="profile" to={{ pathname: "/profile", profile: profile }}>UserImage</Link>
+                <Link id="profile" to={{ pathname: "/profile", profile: profile }}><ProfileImg src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'/></Link>
 
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" onClick={() => whoAmI()}>profile</Button>
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" >Setting</Button>
