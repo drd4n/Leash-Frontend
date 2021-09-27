@@ -60,7 +60,8 @@ export const Profile = () => {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
         .then((res) => {
-            setSrc(res.data.profile_picture)
+            console.log(JSON.stringify(res.data.profile_src))
+            setSrc(res.data.profile_src)
         })
     }, [])
 

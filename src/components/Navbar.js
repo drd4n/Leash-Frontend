@@ -8,7 +8,7 @@ export const Navbar = ({ setWillFetch }) => {
     const [profile, setProfile] = useState({})
     const [src, setSrc] = useState("")
 
-    useEffect(() => {
+    useEffect(async () => {
         axios.get('http://localhost:3001/auth/whoAmI', {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then(async (res) => {
@@ -17,7 +17,7 @@ export const Navbar = ({ setWillFetch }) => {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             })
                 .then((res) => {
-                    console.log(res.data)
+                    console.log(JSON.stringify(res.data))
                     setSrc(res.data.profile_src)
                 })
         })
