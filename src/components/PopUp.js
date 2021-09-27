@@ -28,16 +28,16 @@ const PostImg = styled.img`
     padding: 5px;
   `
 const TextBox = styled.div`
-font-size: 15px;
-padding: 5px;
-color: white;
-width: 550px;
-border-radius: 15px; 
-margin: auto;
-margin-top: 10px;
-margin-bottom: 10px;
-padding:10px;
-background-color: #3A3B3C;
+    font-size: 15px;
+    padding: 5px;
+    color: white;
+    width: 550px;
+    border-radius: 15px; 
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding:10px;
+    background-color: #3A3B3C;
 `
 
 const PictureLayout = styled.div`
@@ -53,17 +53,35 @@ const ButtonLayout = styled.div`
 `
 
 const Button = styled.button`
-  background-color: #FFFFFF;
-  padding: 7px 12px;
-  cursor: pointer;
+    align-self: center;
+    padding: 11px 20px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border:none;
+    border-radius: 44px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
 `
 const CommentBox = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    border:none;
+    border-radius: 44px;
     margin:10px;
     padding:5px;
     background-color: #aaaaaa;
+`
+const Input = styled.input`
+    max-width: 100%;
+    min-width: 50%;
+    padding: 10px;
+    border:none;
+    border-radius: 44px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+
 `
 
 export const PopUp = (props) => {
@@ -131,7 +149,7 @@ export const PopUp = (props) => {
                     })
                 }
                 <CommentBox>
-                    <input
+                    <Input
                         placeholder="Write your comment?"
                         type="text"
                         value={comment}
