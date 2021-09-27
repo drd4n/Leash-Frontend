@@ -171,30 +171,30 @@ export const Register = () => {
         
         console.log(JSON.stringify(form.dob))
         console.log(form.dob)
-        // if (!form.firstname) {
-        //     return setError("Firstname must be filled")
-        // }
-        // if (!form.lastname) {
-        //     return setError("Lastname must be filled")
-        // }
-        // if (!form.email) {
-        //     return setError("E-mail must be filled")
-        // }
-        // if (!validator.isEmail(form.email)) {
-        //     return setError("E-mail is not valid")
-        // }
-        // if (!form.dob) {
-        //     return setError("Date of birth must be filled")
-        // }
-        // if (!validator.isDate(form.dob, { format:'DD/MM/YYYY' ,delimiters: '/', strictMode: true })) {
-        //     return setError("Date of birth is not in format")
-        // }
-        // if (!form.username) {
-        //     return setError("Username must be filled")
-        // }
-        // if (!form.password) {
-        //     return setError("Password must be filled")
-        // }
+        if (!form.firstname) {
+            return setError("Firstname must be filled")
+        }
+        if (!form.lastname) {
+            return setError("Lastname must be filled")
+        }
+        if (!form.email) {
+            return setError("E-mail must be filled")
+        }
+        if (!validator.isEmail(form.email)) {
+            return setError("E-mail is not valid")
+        }
+        if (!form.dob) {
+            return setError("Date of birth must be filled")
+        }
+        if (!validator.isDate(form.dob, { format:'DD/MM/YYYY' ,delimiters: '/', strictMode: true })) {
+            return setError("Date of birth is not in format")
+        }
+        if (!form.username) {
+            return setError("Username must be filled")
+        }
+        if (!form.password) {
+            return setError("Password must be filled")
+        }
 
         axios.post('http://localhost:3001/auth/register', form)
         // ,{
