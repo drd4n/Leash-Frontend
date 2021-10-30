@@ -187,7 +187,7 @@ export const Register = () => {
         if (!form.dob) {
             return setError("Date of birth must be filled")
         }
-        if (!validator.isDate(form.dob, { format:'DD/MM/YYYY' ,delimiters: '/', strictMode: true })) {
+        if (!validator.isDate(form.dob)) {
             return setError("Date of birth is not in format")
         }
         if (!form.username) {

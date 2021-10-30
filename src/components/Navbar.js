@@ -9,11 +9,11 @@ export const Navbar = ({ setWillFetch }) => {
     const [src, setSrc] = useState("")
 
     useEffect(async () => {
-        axios.get('http://localhost:3001/auth/whoAmI', {
+        axios.get('https://54.169.181.65/auth/whoAmI', {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then(async (res) => {
             setProfile(res.data)
-            await axios.get(`http://localhost:3001/auth/showProfileImage/${res.data.profile_picture}`, {
+            await axios.get(`https://54.169.181.65/auth/showProfileImage/${res.data.profile_picture}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             })
                 .then((res) => {
@@ -115,7 +115,7 @@ export const Navbar = ({ setWillFetch }) => {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
         // }
-        axios.post("http://localhost:3001/auth/logout", {
+        axios.post("https://54.169.181.65/auth/logout", {
             token: localStorage.getItem('token')
         })
 
