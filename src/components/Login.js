@@ -174,7 +174,7 @@ export const Login = () => {
     const [form, setForm] = useState({})
 
     async function login() {
-        axios.post("http://localhost:3001/auth/login", form
+        axios.post("https://54.169.181.65/auth/login", form
             // ,{
             //     headers: { 'content-type': 'application/x-www-form-urlencoded'}
             // }
@@ -183,7 +183,7 @@ export const Login = () => {
                 console.log(res)
                 localStorage.clear()
                 localStorage.setItem('token', res.data.token)
-                return window.location.href = 'http://localhost:3000/'
+                return document.getElementById("tofeed").click()
             }).catch((e) => {
                 console.log(JSON.stringify(e))
                 console.log(e.response.data.errors)
@@ -194,7 +194,7 @@ export const Login = () => {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
         // }
-         axios.post("http://localhost:3001/auth/logout", {
+         axios.post("https://54.169.181.65/auth/logout", {
                 token: localStorage.getItem('token')
             })
             .then((res) => {
@@ -296,7 +296,7 @@ export const Login = () => {
                 </BoxButton>
                 </TextForm>
             </Wrapper>
-            
+            <Link id="tofeed" to="/"></Link>
             </WrapperContainer2>
             </Container>
             {/*<Button onClick={() => logout()}>logout</Button><br /> */}

@@ -3,6 +3,7 @@ import validator from 'validator'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import styled, { keyframes, createGlobalStyle } from "styled-components";
 
 
@@ -62,7 +63,7 @@ const Wrapper = styled.section`
     
 `;
 
-const Form = styled.form`
+const Form = styled.div`
     width: 100%;
     max-width: 414px;
     padding: 1rem;
@@ -79,12 +80,13 @@ const Label = styled.label`
 
 const Label2 = styled.label`
     max-height: 100%;
-    color: #FFFFFF;
     margin-bottom: -0.3rem;
     font-style: light;
     font-weight: 200;
     font-size: 14px;
     flex-shrink: 0;
+    margin:10px;
+    color:red;
 `;
 
 const FontTitle1 = styled.label`
@@ -150,7 +152,6 @@ const Button = styled.button`
     }
 `;
 
-
 export const Register = () => {
 
     const [form, setForm] = useState({})
@@ -186,7 +187,7 @@ export const Register = () => {
         if (!form.dob) {
             return setError("Date of birth must be filled")
         }
-        if (!validator.isDate(form.dob, { format:'DD/MM/YYYY' ,delimiters: '/', strictMode: true })) {
+        if (!validator.isDate(form.dob)) {
             return setError("Date of birth is not in format")
         }
         if (!form.username) {
@@ -196,14 +197,16 @@ export const Register = () => {
             return setError("Password must be filled")
         }
 
-        axios.post('http://localhost:3001/auth/register', form)
+        axios.post('https://54.169.181.65/auth/register', form)
         // ,{
         //     headers: { 'content-type': 'application/x-www-form-urlencoded' }
         // }
             .then((res) => {
                 localStorage.clear()
                 localStorage.setItem('token', res.data.token)
-                return window.location.href = "http://localhost:3000/finishYourProfile"
+                document.getElementById("tofinish").click()
+                return
+                // return window.location.href = "http://localhost:3000/finishYourProfile"
             }).catch((e) => {
                 console.log(JSON.stringify(e))
                 console.log(e.response.data.errors)
@@ -213,6 +216,7 @@ export const Register = () => {
 
     return (
         <>
+
             
             
             <GlobalStyle />
@@ -223,7 +227,7 @@ export const Register = () => {
             
             <Wrapper>
                 <Form>
-                <FontTitle1>Login</FontTitle1>
+                <FontTitle1>Register</FontTitle1>
                 
                     <Label htmlFor="firstname">First name</Label><br />
                     <Input
@@ -287,13 +291,14 @@ export const Register = () => {
                             }
                         </Label2>
                     </span>
-                    <div>
+                    <Label2>
                         {
                             error
                         }
-                    </div>
+                    </Label2>
                     
                     <BoxButton>
+                    <Link id="tofinish" to="/finishYourProfile"></Link>
                     <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => validate()}>Confirm</Button>
                     </BoxButton>
                 </Form>
@@ -301,6 +306,7 @@ export const Register = () => {
             
             </WrapperContainer2>
             </Container>
+
         </>
     )
 }
