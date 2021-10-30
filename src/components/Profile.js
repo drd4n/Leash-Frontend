@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component } from 'react'
 import axios from 'axios'
 import { useLocation } from 'react-router'
 import styled, { keyframes, createGlobalStyle, css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Name = styled.h1`
 color:white;
@@ -14,7 +15,6 @@ display:flex;
 flex-direction: row;
 align-items: center;
 justify-content:space-evenly;
-position: fixed;
 width: 100%;
 height: 200px;
 background: #242526;
@@ -59,24 +59,44 @@ export const Profile = () => {
         axios.get(`http://localhost:3001/auth/showProfileImage/${profile.profile_picture}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
-        .then((res) => {
-            console.log(JSON.stringify(res.data.profile_src))
-            setSrc(res.data.profile_src)
-        })
+            .then((res) => {
+                setSrc(res.data.profile_src)
+            })
+
     }, [])
 
+    // const base64toBlob = (data) => {
+    //     // Cut the prefix `data:application/pdf;base64` from the raw base 64
+    //     const base64WithoutPrefix = data.substr('data:application/pdf;base64,'.length);
+
+    //     const bytes = window.atob(base64WithoutPrefix);
+    //     let length = bytes.length;
+    //     let out = new Uint8Array(length);
+
+    //     while (length--) {
+    //         out[length] = bytes.charCodeAt(length);
+    //     }
+
+    //     return new Blob([out], { type: 'application/pdf' });
+    // }
+
     return (
-        <ProfileRow>
-            <Row>
-                <ProfileImg src={src}/>
-                <div><Name>{profile.firstname} {profile.lastname} </Name> <Username>{profile.username}</Username>
-                </div>
-                {
-                   console.log({src}) 
-                }
-            </Row>
-            <Button>setting</Button>
-        </ProfileRow>
+        <>
+            <ProfileRow>
+                <Row>
+                    <Button onClick={() => document.getElementById("tofeed").click()} >&lt; Feed</Button>
+                    <ProfileImg src={src} />
+                    <div><Name>{profile.firstname} {profile.lastname} </Name> <Username>{profile.username}</Username>
+                    </div>
+                    {
+                        console.log({ src })
+                    }
+                </Row>
+                <Button onClick={() => {document.getElementById("torequest").click()}}>Request Verifucation</Button>
+            </ProfileRow>
+            <Link id="torequest" to={{ pathname: "/request", profile: profile }}></Link>
+            <Link id="tofeed" to="/"></Link>
+        </>
     )
 }
 
