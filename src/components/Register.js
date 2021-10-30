@@ -197,7 +197,7 @@ export const Register = () => {
             return setError("Password must be filled")
         }
 
-        axios.post('https://54.169.181.65/auth/register', form)
+        axios.post('http://localhost:3001/auth/register', form)
         // ,{
         //     headers: { 'content-type': 'application/x-www-form-urlencoded' }
         // }

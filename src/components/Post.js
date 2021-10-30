@@ -103,20 +103,20 @@ export const Post = (props) => {
         const data = {
             picture_link: props.post.picture_link
         }
-        axios.post('https://54.169.181.65/post/showPostImage', data)
+        axios.post('http://localhost:3001/post/showPostImage', data)
             // axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data)
             .then(res => {
                 setImgs(res.data.src);
             })
 
-        axios.get(`https://54.169.181.65/interaction/showInteraction/${props.post._id}`, {
+        axios.get(`http://localhost:3001/interaction/showInteraction/${props.post._id}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then((res) => {
             console.log(res.data.interaction)
         })
 
         if(props.post.owner.profile_picture){
-            axios.get(`https://54.169.181.65/auth/showProfileImage/${props.post.owner.profile_picture}`,{
+            axios.get(`http://localhost:3001/auth/showProfileImage/${props.post.owner.profile_picture}`,{
                 headers: {'x-access-token':localStorage.getItem('token')}
             })
             .then((res)=>{
@@ -140,7 +140,7 @@ export const Post = (props) => {
     }
 
     function upvote() {
-        axios.post('https://54.169.181.65/interaction/upvote', {
+        axios.post('http://localhost:3001/interaction/upvote', {
             post_id: props.post._id
         },
             {
@@ -151,7 +151,7 @@ export const Post = (props) => {
     }
 
     function downvote() {
-        axios.post('https://54.169.181.65/interaction/downvote', {
+        axios.post('http://localhost:3001/interaction/downvote', {
             post_id: props.post._id
         },
             {
@@ -163,7 +163,7 @@ export const Post = (props) => {
 
     async function toProfile() {
         try{
-            const data = await axios.get(`https://54.169.181.65/auth/profile/${props.post.owner.user_id}`,{
+            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`,{
                 headers: {'x-access-token':localStorage.getItem('token')}
             })
             console.log(data.data)

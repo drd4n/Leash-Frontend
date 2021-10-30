@@ -10,7 +10,7 @@ export const Feed = ({ willFetch, setWillFetch }) => {
     useEffect(() => {
         if (isRecommend){
             let user_id = ""
-            axios.get('https://54.169.181.65/auth/whoAmI',{
+            axios.get('http://localhost:3001/auth/whoAmI',{
                 headers: {'x-access-token':localStorage.getItem('token')}
             })
             .then((res)=>{
@@ -23,7 +23,7 @@ export const Feed = ({ willFetch, setWillFetch }) => {
             })
             
         } else {
-            axios('https://54.169.181.65')
+            axios('http://localhost:3001')
                 .then(res => {
                     setTemp([])
                     setPosts([])
@@ -34,9 +34,9 @@ export const Feed = ({ willFetch, setWillFetch }) => {
                     console.log(error)
                 })
         }
-        if (willFetch) {// const feed = await axios('https://54.169.181.65/post', );
+        if (willFetch) {// const feed = await axios('http://localhost:3001/post', );
             // axios('https://leash-khakai-api.herokuapp.com/')
-            axios('https://54.169.181.65')
+            axios('http://localhost:3001')
             // axios('http://18.141.13.205:3001')
                 // setPosts(feed.data)
                 .then(res => {
