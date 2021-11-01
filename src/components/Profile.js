@@ -80,6 +80,19 @@ export const Profile = () => {
     //     return new Blob([out], { type: 'application/pdf' });
     // }
 
+    const toRequest = async () => {
+        axios.get('http://localhost:3001/request/check', {
+            headers: { 'x-access-token': localStorage.getItem('token') }
+        }
+        ).then((res) => {
+            if(res.data.message === "go"){
+                return document.getElementById("torequest").click()
+            } else {
+                return alert("You are already submitted")
+            }
+        })
+    }
+
     return (
         <>
             <ProfileRow>
@@ -92,7 +105,7 @@ export const Profile = () => {
                         console.log({ src })
                     }
                 </Row>
-                <Button onClick={() => {document.getElementById("torequest").click()}}>Request Verifucation</Button>
+                <Button onClick={() => toRequest()}>Request Verifucation</Button>
             </ProfileRow>
             <Link id="torequest" to={{ pathname: "/request", profile: profile }}></Link>
             <Link id="tofeed" to="/"></Link>
