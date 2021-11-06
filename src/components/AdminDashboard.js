@@ -19,9 +19,9 @@ export const AdminDashboard = () => {
         })
     }, [])
 
-    const base64toBlob = (data, b64Type, blobType) => {
+    const base64toBlob = (data, b64Type) => {
         // Cut the prefix `data:application/pdf;base64` from the raw base 64
-        const base64Type = b64Type+","
+        const base64Type = "data:"+b64Type+";base64,"
         const base64WithoutPrefix = data.substr( base64Type.length);
     
         const bytes = window.atob(base64WithoutPrefix);
@@ -32,7 +32,7 @@ export const AdminDashboard = () => {
             out[length] = bytes.charCodeAt(length);
         }
     
-        return new Blob([out], { type: blobType });
+        return new Blob([out], { type: b64Type });
     }
 
     const showProfile = (s3key) => {
@@ -43,7 +43,7 @@ export const AdminDashboard = () => {
             // let image = new Image();
             // image.src = res.data.profile_src
             // return window.open("_blank").document.write(image.outerHTML)
-            const url = URL.createObjectURL(base64toBlob(res.data.profile_src,"data:image/jpg;base64", "image/jpg"))
+            const url = URL.createObjectURL(base64toBlob(res.data.profile_src, "image/jpg"))
             return window.open(url, "_blank")
         })
     }
@@ -54,7 +54,7 @@ export const AdminDashboard = () => {
         })
         .then( res => {
             // image/jpg
-            const url = URL.createObjectURL(base64toBlob(res.data.verify_picture,"data:image/jpg;base64", "image/jpg"))
+            const url = URL.createObjectURL(base64toBlob(res.data.verify_picture, "image/jpg"))
             return window.open(url, "_blank")
         })
     }
@@ -64,7 +64,7 @@ export const AdminDashboard = () => {
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
-            const blob = base64toBlob(res.data.veterinarian_file,"data:application/pdf;base64","application/pdf");
+            const blob = base64toBlob(res.data.veterinarian_file, "application/pdf");
             const url = URL.createObjectURL(blob);
             return window.open(url,"_blank")
         })
@@ -72,6 +72,24 @@ export const AdminDashboard = () => {
 
     const approve = (user_id) => {
         axios.post(`http://localhost:3001/request/approve`, {user_id},{
+            headers: { 'x-access-token': localStorage.getItem('admintoken') }
+        })
+        .then( res => {
+            console.log(res)
+        })
+    } 
+
+    const reject = (user_id,veterinarian_file,verify_picture) => {
+        axios.post(`http://localhost:3001/request/reject`, {user_id,veterinarian_file,verify_picture},{
+            headers: { 'x-access-token': localStorage.getItem('admintoken') }
+        })
+        .then( res => {
+            console.log(res)
+        })
+    } 
+
+    const revoke = (user_id) => {
+        axios.post(`http://localhost:3001/request/revoke`, {user_id},{
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
@@ -103,7 +121,8 @@ export const AdminDashboard = () => {
                                     <td><button onClick={()=>{showVerifyPicture(request.verify_picture)}}>View Verification Picture</button></td>
                                     <td><button onClick={()=>{showFile(request.veterinarian_file)}}>View Verification File</button></td>
                                     <td><button onClick={()=>{ approve(request._id) }}>Approve</button></td>
-                                    <td><button onClick={()=>{}}>Reject</button></td>
+                                    <td><button onClick={()=>{ reject(request._id,request.veterinarian_file,request.verify_picture) }}>Reject</button></td>
+                                    <td><button onClick={()=>{ revoke(request._id) }}>Revoke</button></td>
                                 </tr>
                     })
                 }
