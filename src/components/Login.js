@@ -87,6 +87,10 @@ const Label = styled.label`
     margin-bottom: -0.8rem;
 `;
 
+const Error = styled.label`
+    color: red;
+`;
+
 const FontTitle1 = styled.label`
     font-style: medium;
     font-weight: 500;
@@ -172,6 +176,7 @@ const Border = styled.h2`
 export const Login = () => {
 
     const [form, setForm] = useState({})
+    const [error, SetError] = useState(null)
 
     async function login() {
         axios.post("http://localhost:3001/auth/login", form
@@ -187,6 +192,7 @@ export const Login = () => {
             }).catch((e) => {
                 console.log(JSON.stringify(e))
                 console.log(e.response.data.errors)
+                SetError(e.response.data.errors)
             })
     }
 
@@ -283,11 +289,10 @@ export const Login = () => {
                     id="password"
                     name="password"
                     onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
-                
+                <Error>{error}</Error>
                 <BoxButton>
                 <Button textColor="#FFFFFF" backgroundColor="#5D8888" onClick={() => login()}>Login</Button><br />
                 </BoxButton>
-                            
                 <Border></Border>
                 <FontTitle2>Wanna join us?</FontTitle2>
                 <BoxButton>

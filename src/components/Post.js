@@ -24,7 +24,7 @@ transform: translateX(-50px);
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    border: 3px solid #FFFFFF;
+    border: 1px solid #18191A;
     display:flex;
 `
 const PostOwner = styled.div`
@@ -76,14 +76,21 @@ const Spacearound = styled.div`
 `
 
 const Button = styled.button`
-    height: 50px;
+    max-width: 30%;
+    min-width: 18%;
     padding: 12px 7px;
     margin:20px;
     font-weight: 600;
     text-transform: uppercase;
-    border-radius: 15px;
+    border: none;
+    border-radius: 44px;
+    outline: 0;
     cursor: pointer;
+    margin-top: 0.5rem;
+    margin-Bottom: 1.5rem;
     transition: all 0.3s ease-out;
+    background: #A1D3CD;
+    color: #FFFFFF;
 `
 
 
