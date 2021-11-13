@@ -17,7 +17,6 @@ export const Navbar = ({ setWillFetch }) => {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             })
                 .then((res) => {
-                    console.log(JSON.stringify(res.data))
                     setSrc(res.data.profile_src)
                 })
         })
@@ -91,7 +90,7 @@ export const Navbar = ({ setWillFetch }) => {
         }
 
      `
-    const A = styled.div`
+    const A = styled.div `
         align-self: center;
         background: #bdb8d;
         height: 150px;

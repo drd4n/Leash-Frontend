@@ -25,7 +25,6 @@ export const UploadProfile = () => {
             .then(res => {
                 setUploadedpics()
                 setShower()
-                console.log(res.data)
             })
     }
 
