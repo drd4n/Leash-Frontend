@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 export const AdminDashboard = () => {
 
     const [requests, setRequests] = useState([])
+    const [isDirty, setIsDirty] = useState(true)
 
     useEffect(() => {
         if (!AdminTokenValidate()) {
@@ -16,8 +17,9 @@ export const AdminDashboard = () => {
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         }).then((res) => {
             setRequests(res.data)
+            setIsDirty(false)
         })
-    }, [])
+    }, [isDirty])
 
     const base64toBlob = (data, b64Type) => {
         // Cut the prefix `data:application/pdf;base64` from the raw base 64
@@ -75,7 +77,7 @@ export const AdminDashboard = () => {
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
-            console.log(res)
+            setIsDirty(true)
         })
     } 
 
@@ -84,16 +86,7 @@ export const AdminDashboard = () => {
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
-            console.log(res)
-        })
-    } 
-
-    const revoke = (user_id) => {
-        axios.post(`http://localhost:3001/request/revoke`, {user_id},{
-            headers: { 'x-access-token': localStorage.getItem('admintoken') }
-        })
-        .then( res => {
-            console.log(res)
+            setIsDirty(true)
         })
     } 
 
@@ -122,7 +115,7 @@ export const AdminDashboard = () => {
                                     <td><button onClick={()=>{showFile(request.veterinarian_file)}}>View Verification File</button></td>
                                     <td><button onClick={()=>{ approve(request._id) }}>Approve</button></td>
                                     <td><button onClick={()=>{ reject(request._id,request.veterinarian_file,request.verify_picture) }}>Reject</button></td>
-                                    <td><button onClick={()=>{ revoke(request._id) }}>Revoke</button></td>
+                                    <td>{request.approval_status}</td>
                                 </tr>
                     })
                 }

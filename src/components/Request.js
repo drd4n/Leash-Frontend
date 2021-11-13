@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Component } from 'react'
 import axios from 'axios'
-import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
-import styled, { keyframes, createGlobalStyle, css } from 'styled-components'
+import styled from 'styled-components'
+import TokenValidate from '../config/TokenValidate'
 
 const Name = styled.h1`
 color:white;
@@ -51,11 +51,49 @@ transition: all 0.3s ease-out;
 `
 
 export const Profile = () => {
-    const location = useLocation()
-    const profile = location.profile
-    const [file, setFile] = useState("")
-    const [src, setSrc] = useState("")
-    const [request, setRequest] = useState({})
+    const [profile, setProfile] = useState({})
+    const [file, setFile] = useState()
+    const [src, setSrc] = useState()
+    const [requestFile, setRequestFile] = useState()
+    const [requestPicture, setRequestPicture] = useState()
+    const [isDirty, setIsDirty] = useState(true)
+
+    useEffect(async () => {
+        if (!TokenValidate()) {
+            return document.getElementById("notoken").click()
+        }
+
+        if (isDirty) {
+            await axios.get('http://localhost:3001/auth/whoAmI', {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then((res) => {
+                setProfile(res.data)
+                setIsDirty(false)
+            })
+        }
+
+        if (profile.verify_picture && profile.veterinarian_file) {
+            await axios.get(`http://localhost:3001/request/showPendingVerifyPicture/${profile.verify_picture}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then(res => {
+                setSrc(res.data.verify_picture)
+                setRequestPicture(profile.verify_picture)
+            })
+
+            axios.get(`http://localhost:3001/request/showPendingFile/${profile.veterinarian_file}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then(res => {
+                setFile(res.data.veterinarian_file)
+                setRequestFile(profile.veterinarian_file)
+            })
+        } else {
+            setFile()
+            setSrc()
+            setRequestFile()
+            setRequestPicture()
+        }
+
+    }, [isDirty])
 
     function onDrop(selectedImage) {
         //pictures.map(image => {
@@ -69,7 +107,7 @@ export const Profile = () => {
                 // const blob = base64toBlob(res.data.file);
                 // setFile(URL.createObjectURL(blob))
                 setFile(res.data.file)
-                setRequest({ ...request, veterinarian_file: res.data.veterinarian_file })
+                setRequestFile(res.data.veterinarian_file)
                 // setShower(res.data.src)
                 // setUploadedpics(res.data.picture_link)
             })
@@ -87,17 +125,19 @@ export const Profile = () => {
                 // const blob = base64toBlob(res.data.file);
                 // setFile(URL.createObjectURL(blob))
                 setSrc(res.data.src)
-                setRequest({ ...request, verify_picture: res.data.verify_picture })
+                setRequestPicture(res.data.verify_picture)
                 // setShower(res.data.src)
                 // setUploadedpics(res.data.picture_link)
             })
     }
 
     const submit = () => {
-        if (!request.verify_picture && !request.veterinarian_file) {
+        if (!requestPicture || !requestFile || requestPicture === "" || requestFile === "") {
             alert("please complete the form before submit")
             return
         }
+        console.log(requestPicture)
+        console.log(requestFile)
         // alert("You CANNOT be able to edit or replace file later.")
         axios.post("http://localhost:3001/request/submit",
             {
@@ -105,8 +145,9 @@ export const Profile = () => {
                     _id: profile._id
                 },
                 update: {
-                    veterinarian_file: request.veterinarian_file,
-                    verify_picture: request.verify_picture
+                    veterinarian_file: requestFile,
+                    verify_picture: requestPicture,
+                    approval_status: "pending"
                 }
 
             },
@@ -115,10 +156,12 @@ export const Profile = () => {
                     'x-access-token': localStorage.getItem('token')
                 }
             }
-        ).then( (res) => {
+        ).then((res) => {
             setSrc("")
             setFile("")
-            setRequest({})
+            setRequestFile("")
+            setRequestPicture("")
+            setIsDirty(true)
             return document.getElementById("toprofile").click()
         })
     }
@@ -140,46 +183,66 @@ export const Profile = () => {
     }
 
     const removeFile = () => {
-        if (!file) {
+        if (!file || !requestFile) {
             alert("you did not upload any file yet.")
             return
         }
         axios.post("http://localhost:3001/request/removeSelectedFile"
             , {
-                s3key: request.veterinarian_file
+                s3key: requestFile
             },
             {
                 headers: {
                     'x-access-token': localStorage.getItem('token')
                 }
             }).then((res) => {
-                setFile("")
-                setRequest({ ...request, veterinarian_file: "" })
+                setFile()
+                setRequestFile()
             })
     }
 
     const removePicture = () => {
-        if (!src) {
+        if (!src || !requestPicture) {
             alert("you did not upload any file yet.")
             return
         }
         axios.post("http://localhost:3001/request/removeSelectedPicture"
             , {
-                s3key: request.verify_picture
+                s3key: requestPicture
             },
             {
                 headers: {
                     'x-access-token': localStorage.getItem('token')
                 }
             }).then((res) => {
-                setSrc("")
-                setRequest({ ...request, verify_picture: "" })
+                setSrc()
+                setRequestPicture()
+            })
+    }
+
+    const cancel = () => {
+        if (!src && !file && !requestPicture && !requestFile) {
+            alert("you did not upload any file yet.")
+            return
+        }
+
+        axios.post("http://localhost:3001/request/cancel", {
+            veterinarian_file: requestFile,
+            verify_picture: requestPicture
+        },
+            {
+                headers: {
+                    'x-access-token': localStorage.getItem('token')
+                }
+            }).then((res) => {
+                setIsDirty(true)
             })
     }
 
     return (
         <>
             <Button onClick={() => { document.getElementById("toprofile").click() }}>&lt; Profile </Button>
+            <Username>{profile.approval_status}</Username>
             <Username>Verified File</Username>
             <div style={{ border: '1px solid rgba(0, 0, 0, 0.3)', height: '255px', width: '210px' }}>
                 <embed src={file} type="application/pdf" height="100%" width="100%" ></embed>
@@ -209,7 +272,9 @@ export const Profile = () => {
             <Button onClick={() => { pickPicture() }}>Pick Picture</Button>
             <Button onClick={() => { removePicture() }}>Remove</Button><br />
             <Button onClick={() => submit()}>Submit</Button>
+            <Button onClick={() => { cancel() }}>Cancel Submition</Button>
             <Link id="toprofile" to={{ pathname: "/profile", profile: profile }}></Link>
+            <Link id="notoken" to="/"></Link>
         </>
     )
 }
