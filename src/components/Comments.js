@@ -11,7 +11,7 @@ const Text = styled.div`
 `
 const ProfileImg = styled.img`
     
-  `  
+  `
 const CommentBox = styled.div`
     display: flex;
     flex-direction: row;
@@ -24,12 +24,24 @@ const CommentBox = styled.div`
 `
 export const Comments = (props) => {
 
-return ( 
-    <CommentBox>
-        <div>{props.comment.owner.firstname} {props.comment.owner.lastname}</div>
-        <div>{props.comment.comment_text}</div>
-    </CommentBox>
-)
+    const [src, setSrc] = useState()
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/auth/showProfileImage/${props.comment.owner.profile_picture}`, {
+            headers: { 'x-access-token': localStorage.getItem('token') }
+        })
+            .then((res) => {
+                setSrc(res.data.profile_src)
+            })
+    }, [])
+
+    return (
+        <CommentBox>
+            <ProfileImg src={src} />
+            <div>{props.comment.owner.firstname} {props.comment.owner.lastname}</div>
+            <div>{props.comment.comment_text}</div>
+        </CommentBox>
+    )
 }
 
 export default Comments
