@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component } from 'react'
 import styled, { css } from 'styled-components'
 import axios from 'axios'
 import Comments from './Comments'
+import { Link } from 'react-router-dom'
 
 const Box = styled.div` 
     width: 600px;
@@ -20,13 +21,18 @@ const Background = styled.div`
     height: 100vh;
     left: 0;
     top: 0;
+    z-index: 1;
   `
-
 
 const PostImg = styled.img`
     height: 200px;
     padding: 5px;
   `
+
+const ProfileImg = styled.img`
+    height: 100px;
+  `  
+
 const TextBox = styled.div`
     font-size: 15px;
     padding: 5px;
@@ -41,12 +47,6 @@ const TextBox = styled.div`
 `
 
 const PictureLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-`
-
-const ButtonLayout = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -86,10 +86,13 @@ const Input = styled.input`
 
 export const PopUp = (props) => {
     const [Imgs, setImgs] = useState([])
+    const [owner, setOwner] = useState({})
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
     const [isCommentDirty, setIsCommentDirty] = useState(true)
+    const [profilePicture, setProfilePicture] = useState()
 
+    
     useEffect(async() => {
         if (isCommentDirty) {
 
@@ -100,11 +103,20 @@ export const PopUp = (props) => {
                 })
         }
 
+        if(props.props.owner.profile_picture){
+            axios.get(`http://localhost:3001/auth/showProfileImage/${props.props.owner.profile_picture}`,{
+                headers: {'x-access-token':localStorage.getItem('token')}
+            })
+            .then((res)=>{
+                setProfilePicture(res.data.profile_src)
+            })
+        }
+
         if(props.props.src){
             setImgs(props.props.src)
         }
        
-    }, [isCommentDirty, props.props.src, props.props._id])
+    }, [isCommentDirty, props.props.src, props.props._id,props.props.profile_picture])
 
     function createComment() {
         if (!comment) {
@@ -125,6 +137,20 @@ export const PopUp = (props) => {
             )
     }
 
+    async function toProfile() {
+        try{
+            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`,{
+                headers: {'x-access-token':localStorage.getItem('token')}
+            })
+            console.log(data.data)
+            setOwner(data.data)
+            return document.getElementById("toProfile").click()
+        }catch(error){
+            // console.log(error.response.data.errors)
+            console.log(error)
+        }
+    }
+
     function close() {
         props.setWillClose(true)
     }
@@ -133,7 +159,12 @@ export const PopUp = (props) => {
         <Background>
             <Box>
                 <button onClick={close}>X</button>
-                <p>{props.props._id}</p>
+                <div>
+                        <Link id="toProfile" to={{pathname:"/profile", profile:owner}}>
+                        <ProfileImg src={profilePicture} onClick={toProfile}/>
+                        <p>{props.props.owner.firstname} {props.props.owner.lastname}</p>
+                        </Link>
+                </div>
                 <PictureLayout>
                     {
                         Imgs.map((img, i) => {
