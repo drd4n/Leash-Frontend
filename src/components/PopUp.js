@@ -31,7 +31,7 @@ const PostImg = styled.img`
 
 const ProfileImg = styled.img`
     height: 100px;
-  `  
+  `
 
 const TextBox = styled.div`
     font-size: 15px;
@@ -92,8 +92,8 @@ export const PopUp = (props) => {
     const [isCommentDirty, setIsCommentDirty] = useState(true)
     const [profilePicture, setProfilePicture] = useState()
 
-    
-    useEffect(async() => {
+
+    useEffect(async () => {
         if (isCommentDirty) {
 
             await axios.get(`http://localhost:3001/comment/showComment/${props.props._id}`)
@@ -103,20 +103,20 @@ export const PopUp = (props) => {
                 })
         }
 
-        if(props.props.owner.profile_picture){
-            axios.get(`http://localhost:3001/auth/showProfileImage/${props.props.owner.profile_picture}`,{
-                headers: {'x-access-token':localStorage.getItem('token')}
+        if (props.props.owner.profile_picture) {
+            axios.get(`http://localhost:3001/auth/showProfileImage/${props.props.owner.profile_picture}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
             })
-            .then((res)=>{
-                setProfilePicture(res.data.profile_src)
-            })
+                .then((res) => {
+                    setProfilePicture(res.data.profile_src)
+                })
         }
 
-        if(props.props.src){
+        if (props.props.src) {
             setImgs(props.props.src)
         }
-       
-    }, [isCommentDirty, props.props.src, props.props._id,props.props.profile_picture])
+
+    }, [isCommentDirty, props.props.src, props.props._id, props.props.profile_picture, props.props.src])
 
     function createComment() {
         if (!comment) {
@@ -125,12 +125,12 @@ export const PopUp = (props) => {
         const data = {
             comment_text: comment,
             post_id: props.props._id,
-            tags:props.props.tags
+            tags: props.props.tags
         }
         axios.post("http://localhost:3001/comment/createComment", data,
-        {
-            headers: { 'x-access-token': localStorage.getItem('token') }
-        }).then(res => {
+            {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then(res => {
                 setComment('')
                 setIsCommentDirty(true)
             }
@@ -138,14 +138,14 @@ export const PopUp = (props) => {
     }
 
     async function toProfile() {
-        try{
-            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`,{
-                headers: {'x-access-token':localStorage.getItem('token')}
+        try {
+            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
             })
             console.log(data.data)
             setOwner(data.data)
             return document.getElementById("toProfile").click()
-        }catch(error){
+        } catch (error) {
             // console.log(error.response.data.errors)
             console.log(error)
         }
@@ -154,16 +154,16 @@ export const PopUp = (props) => {
     function close() {
         props.setWillClose(true)
     }
-    
+
     return (
         <Background>
             <Box>
                 <button onClick={close}>X</button>
                 <div>
-                        <Link id="toProfile" to={{pathname:"/profile", profile:owner}}>
-                        <ProfileImg src={profilePicture} onClick={toProfile}/>
+                    <Link id="toProfile" to={{ pathname: "/profile", profile: owner }}>
+                        <ProfileImg src={profilePicture} onClick={toProfile} />
                         <p>{props.props.owner.firstname} {props.props.owner.lastname}</p>
-                        </Link>
+                    </Link>
                 </div>
                 <PictureLayout>
                     {
