@@ -112,7 +112,8 @@ export const PopUp = (props) => {
         }
         const data = {
             comment_text: comment,
-            post_id: props.props._id
+            post_id: props.props._id,
+            tags:props.props.tags
         }
         axios.post("http://localhost:3001/comment/createComment", data,
         {
