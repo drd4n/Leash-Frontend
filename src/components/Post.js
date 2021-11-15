@@ -148,7 +148,8 @@ export const Post = (props) => {
 
     function upvote() {
         axios.post('http://localhost:3001/interaction/upvote', {
-            post_id: props.post._id
+            post_id: props.post._id,
+            tags: props.post.tags
         },
             {
                 headers: { 'x-access-token': localStorage.getItem('token') }
@@ -159,7 +160,8 @@ export const Post = (props) => {
 
     function downvote() {
         axios.post('http://localhost:3001/interaction/downvote', {
-            post_id: props.post._id
+            post_id: props.post._id,
+            tags: props.post.tags
         },
             {
                 headers: { 'x-access-token': localStorage.getItem('token') }
@@ -170,10 +172,9 @@ export const Post = (props) => {
 
     async function toProfile() {
         try{
-            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`,{
+            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner_id}`,{
                 headers: {'x-access-token':localStorage.getItem('token')}
             })
-            console.log(data.data)
             setOwner(data.data)
             return document.getElementById("toProfile").click()
         }catch(error){
