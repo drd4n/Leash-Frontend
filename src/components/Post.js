@@ -107,7 +107,7 @@ const VoteButton = styled.button`
     margin-Bottom: 1.5rem;
     transition: all 0.3s ease-out;
     background: ${props => props.status ? "#75B2B2":"#A1D3CD"};
-    color: ${props => props.status ? "black":"##FFFFFF"};
+    color: ${props => props.status ? "black":"#FFFFFF"};
 `
 
 export const Post = (props) => {
