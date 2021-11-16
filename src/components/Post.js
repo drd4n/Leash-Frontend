@@ -89,10 +89,26 @@ const Button = styled.button`
     margin-top: 0.5rem;
     margin-Bottom: 1.5rem;
     transition: all 0.3s ease-out;
-    background: #A1D3CD;
+    background: #75B2B2;
     color: #FFFFFF;
 `
-
+const VoteButton = styled.button`
+    max-width: 30%;
+    min-width: 18%;
+    padding: 12px 7px;
+    margin:20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 44px;
+    outline: 0;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    margin-Bottom: 1.5rem;
+    transition: all 0.3s ease-out;
+    background: ${props => props.status ? "#75B2B2":"#A1D3CD"};
+    color: ${props => props.status ? "black":"##FFFFFF"};
+`
 
 export const Post = (props) => {
     
@@ -120,6 +136,11 @@ export const Post = (props) => {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then((res) => {
             console.log(res.data.interaction)
+            if(res.data.interaction="downvote"){
+                setUpVoted(true)
+            }else if(res.data.interaction="upvote"){
+                setDownVoted(true)
+            }
         })
 
         if(props.post.owner.profile_picture){
@@ -208,8 +229,8 @@ export const Post = (props) => {
                 <div>
                     {/* <p>{props.post._id}</p> */}
                     <Spacearound>
-                            <Button onClick={() => { upvote() }}>UPVOTE</Button>
-                            <Button onClick={() => { downvote() }}>DOWNVOTE</Button>
+                            <VoteButton status ={upVoted} onClick={() => { upvote() }}>UPVOTE</VoteButton>
+                            <VoteButton status ={downVoted} onClick={() => { downvote() }}>DOWNVOTE</VoteButton>
                     </Spacearound>
                 </div>
             </Box>
