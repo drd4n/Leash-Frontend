@@ -121,14 +121,14 @@ export const Post = (props) => {
     const [Imgs, setImgs] = useState([])
     const [popup, setPopup] = useState()
     const [isVoteDirty, setIsVoteDirty] = useState(true)
-    const [voted, setVoted] = useState('')
+    // const [voted, setVoted] = useState('')
     const [upVoted, setUpVoted] = useState(false)
     const [downVoted, setDownVoted] = useState(false)
     const [willClose, setWillClose] = useState(false)
     const PopId = props.post._id + "Popup"
     const BoxId = props.post._id + "Box"
 
-    useEffect(() => {
+    useEffect(async () => {
         const data = {
             picture_link: props.post.picture_link
         }
@@ -138,17 +138,22 @@ export const Post = (props) => {
                 setImgs(res.data.src);
             })
         if(isVoteDirty){
-            axios.get(`http://localhost:3001/interaction/showInteraction/${props.post._id}`, {
+            await axios.get(`http://localhost:3001/interaction/showInteraction/${props.post._id}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then((res) => {
             console.log(res.data.interaction)
             if(res.data.interaction==="upvote"){
+                setDownVoted(false)
                 setUpVoted(true)
+                setIsVoteDirty(false)
             }else if(res.data.interaction==="downvote"){
+                setUpVoted(false)
                 setDownVoted(true)
+                setIsVoteDirty(false)
             }else{
                 setDownVoted(false)
                 setUpVoted(false)
+                setIsVoteDirty(false)
             }
         })
         }
@@ -167,14 +172,12 @@ export const Post = (props) => {
             setWillClose(false)
         }
 
-    }, [props.post.picture_link,willClose,isVoteDirty])
+    }, [isVoteDirty,props.post.picture_link,willClose])
 
     const ShowPopup = () => {
         const post = props.post
         post.src = Imgs
         setPopup(<PopUp props={post} setWillClose={setWillClose} />)
-        // document.getElementById(PopId).style.display = "Block";
-        // document.getElementById(BoxId).style.display = "none";
     }
 
     function upvote() {
@@ -240,9 +243,9 @@ export const Post = (props) => {
                 </PictureLayout>
                 <div>
                     <Spacearound>
-                        {console.log(downVoted)}
+                        {console.log(upVoted)}
                             <VoteButton status ={upVoted} onClick={() => { upvote() }}>UPVOTE</VoteButton>
-                            {console.log(upVoted)}
+                            {console.log(downVoted)}
                             <VoteButton status ={downVoted} onClick={() => { downvote() }}>DOWNVOTE</VoteButton>
                     </Spacearound>
                 </div>
