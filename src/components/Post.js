@@ -106,9 +106,13 @@ const VoteButton = styled.button`
     margin-top: 0.5rem;
     margin-Bottom: 1.5rem;
     transition: all 0.3s ease-out;
-    background: ${props => props.status ? "#75B2B2":"#A1D3CD"};
-    color: ${props => props.status ? "black":"#FFFFFF"};
-`
+    background:#FFFFFF;
+    color:black;
+    background: ${props => props.status ? "#75B2B2" : "#FFFFFF" };
+    color: ${props => props.status ? "#FFFFFF" : "black" };
+    `
+
+
 
 export const Post = (props) => {
     
@@ -116,6 +120,8 @@ export const Post = (props) => {
     const [profilePicture, setProfilePicture] = useState()
     const [Imgs, setImgs] = useState([])
     const [popup, setPopup] = useState()
+    const [isVoteDirty, setIsVoteDirty] = useState(true)
+    const [voted, setVoted] = useState('')
     const [upVoted, setUpVoted] = useState(false)
     const [downVoted, setDownVoted] = useState(false)
     const [willClose, setWillClose] = useState(false)
@@ -131,17 +137,21 @@ export const Post = (props) => {
             .then(res => {
                 setImgs(res.data.src);
             })
-
-        axios.get(`http://localhost:3001/interaction/showInteraction/${props.post._id}`, {
+        if(isVoteDirty){
+            axios.get(`http://localhost:3001/interaction/showInteraction/${props.post._id}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then((res) => {
             console.log(res.data.interaction)
-            if(res.data.interaction="downvote"){
+            if(res.data.interaction==="upvote"){
                 setUpVoted(true)
-            }else if(res.data.interaction="upvote"){
+            }else if(res.data.interaction==="downvote"){
                 setDownVoted(true)
+            }else{
+                setDownVoted(false)
+                setUpVoted(false)
             }
         })
+        }
 
         if(props.post.owner.profile_picture){
             axios.get(`http://localhost:3001/auth/showProfileImage/${props.post.owner.profile_picture}`,{
@@ -157,7 +167,7 @@ export const Post = (props) => {
             setWillClose(false)
         }
 
-    }, [props.post.picture_link,willClose])
+    }, [props.post.picture_link,willClose,isVoteDirty])
 
     const ShowPopup = () => {
         const post = props.post
@@ -176,6 +186,7 @@ export const Post = (props) => {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then((res) => {
                 console.log(res.data)
+                setIsVoteDirty(true)
             })
     }
 
@@ -188,6 +199,7 @@ export const Post = (props) => {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then((res) => {
                 console.log(res.data)
+                setIsVoteDirty(true)
             })
     }
 
@@ -227,9 +239,10 @@ export const Post = (props) => {
                     }
                 </PictureLayout>
                 <div>
-                    {/* <p>{props.post._id}</p> */}
                     <Spacearound>
-                            <VoteButton status ={upVoted} onClick={() => { upvote() }}>UPVOTE</VoteButton>
+                        {console.log(downVoted)}
+                            <VoteButton status ={upVoted} id="p2" onClick={() => { upvote() }}>UPVOTE</VoteButton>
+                            {console.log(upVoted)}
                             <VoteButton status ={downVoted} onClick={() => { downvote() }}>DOWNVOTE</VoteButton>
                     </Spacearound>
                 </div>
