@@ -241,7 +241,7 @@ export const Post = (props) => {
                 <div>
                     <Spacearound>
                         {console.log(downVoted)}
-                            <VoteButton status ={upVoted} id="p2" onClick={() => { upvote() }}>UPVOTE</VoteButton>
+                            <VoteButton status ={upVoted} onClick={() => { upvote() }}>UPVOTE</VoteButton>
                             {console.log(upVoted)}
                             <VoteButton status ={downVoted} onClick={() => { downvote() }}>DOWNVOTE</VoteButton>
                     </Spacearound>
