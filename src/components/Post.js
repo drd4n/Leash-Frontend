@@ -125,7 +125,6 @@ export const Post = (props) => {
     const [upVoted, setUpVoted] = useState(false)
     const [downVoted, setDownVoted] = useState(false)
     const [willClose, setWillClose] = useState(false)
-    const PopId = props.post._id + "Popup"
     const BoxId = props.post._id + "Box"
 
     useEffect(async () => {
@@ -179,6 +178,16 @@ export const Post = (props) => {
         post.src = Imgs
         setPopup(<PopUp props={post} setWillClose={setWillClose} />)
     }
+    
+    function fetchPost() {
+        axios.get(`http://localhost:3001/feed/${props.post._id}`, {
+            headers: {'x-access-token':localStorage.getItem('token')}
+        }).then((res) => {
+            console.log(res.data)
+            props.post.upvote = res.data.upvote
+            props.post.downvote = res.data.downvote
+        })
+    }
 
     function upvote() {
         axios.post('http://localhost:3001/interaction/upvote', {
@@ -190,6 +199,7 @@ export const Post = (props) => {
             }).then((res) => {
                 console.log(res.data)
                 setIsVoteDirty(true)
+                fetchPost()
             })
     }
 
@@ -203,6 +213,7 @@ export const Post = (props) => {
             }).then((res) => {
                 console.log(res.data)
                 setIsVoteDirty(true)
+                fetchPost()
             })
     }
 
