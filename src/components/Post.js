@@ -74,6 +74,22 @@ const Spacearound = styled.div`
   flex-direction: row;
   justify-content: space-around;
 `
+const FlexStart = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+`
+
+const TagBox = styled.div`
+    background: #75B2B2;
+    padding: 7px;
+    margin: 10px;
+    border: none;
+    border-radius: 44px;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
+`
 
 const Button = styled.button`
     max-width: 30%;
@@ -225,6 +241,14 @@ export const Post = (props) => {
         }
     }
 
+    // function allTags(tags) {
+    //     return (
+    //         for (const x of tags){
+    //             <TagBox>{x}</TagBox>
+    //         }
+    //     )
+    // }
+
     async function toProfile() {
         try{
             const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner_id}`,{
@@ -261,6 +285,15 @@ export const Post = (props) => {
                         })
                     }
                 </PictureLayout>
+                <FlexStart>
+                    {
+                        props.post.tags.map((tag, i) => {
+                            return (
+                                <TagBox key={i}>{tag}</TagBox>
+                            )
+                        })
+                    }
+                </FlexStart>
                 <div>
                     <Spacearound>
                         {console.log(upVoted)}
