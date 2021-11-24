@@ -111,7 +111,9 @@ const VoteButton = styled.button`
     background: ${props => props.status ? "#75B2B2" : "#FFFFFF" };
     color: ${props => props.status ? "#FFFFFF" : "black" };
     `
-
+const VerifiedBadge = styled.img`
+    height: 30px;
+`
 
 
 export const Post = (props) => {
@@ -217,6 +219,12 @@ export const Post = (props) => {
             })
     }
 
+    function isVerified(approval_status) {
+        if(approval_status==="approved"){
+            return  <VerifiedBadge src="./Verified.png"/>
+        }
+    }
+
     async function toProfile() {
         try{
             const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner_id}`,{
@@ -238,7 +246,8 @@ export const Post = (props) => {
                     <PostOwner>
                         <PostOwnerImg src={profilePicture} onClick={toProfile}/>
                         <Link id="toProfile" to={{pathname:"/profile", profile:owner}}></Link>
-                        <OwnerName>{props.post.owner.firstname} {props.post.owner.lastname}</OwnerName>
+                        <OwnerName>{props.post.owner.firstname} {props.post.owner.lastname} {isVerified(props.post.owner.approval_status)}
+                        </OwnerName>
                     </PostOwner>
                 <Button onClick={() => ShowPopup()}>OPEN POST</Button>
                 </Spacebetween>
