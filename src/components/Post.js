@@ -157,7 +157,7 @@ export const Post = (props) => {
             await axios.get(`http://localhost:3001/interaction/showInteraction/${props.post._id}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then((res) => {
-                console.log(res.data.interaction)
+                // console.log(res.data.interaction)
                 if (res.data.interaction === "upvote") {
                     setDownVoted(false)
                     setUpVoted(true)
@@ -200,7 +200,7 @@ export const Post = (props) => {
         axios.get(`http://localhost:3001/feed/${props.post._id}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             props.post.upvote = res.data.upvote
             props.post.downvote = res.data.downvote
         })
@@ -214,7 +214,7 @@ export const Post = (props) => {
             {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 setIsVoteDirty(true)
                 fetchPost()
             })

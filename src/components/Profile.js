@@ -4,6 +4,7 @@ import { useLocation } from 'react-router'
 import styled, { keyframes, createGlobalStyle, css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import TokenValidate from '../config/TokenValidate'
+import Post from './Post'
 
 const Name = styled.h1`
 color:white;
@@ -78,16 +79,15 @@ export const Profile = () => {
         }
     }
 
-    console.log(owner_id)
-    axios.get(`http://localhost:3001/feed/${owner_id}`, {
-            headers: { 'x-access-token': localStorage.getItem('token') }
-        }).then((res) => {
-            console.log(res.data)
-            // setPosts(res.data)
-        })
-
     useEffect(() => {
         fetchProfile()
+
+        axios.get(`http://localhost:3001/feed/profile/${owner_id}`, {
+            headers: { 'x-access-token': localStorage.getItem('token') }
+        }).then((res) => {
+            // console.log(res.data)
+            setPosts(res.data)
+        })
     }, [])
 
     const toRequest = async () => {
@@ -119,11 +119,10 @@ export const Profile = () => {
             <Link id="tofeed" to="/"></Link>
             <div>
                 {
-                    // posts.length !== 0 ? posts.slice(0).reverse().map((post, i) => {
-                    //     return <Post key={i} post={post} />
-                    // })
-                    // : ''
-                    console.log(posts)
+                    posts.length !== 0 ? posts.slice(0).reverse().map((post, i) => {
+                        return <Post key={i} post={post} />
+                    })
+                    : ''
                 }
             </div>
         </>
