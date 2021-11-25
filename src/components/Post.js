@@ -134,7 +134,6 @@ const VerifiedBadge = styled.img`
 
 export const Post = (props) => {
 
-    const [owner, setOwner] = useState({})
     const [profilePicture, setProfilePicture] = useState()
     const [Imgs, setImgs] = useState([])
     const [popup, setPopup] = useState()
@@ -248,19 +247,10 @@ export const Post = (props) => {
     //         }
     //     )
     // }
-
-    async function toProfile() {
-        try {
-            await axios.get(`http://localhost:3001/auth/profile/${props.post.owner_id}`, {
-                headers: { 'x-access-token': localStorage.getItem('token') }
-            }).then((res) => {
-                setOwner(res.data)
-                return document.getElementById("toProfile").click()
-            })
-        } catch (error) {
-            // console.log(error.response.data.errors)
-            console.log(error)
-        }
+    const id = "toprofile" + props.post._id
+    
+    async function goToProfile() {
+        return document.getElementById(id).click()
     }
 
     return (
@@ -269,8 +259,7 @@ export const Post = (props) => {
             <Box id={BoxId}>
                 <Spacebetween>
                     <PostOwner>
-                        <PostOwnerImg src={profilePicture} onClick={toProfile} />
-                        <Link id="toProfile" to={{ pathname: "/profile", profile: owner }}></Link>
+                        <PostOwnerImg src={profilePicture} onClick={() => goToProfile()} />
                         <OwnerName>{props.post.owner.firstname} {props.post.owner.lastname} {isVerified(props.post.owner.approval_status)}
                         </OwnerName>
                     </PostOwner>
@@ -297,13 +286,12 @@ export const Post = (props) => {
                 </FlexStart>
                 <div>
                     <Spacearound>
-                        {console.log(upVoted)}
                         <VoteButton status={upVoted} onClick={() => { upvote() }}>UPVOTE {props.post.upvote}</VoteButton>
-                        {console.log(downVoted)}
                         <VoteButton status={downVoted} onClick={() => { downvote() }}>DOWNVOTE {props.post.downvote}</VoteButton>
                     </Spacearound>
                 </div>
             </Box>
+            <Link id={id} to={{ pathname: `/profile`, owner_id: props.post.owner_id }}></Link>
         </div>
     )
 }

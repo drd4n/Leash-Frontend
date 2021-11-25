@@ -86,7 +86,6 @@ const Input = styled.input`
 
 export const PopUp = (props) => {
     const [Imgs, setImgs] = useState([])
-    const [owner, setOwner] = useState({})
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
     const [isCommentDirty, setIsCommentDirty] = useState(true)
@@ -137,18 +136,11 @@ export const PopUp = (props) => {
             )
     }
 
+    
+    const id = "popUpToProfile"+props.props.owner_id
+
     async function toProfile() {
-        try {
-            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner.user_id}`, {
-                headers: { 'x-access-token': localStorage.getItem('token') }
-            })
-            console.log(data.data)
-            setOwner(data.data)
-            return document.getElementById("toProfile").click()
-        } catch (error) {
-            // console.log(error.response.data.errors)
-            console.log(error)
-        }
+            return document.getElementById(id).click()
     }
 
     function close() {
@@ -160,7 +152,7 @@ export const PopUp = (props) => {
             <Box>
                 <button onClick={close}>X</button>
                 <div>
-                    <Link id="toProfile" to={{ pathname: "/profile", profile: owner }}>
+                    <Link id={id} to={{ pathname: "/profile", owner_id: props.props.owner_id }}>
                         <ProfileImg src={profilePicture} onClick={toProfile} />
                         <p>{props.props.owner.firstname} {props.props.owner.lastname}</p>
                     </Link>

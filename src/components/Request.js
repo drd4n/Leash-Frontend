@@ -273,7 +273,7 @@ export const Profile = () => {
             <Button onClick={() => { removePicture() }}>Remove</Button><br />
             <Button onClick={() => submit()}>Submit</Button>
             <Button onClick={() => { cancel() }}>Cancel Submition</Button>
-            <Link id="toprofile" to={{ pathname: "/profile", profile: profile }}></Link>
+            <Link id="toprofile" to={{ pathname: "/profile", owner_id: profile._id }}></Link>
             <Link id="notoken" to="/"></Link>
         </>
     )

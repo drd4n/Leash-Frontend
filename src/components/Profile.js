@@ -53,29 +53,32 @@ transition: all 0.3s ease-out;
 
 export const Profile = () => {
     const location = useLocation()
-    const profile = location.profile
+    const owner_id = location.owner_id
     const [src, setSrc] = useState("")
+    const [profile, setProfile] = useState({})
+    const [isDirty, setIsDirty] = useState(true)
 
-    useEffect(() => {
-        if(!profile.firstname){
-            return document.getElementById("tofeed").click()
-        }
+    const fetchProfile = async () => {
+        try {
+            const data = await axios.get(`http://localhost:3001/auth/profile/${owner_id}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            })
+                
+            setProfile(data.data)
 
-        // if(!profile){
-        //     axios.get(`http://localhost:3001/auth/whoAmI`, {
-        //         headers: { 'x-access-token': localStorage.getItem('token') }
-        //     })
-        //     .then((res) => {
-        //         console.log(res.data)
-        //         profile = res.data
-        //     })
-        // }
-        axios.get(`http://localhost:3001/auth/showProfileImage/${profile.profile_picture}`, {
-            headers: { 'x-access-token': localStorage.getItem('token') }
-        })
-            .then((res) => {
+            axios.get(`http://localhost:3001/auth/showProfileImage/${data.data.profile_picture}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then(function(res) {
                 setSrc(res.data.profile_src)
             })
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        fetchProfile()
     }, [])
 
     const toRequest = async () => {
@@ -83,7 +86,7 @@ export const Profile = () => {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }
         ).then((res) => {
-            if(res.data.message === "go"){
+            if (res.data.message === "go") {
                 return document.getElementById("torequest").click()
             } else {
                 return alert("You are verified veterinarian")
