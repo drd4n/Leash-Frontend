@@ -260,7 +260,7 @@ export const Post = (props) => {
                 <Spacebetween>
                     <PostOwner>
                         <PostOwnerImg src={profilePicture} onClick={() => goToProfile()} />
-                        <OwnerName>{props.post.owner.firstname} {props.post.owner.lastname} {isVerified(props.post.owner.approval_status)}
+                        <OwnerName onClick={() => goToProfile()}>{props.post.owner.firstname} {props.post.owner.lastname} {isVerified(props.post.owner.approval_status)}
                         </OwnerName>
                     </PostOwner>
                     <Button onClick={() => ShowPopup()}>OPEN POST</Button>

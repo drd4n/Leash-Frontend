@@ -56,6 +56,7 @@ export const Profile = () => {
     const owner_id = location.owner_id
     const [src, setSrc] = useState("")
     const [profile, setProfile] = useState({})
+    const [posts, setPosts] = useState([])
     const [isDirty, setIsDirty] = useState(true)
 
     const fetchProfile = async () => {
@@ -76,6 +77,14 @@ export const Profile = () => {
             console.log(e)
         }
     }
+
+    console.log(owner_id)
+    axios.get(`http://localhost:3001/feed/${owner_id}`, {
+            headers: { 'x-access-token': localStorage.getItem('token') }
+        }).then((res) => {
+            console.log(res.data)
+            // setPosts(res.data)
+        })
 
     useEffect(() => {
         fetchProfile()
@@ -108,6 +117,15 @@ export const Profile = () => {
             </ProfileRow>
             <Link id="torequest" to={{ pathname: "/request", profile: profile }}></Link>
             <Link id="tofeed" to="/"></Link>
+            <div>
+                {
+                    // posts.length !== 0 ? posts.slice(0).reverse().map((post, i) => {
+                    //     return <Post key={i} post={post} />
+                    // })
+                    // : ''
+                    console.log(posts)
+                }
+            </div>
         </>
     )
 }
