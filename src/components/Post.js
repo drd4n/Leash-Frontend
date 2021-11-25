@@ -124,8 +124,8 @@ const VoteButton = styled.button`
     transition: all 0.3s ease-out;
     background:#FFFFFF;
     color:black;
-    background: ${props => props.status ? "#75B2B2" : "#FFFFFF" };
-    color: ${props => props.status ? "#FFFFFF" : "black" };
+    background: ${props => props.status ? "#75B2B2" : "#FFFFFF"};
+    color: ${props => props.status ? "#FFFFFF" : "black"};
     `
 const VerifiedBadge = styled.img`
     height: 30px;
@@ -133,7 +133,7 @@ const VerifiedBadge = styled.img`
 
 
 export const Post = (props) => {
-    
+
     const [owner, setOwner] = useState({})
     const [profilePicture, setProfilePicture] = useState()
     const [Imgs, setImgs] = useState([])
@@ -154,52 +154,52 @@ export const Post = (props) => {
             .then(res => {
                 setImgs(res.data.src);
             })
-        if(isVoteDirty){
+        if (isVoteDirty) {
             await axios.get(`http://localhost:3001/interaction/showInteraction/${props.post._id}`, {
-            headers: { 'x-access-token': localStorage.getItem('token') }
-        }).then((res) => {
-            console.log(res.data.interaction)
-            if(res.data.interaction==="upvote"){
-                setDownVoted(false)
-                setUpVoted(true)
-                setIsVoteDirty(false)
-            }else if(res.data.interaction==="downvote"){
-                setUpVoted(false)
-                setDownVoted(true)
-                setIsVoteDirty(false)
-            }else{
-                setDownVoted(false)
-                setUpVoted(false)
-                setIsVoteDirty(false)
-            }
-        })
-        }
-
-        if(props.post.owner.profile_picture){
-            axios.get(`http://localhost:3001/auth/showProfileImage/${props.post.owner.profile_picture}`,{
-                headers: {'x-access-token':localStorage.getItem('token')}
-            })
-            .then((res)=>{
-                setProfilePicture(res.data.profile_src)
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then((res) => {
+                console.log(res.data.interaction)
+                if (res.data.interaction === "upvote") {
+                    setDownVoted(false)
+                    setUpVoted(true)
+                    setIsVoteDirty(false)
+                } else if (res.data.interaction === "downvote") {
+                    setUpVoted(false)
+                    setDownVoted(true)
+                    setIsVoteDirty(false)
+                } else {
+                    setDownVoted(false)
+                    setUpVoted(false)
+                    setIsVoteDirty(false)
+                }
             })
         }
 
-        if(willClose){
+        if (props.post.owner.profile_picture) {
+            axios.get(`http://localhost:3001/auth/showProfileImage/${props.post.owner.profile_picture}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            })
+                .then((res) => {
+                    setProfilePicture(res.data.profile_src)
+                })
+        }
+
+        if (willClose) {
             setPopup()
             setWillClose(false)
         }
 
-    }, [isVoteDirty,props.post.picture_link,willClose])
+    }, [isVoteDirty, props.post.picture_link, willClose])
 
     const ShowPopup = () => {
         const post = props.post
         post.src = Imgs
         setPopup(<PopUp props={post} setWillClose={setWillClose} />)
     }
-    
+
     function fetchPost() {
         axios.get(`http://localhost:3001/feed/${props.post._id}`, {
-            headers: {'x-access-token':localStorage.getItem('token')}
+            headers: { 'x-access-token': localStorage.getItem('token') }
         }).then((res) => {
             console.log(res.data)
             props.post.upvote = res.data.upvote
@@ -236,8 +236,8 @@ export const Post = (props) => {
     }
 
     function isVerified(approval_status) {
-        if(approval_status==="approved"){
-            return  <VerifiedBadge src="./Verified.png"/>
+        if (approval_status === "approved") {
+            return <VerifiedBadge src="./Verified.png" />
         }
     }
 
@@ -250,13 +250,14 @@ export const Post = (props) => {
     // }
 
     async function toProfile() {
-        try{
-            const data = await axios.get(`http://localhost:3001/auth/profile/${props.post.owner_id}`,{
-                headers: {'x-access-token':localStorage.getItem('token')}
+        try {
+            await axios.get(`http://localhost:3001/auth/profile/${props.post.owner_id}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            }).then((res) => {
+                setOwner(res.data)
+                return document.getElementById("toProfile").click()
             })
-            setOwner(data.data)
-            return document.getElementById("toProfile").click()
-        }catch(error){
+        } catch (error) {
             // console.log(error.response.data.errors)
             console.log(error)
         }
@@ -268,12 +269,12 @@ export const Post = (props) => {
             <Box id={BoxId}>
                 <Spacebetween>
                     <PostOwner>
-                        <PostOwnerImg src={profilePicture} onClick={toProfile}/>
-                        <Link id="toProfile" to={{pathname:"/profile", profile:owner}}></Link>
+                        <PostOwnerImg src={profilePicture} onClick={toProfile} />
+                        <Link id="toProfile" to={{ pathname: "/profile", profile: owner }}></Link>
                         <OwnerName>{props.post.owner.firstname} {props.post.owner.lastname} {isVerified(props.post.owner.approval_status)}
                         </OwnerName>
                     </PostOwner>
-                <Button onClick={() => ShowPopup()}>OPEN POST</Button>
+                    <Button onClick={() => ShowPopup()}>OPEN POST</Button>
                 </Spacebetween>
                 <TextBox>{props.post.post_text}</TextBox>
                 <PictureLayout>
@@ -297,9 +298,9 @@ export const Post = (props) => {
                 <div>
                     <Spacearound>
                         {console.log(upVoted)}
-                            <VoteButton status ={upVoted} onClick={() => { upvote() }}>UPVOTE {props.post.upvote}</VoteButton>
-                            {console.log(downVoted)}
-                            <VoteButton status ={downVoted} onClick={() => { downvote() }}>DOWNVOTE {props.post.downvote}</VoteButton>
+                        <VoteButton status={upVoted} onClick={() => { upvote() }}>UPVOTE {props.post.upvote}</VoteButton>
+                        {console.log(downVoted)}
+                        <VoteButton status={downVoted} onClick={() => { downvote() }}>DOWNVOTE {props.post.downvote}</VoteButton>
                     </Spacearound>
                 </div>
             </Box>
