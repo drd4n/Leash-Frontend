@@ -10,7 +10,11 @@ const Text = styled.div`
     
 `
 const ProfileImg = styled.img`
-    
+    transform: translateX(-50px);
+    border-radius: 50%;
+    border: 1px solid #18191A;
+    width: 50px;
+    height: 50px;
   `
 const CommentBox = styled.div`
     display: flex;
