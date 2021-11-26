@@ -20,7 +20,7 @@ const Box = styled.div`
     flex-direction: column;
   `
 const PostOwnerImg = styled.img`
-transform: translateX(-50px);
+    transform: translateX(-50px);
     width: 80px;
     height: 80px;
     border-radius: 50%;
