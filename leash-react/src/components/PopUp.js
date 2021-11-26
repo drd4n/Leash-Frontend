@@ -30,7 +30,11 @@ const PostImg = styled.img`
   `
 
 const ProfileImg = styled.img`
-    height: 100px;
+    transform: translateX(-50px);
+    border-radius: 50%;
+    border: 1px solid #18191A;
+    width: 80px;
+    height: 80px;
   `
 
 const TextBox = styled.div`
