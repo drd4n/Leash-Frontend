@@ -27,7 +27,7 @@ export const Comments = (props) => {
     const [src, setSrc] = useState()
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/auth/showProfileImage/${props.comment.owner.profile_picture}`, {
+        axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/showProfileImage/${props.comment.owner.profile_picture}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
             .then((res) => {

@@ -64,7 +64,7 @@ export const Profile = () => {
         }
 
         if (isDirty) {
-            await axios.get('http://localhost:3001/auth/whoAmI', {
+            await axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/whoAmI`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then((res) => {
                 setProfile(res.data)
@@ -73,14 +73,14 @@ export const Profile = () => {
         }
 
         if (profile.verify_picture && profile.veterinarian_file) {
-            await axios.get(`http://localhost:3001/request/showPendingVerifyPicture/${profile.verify_picture}`, {
+            await axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/request/showPendingVerifyPicture/${profile.verify_picture}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then(res => {
                 setSrc(res.data.verify_picture)
                 setRequestPicture(profile.verify_picture)
             })
 
-            axios.get(`http://localhost:3001/request/showPendingFile/${profile.veterinarian_file}`, {
+            axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/request/showPendingFile/${profile.veterinarian_file}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then(res => {
                 setFile(res.data.veterinarian_file)
@@ -100,7 +100,7 @@ export const Profile = () => {
         let formData = new FormData()
         formData.append("file", selectedImage, selectedImage)
         console.log(formData)
-        axios.post('http://localhost:3001/request/uploadFile', formData, {
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/uploadFile`, formData, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
             .then(res => {
@@ -118,7 +118,7 @@ export const Profile = () => {
         let formData = new FormData()
         formData.append("image", selectedImage, selectedImage)
         console.log(formData)
-        axios.post('http://localhost:3001/request/uploadVerifyPicture', formData, {
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/uploadVerifyPicture`, formData, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
             .then(res => {
@@ -139,7 +139,7 @@ export const Profile = () => {
         console.log(requestPicture)
         console.log(requestFile)
         // alert("You CANNOT be able to edit or replace file later.")
-        axios.post("http://localhost:3001/request/submit",
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/submit`,
             {
                 filter: {
                     _id: profile._id
@@ -187,7 +187,7 @@ export const Profile = () => {
             alert("you did not upload any file yet.")
             return
         }
-        axios.post("http://localhost:3001/request/removeSelectedFile"
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/removeSelectedFile`
             , {
                 s3key: requestFile
             },
@@ -206,7 +206,7 @@ export const Profile = () => {
             alert("you did not upload any file yet.")
             return
         }
-        axios.post("http://localhost:3001/request/removeSelectedPicture"
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/removeSelectedPicture`
             , {
                 s3key: requestPicture
             },
@@ -226,7 +226,7 @@ export const Profile = () => {
             return
         }
 
-        axios.post("http://localhost:3001/request/cancel", {
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/cancel`, {
             veterinarian_file: requestFile,
             verify_picture: requestPicture
         },

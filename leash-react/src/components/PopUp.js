@@ -95,7 +95,7 @@ export const PopUp = (props) => {
     useEffect(async () => {
         if (isCommentDirty) {
 
-            await axios.get(`http://localhost:3001/comment/showComment/${props.props._id}`)
+            await axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/comment/showComment/${props.props._id}`)
                 .then(res => {
                     setComments(res.data)
                     setIsCommentDirty(false)
@@ -103,7 +103,7 @@ export const PopUp = (props) => {
         }
 
         if (props.props.owner.profile_picture) {
-            axios.get(`http://localhost:3001/auth/showProfileImage/${props.props.owner.profile_picture}`, {
+            axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/showProfileImage/${props.props.owner.profile_picture}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             })
                 .then((res) => {
@@ -126,7 +126,7 @@ export const PopUp = (props) => {
             post_id: props.props._id,
             tags: props.props.tags
         }
-        axios.post("http://localhost:3001/comment/createComment", data,
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/comment/createComment`, data,
             {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then(res => {

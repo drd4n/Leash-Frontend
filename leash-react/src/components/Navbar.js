@@ -9,11 +9,11 @@ export const Navbar = ({ setWillFetch }) => {
     const [src, setSrc] = useState("")
 
     useEffect(async () => {
-        axios.get('http://localhost:3001/auth/whoAmI', {
+        axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/whoAmI`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then(async (res) => {
             setProfile(res.data)
-            await axios.get(`http://localhost:3001/auth/showProfileImage/${res.data.profile_picture}`, {
+            await axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/showProfileImage/${res.data.profile_picture}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             })
                 .then((res) => {
@@ -24,7 +24,7 @@ export const Navbar = ({ setWillFetch }) => {
 
     const whoAmI = async () => {
         try {
-            // const data = await axios.get('http://localhost:3001/auth/whoAmI', {
+            // const data = await axios.get('process.env.NODE_ENDPOINT/auth/whoAmI', {
             //     headers: { 'x-access-token': localStorage.getItem('token') }
             // })
             // setProfile(data.data)
@@ -114,7 +114,7 @@ export const Navbar = ({ setWillFetch }) => {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
         // }
-        axios.post("http://localhost:3001/auth/logout", {
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT`/auth/logout`, {
             token: localStorage.getItem('token')
         })
 

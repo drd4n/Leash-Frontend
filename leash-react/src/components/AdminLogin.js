@@ -172,7 +172,7 @@ export const AdminLogin = () => {
     const [form, setForm] = useState({})
 
     async function login() {
-        axios.post("http://localhost:3001/auth/admin", form
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/admin`, form
             // ,{
             //     headers: { 'content-type': 'application/x-www-form-urlencoded'}
             // }
@@ -192,7 +192,7 @@ export const AdminLogin = () => {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
         // }
-         axios.post("http://localhost:3001/request/adminLogout", {
+         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/adminLogout`, {
                 token: localStorage.getItem('admintoken')
             })
             .then((res) => {

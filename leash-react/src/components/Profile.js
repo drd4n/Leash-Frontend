@@ -62,13 +62,13 @@ export const Profile = () => {
 
     const fetchProfile = async () => {
         try {
-            const data = await axios.get(`http://localhost:3001/auth/profile/${owner_id}`, {
+            const data = await axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/profile/${owner_id}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             })
                 
             setProfile(data.data)
 
-            axios.get(`http://localhost:3001/auth/showProfileImage/${data.data.profile_picture}`, {
+            axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/showProfileImage/${data.data.profile_picture}`, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             }).then(function(res) {
                 setSrc(res.data.profile_src)
@@ -82,7 +82,7 @@ export const Profile = () => {
     useEffect(() => {
         fetchProfile()
 
-        axios.get(`http://localhost:3001/feed/profile/${owner_id}`, {
+        axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/feed/profile/${owner_id}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then((res) => {
             // console.log(res.data)
@@ -91,7 +91,7 @@ export const Profile = () => {
     }, [])
 
     const toRequest = async () => {
-        axios.get('http://localhost:3001/request/check', {
+        axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/request/check`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }
         ).then((res) => {

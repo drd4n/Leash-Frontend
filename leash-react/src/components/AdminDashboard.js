@@ -13,7 +13,7 @@ export const AdminDashboard = () => {
             return document.getElementById("adminnotloggedin").click()
         }
 
-        axios.get('http://localhost:3001/request/allRequests', {
+        axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/request/allRequests`, {
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         }).then((res) => {
             setRequests(res.data)
@@ -38,7 +38,7 @@ export const AdminDashboard = () => {
     }
 
     const showProfile = (s3key) => {
-        axios.get(`http://localhost:3001/request/showProfileImage/${s3key}`, {
+        axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/request/showProfileImage/${s3key}`, {
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
@@ -51,7 +51,7 @@ export const AdminDashboard = () => {
     }
 
     const showVerifyPicture = (s3key) => {
-        axios.get(`http://localhost:3001/request/showVerifyPicture/${s3key}`, {
+        axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/request/showVerifyPicture/${s3key}`, {
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
@@ -62,7 +62,7 @@ export const AdminDashboard = () => {
     }
 
     const showFile = (s3key) => {
-        axios.get(`http://localhost:3001/request/showFile/${s3key}`, {
+        axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/request/showFile/${s3key}`, {
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
@@ -73,7 +73,7 @@ export const AdminDashboard = () => {
     }
 
     const approve = (user_id) => {
-        axios.post(`http://localhost:3001/request/approve`, {user_id},{
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/approve`, {user_id},{
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
@@ -82,7 +82,7 @@ export const AdminDashboard = () => {
     } 
 
     const reject = (user_id,veterinarian_file,verify_picture) => {
-        axios.post(`http://localhost:3001/request/reject`, {user_id,veterinarian_file,verify_picture},{
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/reject`, {user_id,veterinarian_file,verify_picture},{
             headers: { 'x-access-token': localStorage.getItem('admintoken') }
         })
         .then( res => {
