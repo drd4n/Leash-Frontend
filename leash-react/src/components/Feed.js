@@ -5,9 +5,8 @@ import styled, { css } from 'styled-components'
 import { Button } from 'bootstrap'
 
 const Container = styled.div`
-    left: 23%;
     display: block;
-    position: absolute;
+    position: center;
 `
 
 export const Feed = ({ willFetch, setWillFetch }) => {
