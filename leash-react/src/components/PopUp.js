@@ -47,9 +47,9 @@ const TextBox = styled.div`
 `
 
 const PictureLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 `
 
 const Button = styled.button`
@@ -152,10 +152,10 @@ export const PopUp = (props) => {
             <Box>
                 <button onClick={close}>X</button>
                 <div>
-                    <Link id={id} to={{ pathname: "/profile", owner_id: props.props.owner_id }}>
+                    <Link id={id} to={{ pathname: "/profile", owner_id: props.props.owner_id }}></Link>
                         <ProfileImg src={profilePicture} onClick={toProfile} />
-                        <p>{props.props.owner.firstname} {props.props.owner.lastname}</p>
-                    </Link>
+                        <p onClick={toProfile}>{props.props.owner.firstname} {props.props.owner.lastname}</p>
+                    
                 </div>
                 <PictureLayout>
                     {
