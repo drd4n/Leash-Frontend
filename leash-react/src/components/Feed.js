@@ -4,10 +4,19 @@ import Post from './Post'
 import styled, { css } from 'styled-components'
 import { Button } from 'bootstrap'
 
-const Container = styled.div`
-    display: block;
+
+const Flex = styled.div` 
+    display: flex;
     position: center;
+    justify-content: center;
 `
+
+const Container = styled.div` 
+    position: center;
+    margin-top: 20px;
+
+`
+
 
 export const Feed = ({ willFetch, setWillFetch }) => {
     const [posts, setPosts] = useState([])
@@ -73,11 +82,17 @@ export const Feed = ({ willFetch, setWillFetch }) => {
     // onChange={click()}
 
     return (
+
+        <Flex>
+
         <Container>
             <label>
                 <button onClick={() => recommendPosts()}>Recommend</button>
                 <button onClick={() => feedPosts()}>Feed</button>  
             </label>
+        
+
+        
             {
                 temp ? temp.map((inter,i)=>{
                     return <div key={i}>{inter.interactions}</div>
@@ -90,6 +105,7 @@ export const Feed = ({ willFetch, setWillFetch }) => {
                 : ''
             }
         </Container>
+        </Flex>
     )
 }
 
