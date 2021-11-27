@@ -25,17 +25,17 @@ const PostOwnerImg = styled.img`
     height: 80px;
     border-radius: 50%;
     border: 1px solid #18191A;
-    display:flex;
+    display: flex;
 `
 const PostOwner = styled.div`
-    display:flex;
-    align-items: center;
+    display: flex;
+    margin: 0px;
     color: #FFFFFF;
     font-size: 30px;
+    flex-direction: column;
   `
 
 const OwnerName = styled.div`
-    margin: 20px;
     color: #FFFFFF;
     font-size: 25px;
 `
