@@ -114,7 +114,7 @@ export const Navbar = ({ setWillFetch }) => {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
         // }
-        axios.post(process.env.REACT_APP_NODE_ENDPOINT`/auth/logout`, {
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/logout`, {
             token: localStorage.getItem('token')
         })
 
