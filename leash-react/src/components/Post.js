@@ -40,10 +40,12 @@ const PostOwner = styled.div`
 
 const OwnerName = styled.div`
     color: #FFFFFF;
-    font-size: 25px;
+    font-size: 24px;
+    font-weight: 550;
+    letter-spacing: 0.5px;
     height: 20px;
-    width: 410px;
-    margin-left: -38px;
+    width: 430px;
+    margin-left: -42px;
     margin-bottom: 10px;
     justify-content: flex-start;
     align-items: center;
@@ -100,7 +102,7 @@ const TagBox = styled.div`
     border-radius: 35px;
     font-size: 13px;
     font-weight: 100;
-    letter-spacing: 1px;;
+    letter-spacing: 1px;
     display: inline-block;
     margin: 3px;
     padding: 0.3em 1.1em;
@@ -120,7 +122,7 @@ const Button = styled.button`
     border: none;
     border-radius: 44px;
     cursor: pointer;
-    margin-right: -2.8rem;
+    margin-right: -3.2rem;
     transition: all 0.3s ease-out;
     background: #75B2B2;
     color: #FFFFFF;
