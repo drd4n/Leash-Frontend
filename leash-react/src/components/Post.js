@@ -27,6 +27,7 @@ const PostOwnerImg = styled.img`
     border-radius: 50%;
     border: 1px solid #18191A;
     margin-left: -50px;
+    cursor: pointer;
 `
 const PostOwner = styled.div`
     display: flex;
@@ -49,6 +50,7 @@ const OwnerName = styled.div`
     margin-bottom: 10px;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
 `
 const PostImg = styled.img`
     max-height: 250px;
@@ -80,13 +82,6 @@ const Spacearound = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-`
-const FlexStart = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  padding: 5px;
-  margin-left: 2px;
 `
 
 const Center = styled.div`
