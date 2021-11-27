@@ -52,7 +52,6 @@ const Th = styled.th`
     background: #3A3B3C;
 `
 
-
 export const AdminDashboard = () => {
 
     const [requests, setRequests] = useState([])
@@ -156,21 +155,17 @@ export const AdminDashboard = () => {
         }
     }
 
-    function logout() {
-        // if (!TokenValidate()) {
-        //     return alert("session out of date")
-        // }
-        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/adminLogout`, {
-            token: localStorage.getItem('token')
-        })
-
-            .then((res) => {
-                if (res.status === 200) {
-                    localStorage.clear()
-                    return document.getElementById("logout").click()
-                }
-            })
-    }
+    // function logout() {
+    //     axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/adminLogout`,{
+    //         headers: { 'x-access-token': localStorage.getItem('admintoken') }
+    //     })
+    //         .then((res) => {
+    //             if (res.status === 200) {
+    //                 localStorage.clear()
+    //                 return document.getElementById("adminLogout").click()
+    //             }
+    //         })
+    // }
 
     return (
         <div>
@@ -202,10 +197,9 @@ export const AdminDashboard = () => {
                 }
             </Table>
             <DivRight>
-            <LogoutButton textColor="#FFFFFF" backgroundColor="#FF7272" hoverBackgroundColor="#FF7272" onClick={() => logout()}>Logout</LogoutButton>
+            <Link id="adminLogout" to="/admin"><LogoutButton>Logout</LogoutButton></Link>
             </DivRight>
-            <Link id="logout" to="/login"></Link>
-            <Link id="adminnotloggedin" to="/admin"></Link>
+            {/* <Link id="adminLogout" to="/admin"></Link> */}
         </div>
     )
 }
