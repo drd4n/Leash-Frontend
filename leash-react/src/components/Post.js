@@ -22,8 +22,8 @@ const Box = styled.div`
   `
 const PostOwnerImg = styled.img`
     transform: translateX(-50px);
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     border: 1px solid #18191A;
     margin-left: -50px;
@@ -45,11 +45,13 @@ const OwnerName = styled.div`
     width: 410px;
     margin-left: -38px;
     margin-bottom: 10px;
+    justify-content: flex-start;
+    align-items: center;
 `
 const PostImg = styled.img`
-    height: 200px;
-    padding: 10px;
-    margin-bottom: 20px;
+    max-height: 250px;
+    border-radius: 5%;
+    padding: 5px;
   `
 
 const TextBox = styled.div`
@@ -67,7 +69,9 @@ const TextBox = styled.div`
 const PictureLayout = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
 `
 
 const Spacearound = styled.div`
@@ -128,7 +132,9 @@ const VoteButton = styled.button`
     color: ${props => props.status ? "#FFFFFF" : "black"};
     `
 const VerifiedBadge = styled.img`
-    height: 30px;
+    height: 20px;
+    width: 20px;
+    padding: 2px;
 `
 
 
@@ -266,7 +272,7 @@ export const Post = (props) => {
                     </PostOwner>
                     
                 </Spacearound>
-                <TextBox>{props.post.post_text}</TextBox>
+                
                 <PictureLayout>
                     {
                         Imgs.map((img, i) => {
@@ -276,6 +282,7 @@ export const Post = (props) => {
                         })
                     }
                 </PictureLayout>
+                <TextBox>{props.post.post_text}</TextBox>
                 <FlexStart>
                     {
                         props.post.tags.map((tag, i) => {
