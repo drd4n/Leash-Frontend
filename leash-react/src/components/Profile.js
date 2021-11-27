@@ -58,7 +58,7 @@ export const Profile = () => {
     const [src, setSrc] = useState("")
     const [profile, setProfile] = useState({})
     const [posts, setPosts] = useState([])
-    const [isDirty, setIsDirty] = useState(true)
+    const [userId, setUserId] = useState("")
 
     const fetchProfile = async () => {
         try {
@@ -79,9 +79,16 @@ export const Profile = () => {
         }
     }
 
-    useEffect(() => {
-        fetchProfile()
+    useEffect(async () => {
+        
+        await axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/whoAmI`,{
+            headers: {'x-access-token':localStorage.getItem('token')}
+        })
+        .then(async (res) => {
+            setUserId(res.data._id)
+        })
 
+        fetchProfile()
         axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/feed/profile/${owner_id}`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then((res) => {
@@ -103,6 +110,12 @@ export const Profile = () => {
         })
     }
 
+    function requestVerification(){
+        if(userId === owner_id){
+            return <Button onClick={() => toRequest()}>Request Verifucation</Button>
+        }
+    }
+
     return (
         <>
             <ProfileRow>
@@ -113,7 +126,7 @@ export const Profile = () => {
                         <Name>{profile.firstname} {profile.lastname} </Name> <Username>{profile.username}</Username>
                     </div>
                 </Row>
-                <Button onClick={() => toRequest()}>Request Verifucation</Button>
+                {requestVerification()}
             </ProfileRow>
             <Link id="torequest" to={{ pathname: "/request", profile: profile }}></Link>
             <Link id="tofeed" to="/"></Link>
