@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Post from './Post'
 import styled, { css } from 'styled-components'
-import { Button } from 'bootstrap'
 
 const Container = styled.div`
     display: block;
