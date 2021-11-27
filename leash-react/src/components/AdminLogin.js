@@ -124,6 +124,9 @@ const Input = styled.input`
         
     }
     `;
+const Error = styled.label`
+color: red;
+`;
 
 
 const BoxButton = styled.section`
@@ -170,6 +173,7 @@ const Border = styled.h2`
 export const AdminLogin = () => {
 
     const [form, setForm] = useState({})
+    const [error, setError] = useState("")
 
     async function login() {
         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/admin`, form
@@ -183,8 +187,9 @@ export const AdminLogin = () => {
                 localStorage.setItem('admintoken', res.data.admin_token)
                 return document.getElementById("dashboard").click()
             }).catch((e) => {
-                console.log(JSON.stringify(e))
-                console.log(e.response.data.errors)
+                // console.log(JSON.stringify(e))
+                // console.log(e.response.data.errors)
+                setError(e.response.data.errors)
             })
     }
 
@@ -226,6 +231,7 @@ export const AdminLogin = () => {
                     id="password"
                     name="password"
                     onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
+                <Error>{error}</Error>
                 
                 <BoxButton>
                 <Button textColor="#FFFFFF" backgroundColor="#5D8888" onClick={() => login()}>Login</Button><br />
