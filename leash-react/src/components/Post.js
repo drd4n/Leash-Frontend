@@ -12,12 +12,13 @@ const Flex = styled.div`
 const Box = styled.div` 
     width: 600px;
     border-radius: 15px; 
-    margin: auto;
     margin-top: 20px;
-    padding:10px;
     background-color: #242526;
     display: flex;
     flex-direction: column;
+    position: center;
+    margin: auto;
+    margin-top: 20px;
   `
 const PostOwnerImg = styled.img`
     transform: translateX(-50px);
@@ -25,35 +26,41 @@ const PostOwnerImg = styled.img`
     height: 80px;
     border-radius: 50%;
     border: 1px solid #18191A;
-    display: flex;
+    margin-left: -50px;
 `
 const PostOwner = styled.div`
     display: flex;
-    margin: 0px;
     color: #FFFFFF;
     font-size: 30px;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: flex-start;
   `
 
 const OwnerName = styled.div`
     color: #FFFFFF;
     font-size: 25px;
+    height: 20px;
+    width: 410px;
+    margin-left: -38px;
+    margin-bottom: 10px;
 `
 const PostImg = styled.img`
     height: 200px;
-    padding: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
   `
 
 const TextBox = styled.div`
     font-size: 15px;
-    padding: 5px;
+    padding: 8px;
     color: white;
     width: 550px;
     border-radius: 15px; 
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding:10px;
     background-color: #3A3B3C;
 `
 
@@ -61,12 +68,6 @@ const PictureLayout = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-`
-
-const Spacebetween = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `
 
 const Spacearound = styled.div`
@@ -92,18 +93,17 @@ const TagBox = styled.div`
 `
 
 const Button = styled.button`
-    max-width: 30%;
-    min-width: 18%;
-    padding: 12px 7px;
-    margin:20px;
+    display: inline-block;
+    height: 50px;
+    width: 100px;
+    padding: 8px;
+    margin: 15px;
     font-weight: 600;
     text-transform: uppercase;
     border: none;
     border-radius: 44px;
-    outline: 0;
     cursor: pointer;
-    margin-top: 0.5rem;
-    margin-Bottom: 1.5rem;
+    margin-right: -2.8rem;
     transition: all 0.3s ease-out;
     background: #75B2B2;
     color: #FFFFFF;
@@ -257,14 +257,15 @@ export const Post = (props) => {
         <div>
             {popup}
             <Box id={BoxId}>
-                <Spacebetween>
+                <Spacearound>
                     <PostOwner>
                         <PostOwnerImg src={profilePicture} onClick={() => goToProfile()} />
                         <OwnerName onClick={() => goToProfile()}>{props.post.owner.firstname} {props.post.owner.lastname} {isVerified(props.post.owner.approval_status)}
                         </OwnerName>
+                        <Button onClick={() => ShowPopup()}>OPEN POST</Button>
                     </PostOwner>
-                    <Button onClick={() => ShowPopup()}>OPEN POST</Button>
-                </Spacebetween>
+                    
+                </Spacearound>
                 <TextBox>{props.post.post_text}</TextBox>
                 <PictureLayout>
                     {
