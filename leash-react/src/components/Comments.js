@@ -26,6 +26,10 @@ const CommentBox = styled.div`
     padding:5px;
     background-color: #aaaaaa;
 `
+const VerifiedBadge = styled.img`
+    height: 30px;
+`
+
 export const Comments = (props) => {
 
     const [src, setSrc] = useState()
@@ -39,10 +43,19 @@ export const Comments = (props) => {
             })
     }, [])
 
+    function isVerified(approval_status) {
+        if (approval_status === "approved") {
+            return <VerifiedBadge src="./Verified.png" />
+        }
+    }
+
     return (
         <CommentBox>
             <ProfileImg src={src} />
-            <div>{props.comment.owner.firstname} {props.comment.owner.lastname}</div>
+            {
+                console.log(props)
+            }
+            <div>{props.comment.owner.firstname} {props.comment.owner.lastname} {isVerified(props.comment.owner.approval_status)}</div>
             <div>{props.comment.comment_text}</div>
         </CommentBox>
     )
