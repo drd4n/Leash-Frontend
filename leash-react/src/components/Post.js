@@ -83,17 +83,30 @@ const FlexStart = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  padding: 5px;
+  margin-left: 2px;
+`
+
+const Center = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 5px;
+  margin-top: -8px;
 `
 
 const TagBox = styled.div`
-    background: #75B2B2;
-    padding: 7px;
-    margin: 10px;
-    border: none;
-    border-radius: 44px;
+    color: #75B2B2;
+    border-radius: 35px;
     font-size: 13px;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 100;
+    letter-spacing: 1px;;
+    display: inline-block;
+    margin: 3px;
+    padding: 0.3em 1.1em;
+    border: 1.5px solid #75B2B2;
+    display: block;
+    margin-bottom: 20px;
 `
 
 const Button = styled.button`
@@ -283,7 +296,7 @@ export const Post = (props) => {
                     }
                 </PictureLayout>
                 <TextBox>{props.post.post_text}</TextBox>
-                <FlexStart>
+                <Center>
                     {
                         props.post.tags.map((tag, i) => {
                             return (
@@ -291,7 +304,7 @@ export const Post = (props) => {
                             )
                         })
                     }
-                </FlexStart>
+                </Center>
                 <div>
                     <Spacearound>
                         <VoteButton status={upVoted} onClick={() => { upvote() }}>UPVOTE {props.post.upvote}</VoteButton>
