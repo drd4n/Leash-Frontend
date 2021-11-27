@@ -46,29 +46,27 @@ export const Navbar = ({ setWillFetch }) => {
 
     const Container = styled.section`
         display: flex;
-        justify-content: left;
-        flex-wrap: wrap;
-        flex-shrink: 0;
-        height: 100%;
-        width: 100%;
-
-    `;
-
-    const SidebarItem = styled.div`
-        display: flex;
-        flex-direction: column;
-        position: fixed;
         align-items: center;
+        align-content: center;
+        flex-direction: column;
         width: 250px;
         height: 100%;
         background: #242526;
+        position: fixed;
+        gap: 520px;
+    `;
+
+    const SidebarItem = styled.div`
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 0px;
     `
 
     const Button = styled.button`
         max-width: 100%;
         min-width: 50%;
-        align-self: center;
-        position: bottom;
         padding: 11px 20px;
         color: ${(props) => props.textColor};
         font-weight: 600;
@@ -77,10 +75,9 @@ export const Navbar = ({ setWillFetch }) => {
         background: ${(props) => props.backgroundColor};
         border: none;
         border-radius: 44px;
-        outline: 0;
         cursor: pointer;
-        margin-top: 0.5rem;
-        margin-Bottom: 1.5rem;
+        margin-top: 0.25rem;
+        margin-Bottom: 1.25rem;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease-out;
         :hover {
@@ -131,29 +128,22 @@ export const Navbar = ({ setWillFetch }) => {
         <Container>
             <SidebarItem>
 
-                <A></A>
-
                 {/*<Button onClick={() => setWillFetch(true)}>Leash</Button>*/}
                 <Link id="profile" to={{ pathname: "/profile", owner_id: profile._id }}><ProfileImg src={src} /></Link>
 
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" onClick={() => whoAmI()}>profile</Button>
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" >Setting</Button>
                 {/* <p>{src}</p> */}
-                <A></A>
-                <A></A>
-                <A></A>
-                <A></A>
-                <A></A>
-                <A></A>
-                <A></A>
-                <Button textColor="#FFFFFF" backgroundColor="#FF7272" hoverBackgroundColor="#FF7272" onClick={() => logout()}>Logout</Button>
 
+            </SidebarItem>
+
+            <SidebarItem>
+
+                <Button textColor="#FFFFFF" backgroundColor="#FF7272" hoverBackgroundColor="#FF7272" onClick={() => logout()}>Logout</Button>
                 <Link id="logout" to="/login"></Link>
-                <A></A>
 
             </SidebarItem>
         </Container>
-
     )
 }
 
