@@ -19,6 +19,7 @@ const Box = styled.div`
     position: center;
     margin: auto;
     margin-top: 20px;
+    margin-bottom: 20px;
   `
 const PostOwnerImg = styled.img`
     transform: translateX(-50px);
@@ -82,6 +83,7 @@ const Spacearound = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  padding: 10px;
 `
 
 const Center = styled.div`
@@ -93,7 +95,7 @@ const Center = styled.div`
 `
 
 const TagBox = styled.div`
-    color: #75B2B2;
+    color: cornflowerblue;
     border-radius: 35px;
     font-size: 13px;
     font-weight: 100;
@@ -101,14 +103,14 @@ const TagBox = styled.div`
     display: inline-block;
     margin: 3px;
     padding: 0.3em 1.1em;
-    border: 1.5px solid #75B2B2;
+    border: 1.5px solid cornflowerblue;
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 `
 
 const Button = styled.button`
     display: inline-block;
-    height: 50px;
+    height: 45px;
     width: 100px;
     padding: 8px;
     margin: 15px;
@@ -123,23 +125,19 @@ const Button = styled.button`
     color: #FFFFFF;
 `
 const VoteButton = styled.button`
+    display: inline-block;
     max-width: 30%;
     min-width: 18%;
-    padding: 12px 7px;
-    margin:20px;
-    font-weight: 600;
-    text-transform: uppercase;
+    padding: 20px 12px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: ${props => props.status ? "800" : "600"};
     border: none;
     border-radius: 44px;
     outline: 0;
     cursor: pointer;
-    margin-top: 0.5rem;
-    margin-Bottom: 1.5rem;
-    transition: all 0.3s ease-out;
-    background:#FFFFFF;
-    color:black;
-    background: ${props => props.status ? "#75B2B2" : "#FFFFFF"};
-    color: ${props => props.status ? "#FFFFFF" : "black"};
+    background: ${props => props.status ? "none" : "none"};
+    color: ${props => props.status ? "#75B2B2" : "#FFFFFF"};
     `
 const VerifiedBadge = styled.img`
     height: 20px;
@@ -270,7 +268,7 @@ export const Post = (props) => {
     }
 
     return (
-        <div>
+        <flex>
             {popup}
             <Box id={BoxId}>
                 <Spacearound>
@@ -304,13 +302,13 @@ export const Post = (props) => {
                 </Center>
                 <div>
                     <Spacearound>
-                        <VoteButton status={upVoted} onClick={() => { upvote() }}>UPVOTE {props.post.upvote}</VoteButton>
-                        <VoteButton status={downVoted} onClick={() => { downvote() }}>DOWNVOTE {props.post.downvote}</VoteButton>
+                        <VoteButton status={upVoted} onClick={() => { upvote() }}>Upvote  {props.post.upvote}</VoteButton>
+                        <VoteButton status={downVoted} onClick={() => { downvote() }}>Downvote  {props.post.downvote}</VoteButton>
                     </Spacearound>
                 </div>
             </Box>
             <Link id={id} to={{ pathname: `/profile`, owner_id: props.post.owner_id }}></Link>
-        </div>
+        </flex>
     )
 }
 
