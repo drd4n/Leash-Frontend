@@ -136,7 +136,6 @@ export const Navbar = ({ setWillFetch }) => {
                 {/* <p>{src}</p> */}
 
             </SidebarItem>
-
             <SidebarItem>
 
                 <Button textColor="#FFFFFF" backgroundColor="#FF7272" hoverBackgroundColor="#FF7272" onClick={() => logout()}>Logout</Button>
