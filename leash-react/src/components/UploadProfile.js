@@ -20,19 +20,19 @@ const Picture = styled.img`
 `
 
 const Button = styled.button`
-max-width: 50%;
-padding: 11px 20px;
-color: #FFFFFF;
-color: ${(props) => props.textColor};
-background: #A1D3CD;
-background: ${(props) => props.backgroundColor};
-font-weight: 600;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-border: none;
-border-radius: 44px;
-cursor: pointer;
-margin: 0.25rem;
+    max-width: 50%;
+    padding: 11px 20px;
+    color: #FFFFFF;
+    color: ${(props) => props.textColor};
+    background: #A1D3CD;
+    background: ${(props) => props.backgroundColor};
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 44px;
+    cursor: pointer;
+    margin: 0.25rem;
 `
 
 export const UploadProfile = () => {
