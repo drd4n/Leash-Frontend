@@ -2,6 +2,38 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import TokenValidate from '../config/TokenValidate'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+
+const Title = styled.h1`
+    color:white;
+`
+
+const Container = styled.div`
+    text-align: center;
+    margin-top: 5em;
+`
+
+const Picture = styled.img`
+    max-height: 350px;
+    border-radius: 5%;
+    padding: 5px;
+`
+
+const Button = styled.button`
+max-width: 50%;
+padding: 11px 20px;
+color: #FFFFFF;
+color: ${(props) => props.textColor};
+background: #A1D3CD;
+background: ${(props) => props.backgroundColor};
+font-weight: 600;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+border: none;
+border-radius: 44px;
+cursor: pointer;
+margin: 0.25rem;
+`
 
 export const UploadProfile = () => {
 
@@ -48,7 +80,8 @@ export const UploadProfile = () => {
     }
 
     return (
-        <>
+        <Container>
+            <Title>Choose Picture Profile</Title>
             <input
                 type="file"
                 id="selectedFile"
@@ -66,18 +99,19 @@ export const UploadProfile = () => {
                     //     </>
                     // }
                     // )
-                    <img id={shower} src={shower} alt={shower} />
-                }
-                {
-                    shower ? <button onClick={() => removeSelectedImage(uploadedpics)} >Remove</button> : ""
+                    <Picture id={shower} src={shower} alt={shower} />
                 }
             </div>
-
-            <button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</button>
-            <button onClick={done}>Done</button>
+            <div>
+                <Button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</Button>
+                {
+                    shower ? <Button textColor="white" backgroundColor="#FF7272" onClick={() => removeSelectedImage(uploadedpics)} >Remove</Button> : ""
+                }
+            </div>
+            <Button onClick={done}>Done</Button>
             <Link id="tofeed" to="/"></Link>
             {/* <button onClick={uploadImages}>Upload Images</button> */}
-        </>
+        </Container>
     )
             }
 export default UploadProfile
