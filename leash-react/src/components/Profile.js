@@ -112,7 +112,7 @@ export const Profile = () => {
 
     function requestVerification(){
         if(userId === owner_id){
-            return <Button onClick={() => toRequest()}>Request Verifucation</Button>
+            return <Button onClick={() => toRequest()}>Request Verification</Button>
         }
     }
 
