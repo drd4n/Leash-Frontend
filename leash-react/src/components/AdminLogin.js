@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import styled, { keyframes, createGlobalStyle } from "styled-components";
 import { Link } from 'react-router-dom';
@@ -36,18 +36,6 @@ const Container = styled.section`
     flex-shrink: 0;
     height: 100%;
     width: 100%;
-  
-`;
-
-const WrapperContainer1 = styled.section`
-    display: flex;
-    flex-direction: column;
-    align-item: center;
-    align-content: center;
-    justify-content: center;
-    flex-shrink: 0;
-    flex-grow: 2;
-    align-self: center;
   
 `;
 
@@ -95,16 +83,6 @@ const FontTitle1 = styled.label`
     color: #FFFFFF;
 `;
 
-const FontTitle2 = styled.label`
-    font-style: medium;
-    font-weight: 500;
-    font-size: 38px;
-    line-height: 75px;
-    text-align: center;
-    letter-spacing: 0.05em;
-    color: #FFFFFF;
-`;
-
 const Input = styled.input`
     max-width: 100%;
     min-width: 100%;
@@ -123,9 +101,9 @@ const Input = styled.input`
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.15), 0 0px 2.5px rgba(255, 255, 255, 255);
         
     }
-    `;
+`;
 const Error = styled.label`
-color: red;
+    color: red;
 `;
 
 
@@ -162,12 +140,6 @@ const Button = styled.button`
     }
 `;
 
-const Border = styled.h2`
-    border-style: solid;
-    border-width: 1px;
-    border-color: #5D8888;
-`;
-
 
 
 export const AdminLogin = () => {
@@ -193,19 +165,19 @@ export const AdminLogin = () => {
             })
     }
 
-    function logout() {
+    // function logout() {
         // if (!TokenValidate()) {
         //     return alert("session out of date")
         // }
-         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/adminLogout`, {
-                token: localStorage.getItem('admintoken')
-            })
-            .then((res) => {
-                if(res.status === 200){
-                    localStorage.clear()
-                }
-            })
-    }
+    //      axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/adminLogout`, {
+    //             token: localStorage.getItem('admintoken')
+    //         })
+    //         .then((res) => {
+    //             if(res.status === 200){
+    //                 localStorage.clear()
+    //             }
+    //         })
+    // }
 
     return (
         <>
