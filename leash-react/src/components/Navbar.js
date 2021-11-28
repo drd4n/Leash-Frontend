@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import styled, { keyframes, createGlobalStyle, css } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const Navbar = ({ setWillFetch }) => {
+export const Navbar = () => {
 
     const [profile, setProfile] = useState({})
     const [src, setSrc] = useState("")
@@ -53,7 +53,8 @@ export const Navbar = ({ setWillFetch }) => {
         height: 100%;
         background: #242526;
         position: fixed;
-        gap: 600px;
+        gap: 50%;
+        z-index: 1;
     `;
 
     const SidebarItem = styled.div`
@@ -85,7 +86,6 @@ export const Navbar = ({ setWillFetch }) => {
             color: #FFFFFF;
             animation: ${jump} 0.2s ease-out forwards;
         }
-
      `
 
     const ProfileImg = styled.img`
