@@ -140,8 +140,8 @@ const VoteButton = styled.button`
     color: ${props => props.status ? "#75B2B2" : "#FFFFFF"};
     `
 const VerifiedBadge = styled.img`
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
     padding: 2px;
 `
 const Border = styled.h2`

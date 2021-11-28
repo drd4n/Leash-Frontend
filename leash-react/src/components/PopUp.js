@@ -50,7 +50,7 @@ const ProfileImg = styled.img`
     border: 1px solid #18191A;
     width: 80px;
     height: 80px;
-    margin-left: -80px;
+    margin-left: -65px;
   `
 
 const TextBox = styled.div`
@@ -141,7 +141,7 @@ const OwnerName = styled.div`
     font-weight: 550;
     letter-spacing: 0.2px;
     height: 20px;
-    width: 480px;
+    width: 485px;
     margin-left: -90px;
     margin-bottom: 0px;
     margin-top: 25px;
@@ -151,8 +151,8 @@ const OwnerName = styled.div`
 `
 
 const VerifiedBadge = styled.img`
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
     padding: 2px;
 `
 
