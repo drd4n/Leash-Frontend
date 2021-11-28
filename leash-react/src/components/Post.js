@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Component } from 'react'
-import styled, { css } from 'styled-components'
+import React, { useState, useEffect} from 'react'
+import styled from 'styled-components'
 import axios from 'axios'
 import PopUp from './PopUp'
 import { Link } from 'react-router-dom'
@@ -170,7 +170,7 @@ export const Post = (props) => {
         const data = {
             picture_link: props.post.picture_link
         }
-        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/post/showPostImage`, data)
+        await axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/post/showPostImage`, data)
             // axios.post('https://leash-khakai-api.herokuapp.com/post/showPostImage', data)
             .then(res => {
                 setImgs(res.data.src);

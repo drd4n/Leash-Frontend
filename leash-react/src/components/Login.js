@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { useHistory } from 'react-router'
-import TokenValidate from '../config/TokenValidate'
 import styled, { keyframes, createGlobalStyle } from "styled-components";
 import { Link } from 'react-router-dom';
 
@@ -38,18 +36,6 @@ const Container = styled.section`
     flex-shrink: 0;
     height: 100%;
     width: 100%;
-  
-`;
-
-const WrapperContainer1 = styled.section`
-    display: flex;
-    flex-direction: column;
-    align-item: center;
-    align-content: center;
-    justify-content: center;
-    flex-shrink: 0;
-    flex-grow: 2;
-    align-self: center;
   
 `;
 
@@ -171,8 +157,6 @@ const Border = styled.h2`
     border-color: #5D8888;
 `;
 
-
-
 export const Login = () => {
 
     const [form, setForm] = useState({})
@@ -196,82 +180,45 @@ export const Login = () => {
             })
     }
 
-    function logout() {
-        // if (!TokenValidate()) {
-        //     return alert("session out of date")
-        // }
-         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/logout`, {
-                token: localStorage.getItem('token')
-            })
-            .then((res) => {
-                if(res.status === 200){
-                    localStorage.clear()
-                }
-            })
-    }
+    // function logout() {
+    //     if (!TokenValidate()) {
+    //         return alert("session out of date")
+    //     }
+    //      axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/logout`, {
+    //             token: localStorage.getItem('token')
+    //         })
+    //         .then((res) => {
+    //             if(res.status === 200){
+    //                 localStorage.clear()
+    //             }
+    //         })
+    // }
 
-    function showToken() {
-        console.log(localStorage.getItem('token'))
-    }
+    // function showToken() {
+    //     console.log(localStorage.getItem('token'))
+    // }
 
     function goToRegister() {
         // return window.location.href = "http://localhost:3000/register"
         return document.getElementById("register").click()
     }
     
-    function showPwd(id, el) {
-        let x = document.getElementById(id);
-        if (x.type === "password") {
-          x.type = "text";
-          el.className = 'fa fa-eye-slash showpwd';
-        } else {
-          x.type = "password";
-          el.className = 'fa fa-eye showpwd';
+    // function showPwd(id, el) {
+    //     let x = document.getElementById(id);
+    //     if (x.type === "password") {
+    //       x.type = "text";
+    //       el.className = 'fa fa-eye-slash showpwd';
+    //     } else {
+    //       x.type = "password";
+    //       el.className = 'fa fa-eye showpwd';
 
-        }
-    }
+    //     }
+    // }
 
     return (
         <>
-            
             <GlobalStyle />
-
             <Container>
-            {/*<WrapperContainer1>
-
-            <Wrapper>
-                <TextForm>
-                <FontTitle1>Login1</FontTitle1>
-                <Label htmlFor="username">Username</Label><br />
-                <Input
-                    type="text"
-                    id="username"
-                    name="username"
-                    onChange={(event) => { setForm({ ...form, username: event.target.value.trim() }) }} /><br />
-                <Label htmlFor="password">Password</Label><br />
-                <Input
-                    type="password"
-                    id="password"
-                    name="password"
-                    onChange={(event) => { setForm({ ...form, password: event.target.value.trim() }) }} /><br />
-                
-                <BoxButton>
-                <Button textColor="#FFFFFF" backgroundColor="#5D8888" onClick={() => login()}>Login</Button><br />
-                </BoxButton>
- 
-                <Border></Border>
-                <FontTitle2>Wanna join us?</FontTitle2>
-                <BoxButton>
-                <Button textColor="#5D8888" backgroundColor="#FFFFFF" onClick={() => goToRegister()}>SIGN UP</Button><br />
-                </BoxButton>
-                </TextForm>
-            </Wrapper>
-
-            </WrapperContainer1>
-        */}
-
-            
-
             <WrapperContainer2>
             
             <Wrapper>

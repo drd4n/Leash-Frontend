@@ -8,7 +8,7 @@ export const Navbar = () => {
     const [profile, setProfile] = useState({})
     const [src, setSrc] = useState("")
 
-    useEffect(async () => {
+    useEffect(() => {
         axios.get(process.env.REACT_APP_NODE_ENDPOINT+`/auth/whoAmI`, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         }).then(async (res) => {
