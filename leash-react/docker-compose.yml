@@ -1,0 +1,14 @@
+services:
+ leash-backend:
+  container_name: leash-frontend-prd
+  ports:
+   - 3000:3000
+  build:
+   context: .
+   dockerfile: Dockerfile
+  volumes:
+   - /app:/usr/src/app/       
+   - /usr/src/app/node_modules
+  environment:
+   - REACT_APP_NODE_ENDPOINT=https://api.leashpet.club
+   - REACT_APP_FLASK_ENDPOINT=https://recommendation-api.leashpet.club
