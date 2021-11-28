@@ -8,11 +8,9 @@ const Flex = styled.div`
     display:flex;
 `
 
-
 const Box = styled.div` 
     width: 600px;
     border-radius: 15px; 
-    margin-top: 20px;
     background-color: #242526;
     display: flex;
     flex-direction: column;
@@ -268,7 +266,7 @@ export const Post = (props) => {
     }
 
     return (
-        <flex>
+        <Flex>
             {popup}
             <Box id={BoxId}>
                 <Spacearound>
@@ -308,7 +306,7 @@ export const Post = (props) => {
                 </div>
             </Box>
             <Link id={id} to={{ pathname: `/profile`, owner_id: props.post.owner_id }}></Link>
-        </flex>
+        </Flex>
     )
 }
 
