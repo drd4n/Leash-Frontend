@@ -53,7 +53,7 @@ export const Navbar = ({ setWillFetch }) => {
         height: 100%;
         background: #242526;
         position: fixed;
-        gap: 520px;
+        gap: 600px;
     `;
 
     const SidebarItem = styled.div`
@@ -87,18 +87,7 @@ export const Navbar = ({ setWillFetch }) => {
         }
 
      `
-    const A = styled.div`
-        align-self: center;
-        background: #bdb8d;
-        height: 150px;
-        line-height: 30px;
-        text-align: center;
-        margin: 0 5px;
-        color: black;
-        border-radius: 15px;
-        margin: 8px;
-        width: 100px;
-    `
+
     const ProfileImg = styled.img`
         width: 150px;
         height: 150px;
@@ -132,7 +121,7 @@ export const Navbar = ({ setWillFetch }) => {
                 <Link id="profile" to={{ pathname: "/profile", owner_id: profile._id }}><ProfileImg src={src} /></Link>
 
                 <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" onClick={() => whoAmI()}>profile</Button>
-                <Button textColor="#000000" backgroundColor="#FFFFFF" hoverBackgroundColor="#A1D3CD" >Setting</Button>
+            
                 {/* <p>{src}</p> */}
 
             </SidebarItem>
