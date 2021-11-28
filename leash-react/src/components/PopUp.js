@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components'
 import axios from 'axios'
 import Comments from './Comments'
 import { Link } from 'react-router-dom'
-import Post from './Post'
 
 const Flex = styled.div` 
     padding: 0;
@@ -17,6 +16,7 @@ const Flex = styled.div`
     background: rgba(0,0,0,0.7);
     backdrop-filter: blur(4px);
     overflow: auto;
+    z-index: 1;
 `
 
 const Background = styled.div`
@@ -137,17 +137,23 @@ const Column = styled.div`
 
 const OwnerName = styled.div`
     color: #FFFFFF;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 550;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.2px;
     height: 20px;
-    width: 430px;
+    width: 480px;
     margin-left: -90px;
     margin-bottom: 0px;
     margin-top: 25px;
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+`
+
+const VerifiedBadge = styled.img`
+    height: 20px;
+    width: 20px;
+    padding: 2px;
 `
 
 export const PopUp = (props) => {
@@ -213,6 +219,12 @@ export const PopUp = (props) => {
         props.setWillClose(true)
     }
 
+    function isVerified(approval_status) {
+        if (approval_status === "approved") {
+            return <VerifiedBadge src="./Verified.png" />
+        }
+    }
+
     return (
         <Flex>
             <Background>
@@ -220,7 +232,7 @@ export const PopUp = (props) => {
                     <Spacearound>
                         <Link id={id} to={{ pathname: "/profile", owner_id: props.props.owner_id }}></Link>
                         <ProfileImg src={profilePicture} onClick={toProfile} />
-                        <OwnerName onClick={toProfile}>{props.props.owner.firstname} {props.props.owner.lastname}</OwnerName>
+                        <OwnerName onClick={toProfile}>{props.props.owner.firstname} {props.props.owner.lastname} {isVerified(props.props.owner.approval_status)}</OwnerName>
                         <XButton onClick={close}>X</XButton>
                     </Spacearound>
                     <PictureLayout>
