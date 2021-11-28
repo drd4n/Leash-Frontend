@@ -1,5 +1,5 @@
 services:
- leash-backend:
+ leash-frontend:
   container_name: leash-frontend-prd
   ports:
    - 3000:3000
