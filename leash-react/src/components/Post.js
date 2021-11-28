@@ -9,7 +9,7 @@ const Flex = styled.div`
 `
 
 const Box = styled.div` 
-    width: 600px;
+    width: 620px;
     border-radius: 15px; 
     background-color: #242526;
     display: flex;
@@ -25,7 +25,7 @@ const PostOwnerImg = styled.img`
     height: 70px;
     border-radius: 50%;
     border: 1px solid #18191A;
-    margin-left: -50px;
+    margin-left: -40px;
     cursor: pointer;
 `
 const PostOwner = styled.div`
@@ -42,10 +42,10 @@ const OwnerName = styled.div`
     color: #FFFFFF;
     font-size: 24px;
     font-weight: 550;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.2px;
     height: 20px;
-    width: 430px;
-    margin-left: -42px;
+    width: 450px;
+    margin-left: -35px;
     margin-bottom: 10px;
     justify-content: flex-start;
     align-items: center;
@@ -59,37 +59,39 @@ const PostImg = styled.img`
 
 const TextBox = styled.div`
     font-size: 15px;
-    padding: 8px;
+    padding: 12px;
     color: white;
-    width: 550px;
+    width: 570px;
     border-radius: 15px; 
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 12px;
     background-color: #3A3B3C;
 `
 
 const PictureLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px;
 `
 
 const Spacearound = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    margin-top: -5px;
+    margin-bottom: -5px;
 `
 
 const Center = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 5px;
-  margin-top: -8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px;
+    margin-top: -8px;
 `
 
 const TagBox = styled.div`
@@ -117,7 +119,7 @@ const Button = styled.button`
     border: none;
     border-radius: 44px;
     cursor: pointer;
-    margin-right: -3.2rem;
+    margin-right: -2.5rem;
     transition: all 0.3s ease-out;
     background: #75B2B2;
     color: #FFFFFF;
@@ -127,9 +129,9 @@ const VoteButton = styled.button`
     max-width: 30%;
     min-width: 18%;
     padding: 20px 12px;
-    font-size: 18px;
+    font-size: 20px;
     letter-spacing: 1px;
-    font-weight: ${props => props.status ? "800" : "600"};
+    font-weight: ${props => props.status ? "800" : "400"};
     border: none;
     border-radius: 44px;
     outline: 0;
@@ -142,7 +144,15 @@ const VerifiedBadge = styled.img`
     width: 20px;
     padding: 2px;
 `
-
+const Border = styled.h2`
+    display: flex;
+    border-style: solid;
+    border-width: 0.1px;
+    border-color: #2d2e2f;
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+`;
 
 export const Post = (props) => {
 
@@ -298,12 +308,13 @@ export const Post = (props) => {
                         })
                     }
                 </Center>
-                <div>
+                <Border></Border>
+                
                     <Spacearound>
                         <VoteButton status={upVoted} onClick={() => { upvote() }}>Upvote  {props.post.upvote}</VoteButton>
                         <VoteButton status={downVoted} onClick={() => { downvote() }}>Downvote  {props.post.downvote}</VoteButton>
                     </Spacearound>
-                </div>
+                
             </Box>
             <Link id={id} to={{ pathname: `/profile`, owner_id: props.post.owner_id }}></Link>
         </Flex>
