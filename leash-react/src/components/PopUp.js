@@ -77,13 +77,12 @@ const Button = styled.button`
     display: inline-block;
     height: 45px;
     width: 100px;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 14px;
     text-transform: uppercase;
     border: none;
     border-radius: 44px;
     cursor: pointer;
-    margin-right: -6em;
     transition: all 0.3s ease-out;
     background: #75B2B2;
     color: #FFFFFF;
@@ -102,22 +101,21 @@ const XButton = styled(Button)`
 const CommentBox = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    border:none;
+    justify-content: center;
+    border: none;
     border-radius: 44px;
-    margin:10px;
-    padding:5px;
-    background-color: #aaaaaa;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: none;
+    gap: 8px;
 `
 const Input = styled.input`
-    max-width: 100%;
-    min-width: 50%;
-    padding: 10px;
-    border:none;
+    width: 450px;
+    padding: 15px;
+    border: none;
     border-radius: 44px;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
-
 `
 
 const Spacearound = styled.div`
@@ -155,6 +153,17 @@ const VerifiedBadge = styled.img`
     width: 25px;
     padding: 2px;
 `
+
+const Border = styled.h2`
+    display: flex;
+    border-style: solid;
+    border-width: 0.1px;
+    border-color: #75B2B2;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+`;
 
 export const PopUp = (props) => {
     const [Imgs, setImgs] = useState([])
@@ -245,7 +254,7 @@ export const PopUp = (props) => {
                         }
                     </PictureLayout>
                     <TextBox>{props.props.post_text}</TextBox>
-                    
+                    <Border></Border>
                     <Column>
                         {
                             comments.map((comment, i) => {
