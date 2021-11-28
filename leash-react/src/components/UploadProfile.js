@@ -44,7 +44,7 @@ export const UploadProfile = () => {
         //pictures.map(image => {
         let formData = new FormData()
         formData.append("image", selectedImage, selectedImage)
-        console.log(formData)
+        // console.log(formData)
         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/uploadProfileImage`, formData)
             .then(res => {
                 setShower(res.data.src)

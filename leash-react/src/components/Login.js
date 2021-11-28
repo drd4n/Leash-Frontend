@@ -169,13 +169,13 @@ export const Login = () => {
             // }
         )
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 localStorage.clear()
                 localStorage.setItem('token', res.data.token)
                 return document.getElementById("tofeed").click()
             }).catch((e) => {
-                console.log(JSON.stringify(e))
-                console.log(e.response.data.errors)
+                // console.log(JSON.stringify(e))
+                // console.log(e.response.data.errors)
                 SetError(e.response.data.errors)
             })
     }

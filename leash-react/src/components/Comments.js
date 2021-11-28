@@ -1,14 +1,7 @@
-import React, { useState, useEffect, Component } from 'react'
-import styled, { css } from 'styled-components'
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 
-const Button = styled.button`
-
-`
-const Text = styled.div`
-    
-`
 const ProfileImg = styled.img`
     transform: translateX(-50px);
     border-radius: 50%;
@@ -104,9 +97,7 @@ export const Comments = (props) => {
             <CommentName>
 
                 <ProfileImg src={src} />
-                    {
-                        console.log(props)
-                    }
+ 
                 <OwnerName>{props.comment.owner.firstname} {props.comment.owner.lastname} {isVerified(props.comment.owner.approval_status)}</OwnerName>
 
             </CommentName>

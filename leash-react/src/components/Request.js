@@ -88,7 +88,7 @@ export const Profile = () => {
         //pictures.map(image => {
         let formData = new FormData()
         formData.append("file", selectedImage, selectedImage)
-        console.log(formData)
+        // console.log(formData)
         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/uploadFile`, formData, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
@@ -106,7 +106,7 @@ export const Profile = () => {
         //pictures.map(image => {
         let formData = new FormData()
         formData.append("image", selectedImage, selectedImage)
-        console.log(formData)
+        // console.log(formData)
         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/uploadVerifyPicture`, formData, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
@@ -125,8 +125,8 @@ export const Profile = () => {
             alert("please complete the form before submit")
             return
         }
-        console.log(requestPicture)
-        console.log(requestFile)
+        // console.log(requestPicture)
+        // console.log(requestFile)
         // alert("You CANNOT be able to edit or replace file later.")
         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/submit`,
             {
