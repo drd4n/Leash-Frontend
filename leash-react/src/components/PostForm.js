@@ -13,19 +13,10 @@ const jump = keyframes`
   }
 `;
 
-const GlobalStyle = createGlobalStyle`
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    ;
-  }
-
-  body, html, #root {
-    height: 100%;
-    width: 100%;
-    ;
-  }
+const Container = styled.section`
+        display: flex;
+        align-items: center;
+        text-align: center;
 `;
 
 const Form = styled.div`
@@ -36,7 +27,7 @@ const Form = styled.div`
     border-radius: 15px; 
     margin: auto;
     margin-top: 20px;
-    padding:10px;
+    padding: 10px;
     background-color: #242526;
     flex-direction: column;
     justify-content: center;
@@ -223,6 +214,7 @@ export const PostForm = ({ setWillFetch }) => {
     }
 
     return (
+        <Container>
         <Form>
             <Textarea
                 placeholder="What do you want to ask?"
@@ -291,6 +283,7 @@ export const PostForm = ({ setWillFetch }) => {
             </Row>
             {/* <button onClick={uploadImages}>Upload Images</button> */}
         </Form>
+        </Container>
     )
 }
 export default PostForm

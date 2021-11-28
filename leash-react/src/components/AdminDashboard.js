@@ -2,6 +2,55 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import AdminTokenValidate from '../config/AdminTokenValidate'
 import { Link } from 'react-router-dom'
+import styled, { css } from 'styled-components'
+
+const Table = styled.table`
+    border: 1px solid white;
+    color: white;
+    border-collapse: collapse;
+    margin: 20px auto;
+`
+const DivRight = styled.div`
+    text-align: right;
+    margin-top: 30px;
+    margin-right: 170px;
+`
+const Button = styled.button`
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+`
+const Title = styled.h1`
+    color: white;
+    text-align-last: center;
+`
+const LogoutButton = styled.button`
+    max-width: 100%;
+    align-self: center;
+    padding: 11px 20px;
+    color: #FFFFFF;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #FF7272;
+    border: none;
+    border-radius: 44px;
+    cursor: pointer;
+`
+const Td = styled.td`
+    padding: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+`
+const Th = styled.th`
+    padding: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+    background: #3A3B3C;
+`
 
 export const AdminDashboard = () => {
 
@@ -88,39 +137,69 @@ export const AdminDashboard = () => {
         .then( res => {
             setIsDirty(true)
         })
-    } 
+    }
+
+    function showButton(request){
+        if(request.approval_status==="pending"){
+            return  <div>
+                        <Td><button onClick={()=>{ approve(request._id) }}>Approve</button></Td>
+                        <Td><button onClick={()=>{ reject(request._id,request.veterinarian_file,request.verify_picture) }}>Reject</button></Td>
+                        <Td>Pending</Td>
+                    </div>
+        }else if(request.approval_status==="approved"){
+            return  <div>
+                        <Td><Button>Approve</Button></Td>
+                        <Td><button onClick={()=>{ reject(request._id,request.veterinarian_file,request.verify_picture) }}>Reject</button></Td>
+                        <Td>Approved</Td>
+                    </div>
+        }
+    }
+
+    // function logout() {
+    //     axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/adminLogout`,{
+    //         headers: { 'x-access-token': localStorage.getItem('admintoken') }
+    //     })
+    //         .then((res) => {
+    //             if (res.status === 200) {
+    //                 localStorage.clear()
+    //                 return document.getElementById("adminLogout").click()
+    //             }
+    //         })
+    // }
 
     return (
         <div>
-            AdminDashboard
-            <table style={{ border: "1px solid white", color: "white" }}>
+            <Title>AdminDashboard</Title>
+            <Table style={{ border: "1px solid white", color: "white" }}>
                 <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>E-mail</th>
-                    <th>Dob</th>
-                    <th>profile picture</th>
-                    <th>verify picture</th>
-                    <th>veterinarian file</th>
+                    <Th>FullName</Th>
+                    <Th>Username</Th>
+                    <Th>E-mail</Th>
+                    <Th>Dob</Th>
+                    <Th>profile picture</Th>
+                    <Th>verify picture</Th>
+                    <Th>veterinarian file</Th>
+                    <Th></Th>
                 </tr>
                 {
                     requests.map(request => {
                         return <tr>
-                                    <td>{request.firstname} {request.lastname}</td>
-                                    <td>{request.username}</td>
-                                    <td>{request.email}</td>
-                                    <td>{request.dob.slice(0,10)}</td>
-                                    <td><button onClick={()=>{showProfile(request.profile_picture)}}>View Profile Picture</button></td>
-                                    <td><button onClick={()=>{showVerifyPicture(request.verify_picture)}}>View Verification Picture</button></td>
-                                    <td><button onClick={()=>{showFile(request.veterinarian_file)}}>View Verification File</button></td>
-                                    <td><button onClick={()=>{ approve(request._id) }}>Approve</button></td>
-                                    <td><button onClick={()=>{ reject(request._id,request.veterinarian_file,request.verify_picture) }}>Reject</button></td>
-                                    <td>{request.approval_status}</td>
+                                    <Td>{request.firstname} {request.lastname}</Td>
+                                    <Td>{request.username}</Td>
+                                    <Td>{request.email}</Td>
+                                    <Td>{request.dob.slice(0,10)}</Td>
+                                    <Td><button onClick={()=>{showProfile(request.profile_picture)}}>View Profile Picture</button></Td>
+                                    <Td><button onClick={()=>{showVerifyPicture(request.verify_picture)}}>View Verification Picture</button></Td>
+                                    <Td><button onClick={()=>{showFile(request.veterinarian_file)}}>View Verification File</button></Td>
+                                    {showButton(request)}
                                 </tr>
                     })
                 }
-            </table>
-            <Link id="adminnotloggedin" to="/admin"></Link>
+            </Table>
+            <DivRight>
+            <Link id="adminLogout" to="/admin"><LogoutButton>Logout</LogoutButton></Link>
+            </DivRight>
+            {/* <Link id="adminLogout" to="/admin"></Link> */}
         </div>
     )
 }

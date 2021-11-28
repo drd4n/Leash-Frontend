@@ -4,28 +4,43 @@ import axios from 'axios'
 import Comments from './Comments'
 import { Link } from 'react-router-dom'
 
-const Box = styled.div` 
-    width: 600px;
-    border-radius: 15px; 
-    margin: auto;
-    margin-top: 20px;
-    padding:10px;
-    background-color: #242526;
+const Flex = styled.div` 
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    flex-shrink: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    overflow: auto;
+    z-index: 1;
+`
+
+const Background = styled.div`
     display: flex;
     flex-direction: column;
-    border: 3px solid whitesmoke;
-  `
-const Background = styled.div`
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    z-index: 1;
+    justify-content: center;
+    align-items: center;
   `
 
+const Box = styled.div` 
+    width: 600px;
+    flex-direction: column;
+    border-radius: 15px; 
+    background-color: #242526;
+    position: center;
+    margin: auto;
+    margin-top: 80px;
+    margin-bottom: 80px;
+  `
+
+
 const PostImg = styled.img`
-    height: 200px;
+    max-height: 250px;
+    border-radius: 5%;
     padding: 5px;
   `
 
@@ -35,38 +50,55 @@ const ProfileImg = styled.img`
     border: 1px solid #18191A;
     width: 80px;
     height: 80px;
+    margin-left: -65px;
   `
 
 const TextBox = styled.div`
     font-size: 15px;
-    padding: 5px;
+    padding: 8px;
     color: white;
     width: 550px;
     border-radius: 15px; 
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding:10px;
     background-color: #3A3B3C;
 `
 
 const PictureLayout = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px;
 `
 
 const Button = styled.button`
-    align-self: center;
-    padding: 11px 20px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    display: inline-block;
+    height: 45px;
+    width: 100px;
+    font-weight: 400;
+    font-size: 14px;
     text-transform: uppercase;
-    border:none;
+    border: none;
     border-radius: 44px;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-right: -6em;
+    transition: all 0.3s ease-out;
+    background: #75B2B2;
+    color: #FFFFFF;
 `
+
+const XButton = styled(Button)`
+    background: #a9a9a9;
+    margin-right: -3em;
+    margin-top: -1.2em;
+    height: 40px;
+    width: 40px;
+    font-weight: 600;
+    font-size: 18px;
+`
+
 const CommentBox = styled.div`
     display: flex;
     flex-direction: row;
@@ -86,6 +118,42 @@ const Input = styled.input`
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
 
+`
+
+const Spacearound = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+`
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px;
+  margin-top: -8px;
+`
+
+const OwnerName = styled.div`
+    color: #FFFFFF;
+    font-size: 26px;
+    font-weight: 550;
+    letter-spacing: 0.2px;
+    height: 20px;
+    width: 485px;
+    margin-left: -90px;
+    margin-bottom: 0px;
+    margin-top: 25px;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+`
+
+const VerifiedBadge = styled.img`
+    height: 25px;
+    width: 25px;
+    padding: 2px;
 `
 
 export const PopUp = (props) => {
@@ -151,45 +219,54 @@ export const PopUp = (props) => {
         props.setWillClose(true)
     }
 
-    return (
-        <Background>
-            <Box>
-                <button onClick={close}>X</button>
-                <div>
-                    <Link id={id} to={{ pathname: "/profile", owner_id: props.props.owner_id }}></Link>
-                        <ProfileImg src={profilePicture} onClick={toProfile} />
-                        <p onClick={toProfile}>{props.props.owner.firstname} {props.props.owner.lastname}</p>
-                    
-                </div>
-                <PictureLayout>
-                    {
-                        Imgs.map((img, i) => {
-                            return (
-                                <PostImg key={i} className="img" src={img}></PostImg>
-                            )
-                        })
-                    }
-                </PictureLayout>
-                <TextBox>{props.props.post_text}</TextBox>
-                {
-                    comments.map((comment, i) => {
-                        return <Comments key={i} comment={comment} />
-                    })
-                }
-                <CommentBox>
-                    <Input
-                        placeholder="Write your comment?"
-                        type="text"
-                        value={comment}
-                        onChange={(event) => {
-                            setComment(event.target.value)
-                        }}
-                    />
-                    <Button onClick={createComment}>Comment</Button>
+    function isVerified(approval_status) {
+        if (approval_status === "approved") {
+            return <VerifiedBadge src="./Verified.png" />
+        }
+    }
 
-                </CommentBox>
-            </Box>
-        </Background>
+    return (
+        <Flex>
+            <Background>
+                <Box>
+                    <Spacearound>
+                        <Link id={id} to={{ pathname: "/profile", owner_id: props.props.owner_id }}></Link>
+                        <ProfileImg src={profilePicture} onClick={toProfile} />
+                        <OwnerName onClick={toProfile}>{props.props.owner.firstname} {props.props.owner.lastname} {isVerified(props.props.owner.approval_status)}</OwnerName>
+                        <XButton onClick={close}>X</XButton>
+                    </Spacearound>
+                    <PictureLayout>
+                        {
+                            Imgs.map((img, i) => {
+                                return (
+                                    <PostImg key={i} className="img" src={img}></PostImg>
+                                )
+                            })
+                        }
+                    </PictureLayout>
+                    <TextBox>{props.props.post_text}</TextBox>
+                    
+                    <Column>
+                        {
+                            comments.map((comment, i) => {
+                                return <Comments key={i} comment={comment} />
+                            })
+                        }
+                    </Column>
+                    <CommentBox>
+                        <Input
+                            placeholder="Write your comment?"
+                            type="text"
+                            value={comment}
+                            onChange={(event) => {
+                                setComment(event.target.value)
+                            }}
+                        />
+                        <Button onClick={createComment}>Comment</Button>
+                    </CommentBox>
+                </Box>
+            </Background>
+        </Flex>
     )
 }
 
