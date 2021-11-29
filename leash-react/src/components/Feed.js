@@ -19,7 +19,6 @@ const Container = styled.div`
 
 export const Feed = ({ willFetch, setWillFetch }) => {
     const [posts, setPosts] = useState([])
-    const [temp, setTemp] = useState([])
     const [isRecommend, setIsRecommend] = useState(false)
 
     useEffect(async () => {
@@ -48,12 +47,9 @@ export const Feed = ({ willFetch, setWillFetch }) => {
             // axios('http://18.141.13.205:3001')
                 // setPosts(feed.data)
                 .then(res => {
-                    setTemp([])
                     setPosts([])
                     setPosts(res.data)
                     setWillFetch(false)
-                    console.log(res.data)
-                    console.log("fectch")
                 }).catch((error) => {
                     console.log(error)
                 })
@@ -90,13 +86,6 @@ export const Feed = ({ willFetch, setWillFetch }) => {
                 <button onClick={() => feedPosts()}>Feed</button>  
             </label>
         
-
-        
-            {
-                temp ? temp.map((inter,i)=>{
-                    return <div key={i}>{inter.interactions}</div>
-                }) : ""
-            }
             {
                 posts.length !== 0 ? posts.slice(0).reverse().map((post, i) => {
                     return <Post key={i} post={post} />
