@@ -4,50 +4,39 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import TokenValidate from '../config/TokenValidate'
 
-const Name = styled.h1`
-color:white;
+const VerifyContainer = styled.div`
+    display: flex;
+    text-align: center;
+    justify-content: center;
 `
-const Username = styled.h3`
-color:white;
+const Text = styled.h3`
+    color:white;
 `
-const ProfileRow = styled.div`
-display:flex;
-flex-direction: row;
-align-items: center;
-justify-content:space-evenly;
-width: 100%;
-height: 200px;
-background: #242526;
+const Picture = styled.img`
+    max-height: 300px;
+    border-radius: 5%;
+    padding: 5px;
 `
-const Row = styled.div`
-display:flex;
-flex-direction: row;
-height: 200px;
-align-items: center;
+const Show = styled.div`
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    width: 210px;
+    height: 350px;
 `
-
-const ProfileImg = styled.img`
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    display:flex;
-    margin: 20px;
+const Box = styled.div`
+    margin: 1em;
 `
 const Button = styled.button`
-align-self: center;
-position: bottom;
-padding: 11px 20px;
-font-weight: 600;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-border: none;
-border-radius: 44px;
-outline: 0;
-cursor: pointer;
-margin-top: 0.5rem;
-margin-Bottom: 1.5rem;
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
-transition: all 0.3s ease-out;
+    align-self: center;
+    position: bottom;
+    padding: 11px 20px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 44px;
+    outline: 0;
+    cursor: pointer;
+    margin: 0.5rem;
 `
 
 export const Profile = () => {
@@ -99,7 +88,7 @@ export const Profile = () => {
         //pictures.map(image => {
         let formData = new FormData()
         formData.append("file", selectedImage, selectedImage)
-        console.log(formData)
+        // console.log(formData)
         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/uploadFile`, formData, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
@@ -117,7 +106,7 @@ export const Profile = () => {
         //pictures.map(image => {
         let formData = new FormData()
         formData.append("image", selectedImage, selectedImage)
-        console.log(formData)
+        // console.log(formData)
         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/uploadVerifyPicture`, formData, {
             headers: { 'x-access-token': localStorage.getItem('token') }
         })
@@ -136,8 +125,8 @@ export const Profile = () => {
             alert("please complete the form before submit")
             return
         }
-        console.log(requestPicture)
-        console.log(requestFile)
+        // console.log(requestPicture)
+        // console.log(requestFile)
         // alert("You CANNOT be able to edit or replace file later.")
         axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/request/submit`,
             {
@@ -239,40 +228,69 @@ export const Profile = () => {
             })
     }
 
+    function statusButton(approval_status){
+        if(approval_status==="pending"){
+            return <div>
+                <VerifyContainer>
+                <Text>Status:{profile.approval_status}</Text>
+                </VerifyContainer>
+                <VerifyContainer>
+                    <Button onClick={() => { cancel() }}>Cancel Submition</Button>
+                </VerifyContainer>
+            </div>
+        }else if(approval_status==="approved"){
+            return <div>
+                <VerifyContainer>
+                <Text>Status:{profile.approval_status}</Text>
+                </VerifyContainer>
+            </div>
+        }else{
+            return <VerifyContainer>
+                    <Button onClick={() => submit()}>Submit</Button>
+                </VerifyContainer>
+        }
+    }
+
     return (
         <>
+        <div>
             <Button onClick={() => { document.getElementById("toprofile").click() }}>&lt; Profile </Button>
-            <Username>{profile.approval_status}</Username>
-            <Username>Verified File</Username>
-            <div style={{ border: '1px solid rgba(0, 0, 0, 0.3)', height: '255px', width: '210px' }}>
-                <embed src={file} type="application/pdf" height="100%" width="100%" ></embed>
-            </div>
-            <input
-                type="file"
-                id="selectedFile"
-                onChange={(event) => {
-                    onDrop(event.target.files[0])
-                }}
-                style={{ display: 'none' }}
-            />
-            <Button onClick={() => { pickFile() }}>Pick File</Button>
-            <Button onClick={() => { removeFile() }}>Remove</Button><br />
-            <Username>Verified Picture</Username>
-            <div style={{ border: '1px solid rgba(0, 0, 0, 0.3)', height: '255px', width: '210px' }}>
-                <img src={src}></img>
-            </div>
-            <input
-                type="file"
-                id="selectedPicture"
-                onChange={(event) => {
-                    onDropPicture(event.target.files[0])
-                }}
-                style={{ display: 'none' }}
-            />
-            <Button onClick={() => { pickPicture() }}>Pick Picture</Button>
-            <Button onClick={() => { removePicture() }}>Remove</Button><br />
-            <Button onClick={() => submit()}>Submit</Button>
-            <Button onClick={() => { cancel() }}>Cancel Submition</Button>
+        </div>
+        <VerifyContainer>
+            <Box>
+            <Text>Verified File</Text>
+                <Show>
+                    <embed src={file} type="application/pdf" height="100%" width="100%" ></embed>
+                </Show>
+                <input
+                    type="file"
+                    id="selectedFile"
+                    onChange={(event) => {
+                        onDrop(event.target.files[0])
+                    }}
+                    style={{ display: 'none' }}
+                />
+                <Button onClick={() => { pickFile() }}>Pick File</Button>
+                <Button onClick={() => { removeFile() }}>Remove</Button>
+            </Box>
+            <Box>
+                <Text>Verified Picture</Text>
+                <Show>
+                    <Picture src={src}></Picture>
+                </Show>
+                <input
+                    type="file"
+                    id="selectedPicture"
+                    onChange={(event) => {
+                        onDropPicture(event.target.files[0])
+                    }}
+                    style={{ display: 'none' }}
+                />
+                <Button onClick={() => { pickPicture() }}>Pick Picture</Button>
+                <Button onClick={() => { removePicture() }}>Remove</Button><br />
+            </Box>
+        </VerifyContainer>
+        {statusButton(profile.approval_status)}
             <Link id="toprofile" to={{ pathname: "/profile", owner_id: profile._id }}></Link>
             <Link id="notoken" to="/"></Link>
         </>

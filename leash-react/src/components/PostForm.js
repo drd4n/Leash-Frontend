@@ -4,19 +4,11 @@ import axios from 'axios'
 import TokenValidate from '../config/TokenValidate'
 import Tag from './Tag'
 
-const jump = keyframes`
-  from{
-    transform: translateY(0)
-  }
-  to{
-    transform: translateY(-3px)
-  }
-`;
 
 const Container = styled.section`
-        display: flex;
-        align-items: center;
-        text-align: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
 `;
 
 const Form = styled.div`
@@ -34,16 +26,39 @@ const Form = styled.div`
 `;
 
 const Selector = styled.select`
-    width: 100%;
+    width: 30%;
+    height: 35px;
+    background: grey;
+    color: white;
+    padding-left: 5px;
+    font-size: 14px;
+    border: none;
+    margin-left: 10px;
+    margin-top: 3px;
+
+    option {
+    color: black;
+    background: white;
+    display: flex;
+    min-height: 20px;
+    padding: 0px 2px 1px;
+    }
 `;
 
 const Row = styled.section`
     display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-shrink: 0;
-    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+    height: 50px;
     width: 100%;
+`;
+
+const InRow = styled(Row)`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 50px;
+    gap: 10px;
 `;
 
 const Input = styled.input`
@@ -52,62 +67,109 @@ const Input = styled.input`
 `;
 
 const InputImg = styled.img`
-    height: 250px;
-    margin: 2px;
+    max-height: 80px;
+    border-radius: 5%;
+    padding: 5px;
 `;
 
 const PictureLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px;
 `;
 
 const Col = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin:2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+`;
+
+const TagRow = styled(Row)`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 38px;
 `;
 
 const Textarea = styled.textarea`
     background-color: #dddddd;
-  color: #666666;
-  padding: 1em;
-  border-radius: 10px;
-  margin:20px;
-  border: 2px solid transparent;
-  outline: none;
-  font-family: "Heebo", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.4;
-  width: 500px;
-  height: 100px;
-  transition: all 0.2s;
+    color: #666666;
+    padding: 1em;
+    border-radius: 10px;
+    margin: 20px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: "Heebo", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    width: 560px;
+    min-width: 560px;
+    max-width: 650px;
+    height: 175px;
+    min-height: 175px;
+    max-height: 350px;
+    transition: all 0.2s;
 `;
-const Button = styled.button`
-    width: 250px;
+const AddButton = styled.button`
+    width: 40px;
     height: 40px;
-    padding: 10px 10px;
     font-weight: 600;
-    text-transform: uppercase;
     border-radius: 44px;
-    color: ${(props) => props.textColor};
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-size: 24px;
+    color: black;
     text-transform: uppercase;
-    background: ${(props) => props.backgroundColor};
+    background: grey;
     border: none;
     outline: 0;
     cursor: pointer;
-    margin-top: 0.5rem;
-    margin-Bottom: 1.5rem;
-    margin-left: 1rem;
+    transition: all 0.3s ease-out;
+    :hover {
+        background: white;
+        animation: 0.2s ease-out forwards;
+    }
+`;
+
+const RemoveButton = styled(AddButton)`
+    width: 30px;
+    height: 20px;
+    font-weight: 600;
+    border-radius: 20px;
+    font-size: 10px;
+    color: black;
+    text-transform: uppercase;
+    background: white;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    :hover {
+        background: red;
+        animation: 0.2s ease-out forwards;
+    }
+`;
+
+const Button = styled(AddButton)`
+    width: 120px;
+    height: 40px;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 44px;
+    color: white;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #75B2B2;
+    border: none;
+    outline: 0;
+    cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-out;
     :hover {
         background: #A1D3CD;
-        color: #FFFFFF;
-        animation: ${jump} 0.2s ease-out forwards;
+        animation: 0.2s ease-out forwards;
     }
 `;
     
@@ -223,14 +285,17 @@ export const PostForm = ({ setWillFetch }) => {
                 onChange={(event) => {
                     setPostDetail(event.target.value)
                 }} />
+            
             {
                 tags.map((tag,i) => {
-                    return <Col>
+                    return <TagRow>
                         <Tag key={i} tag={tag} />
-                        <button onClick={() => {deleteTag(i)}}>X</button>
-                        </Col> 
+                        <RemoveButton onClick={() => {deleteTag(i)}}>X</RemoveButton>
+                        </TagRow> 
+                        
                 })
             }
+
             <Input
                 placeholder="choose categorie(s)"
                 type="file"
@@ -245,7 +310,7 @@ export const PostForm = ({ setWillFetch }) => {
                     shower.map((shwr, i) => {
                         return <Col>
                             <InputImg key={i} src={shwr} alt={shower.indexOf(shwr)} />
-                            <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
+                            <RemoveButton onClick={() => removeSelectedImage(shower.indexOf(shwr))} >X</RemoveButton>
                         </Col>
                     }
                     )
@@ -262,7 +327,7 @@ export const PostForm = ({ setWillFetch }) => {
                 <option value="Birds">Birds</option>
                 <option value="Amphibians">Amphibians</option>
                 <option selected disabled ></option>
-            </Selector>
+                </Selector>
             <Input
                 type="file"
                 id="selectedFile"
@@ -278,8 +343,12 @@ export const PostForm = ({ setWillFetch }) => {
                 </form>
             })
         } */}
-            <Button onClick={() => { document.getElementById('selectedFile').click(); }}>Pick File</Button>
-            <Button onClick={uploadText}>Post</Button>
+
+                <InRow>
+                    <AddButton onClick={() => { document.getElementById('selectedFile').click(); }}>+</AddButton>
+                    <Button onClick={uploadText}>Post</Button>
+                </InRow>
+
             </Row>
             {/* <button onClick={uploadImages}>Upload Images</button> */}
         </Form>

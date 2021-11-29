@@ -29,13 +29,13 @@ export const Feed = ({ willFetch, setWillFetch }) => {
             })
             .then(async (res) => {
                 user_id = res.data._id
-                console.log(res.data._id)
+                // console.log(res.data._id)
                 await axios.get(process.env.REACT_APP_FLASK_ENDPOINT+`/recommendedPosts?user_id=${user_id}`)
                     .then((res)=>{
                     setPosts([])
                     setPosts(res.data)
-                    console.log(posts)
-                    console.log(res.data)
+                    // console.log(posts)
+                    // console.log(res.data)
                 })
             })
             
@@ -50,6 +50,8 @@ export const Feed = ({ willFetch, setWillFetch }) => {
                     setPosts([])
                     setPosts(res.data)
                     setWillFetch(false)
+                    // console.log(res.data)
+                    // console.log("fectch")
                 }).catch((error) => {
                     console.log(error)
                 })
