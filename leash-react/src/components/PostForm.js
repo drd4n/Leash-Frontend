@@ -84,6 +84,7 @@ const Col = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    justify-items: center;
 `;
 
 const TagRow = styled(Row)`
@@ -309,7 +310,7 @@ export const PostForm = ({ setWillFetch }) => {
                     shower.map((shwr, i) => {
                         return <Col>
                             <InputImg key={i} src={shwr} alt={shower.indexOf(shwr)} />
-                            <Button onClick={() => removeSelectedImage(shower.indexOf(shwr))} >Remove</Button>
+                            <RemoveButton onClick={() => removeSelectedImage(shower.indexOf(shwr))} >X</RemoveButton>
                         </Col>
                     }
                     )
