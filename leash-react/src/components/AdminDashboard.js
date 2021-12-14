@@ -155,17 +155,17 @@ export const AdminDashboard = () => {
         }
     }
 
-    // function logout() {
-    //     axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/adminLogout`,{
-    //         headers: { 'x-access-token': localStorage.getItem('admintoken') }
-    //     })
-    //         .then((res) => {
-    //             if (res.status === 200) {
-    //                 localStorage.clear()
-    //                 return document.getElementById("adminLogout").click()
-    //             }
-    //         })
-    // }
+    function logout() {
+        axios.post(process.env.REACT_APP_NODE_ENDPOINT+`/auth/adminLogout`,{
+            token : localStorage.getItem('admintoken') 
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    localStorage.clear()
+                    return document.getElementById("adminLogout").click()
+                }
+            })
+    }
 
     return (
         <div>
@@ -197,7 +197,8 @@ export const AdminDashboard = () => {
                 }
             </Table>
             <DivRight>
-            <Link id="adminLogout" to="/admin"><LogoutButton>Logout</LogoutButton></Link>
+            <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
+            <Link id="adminLogout" to="/admin"></Link>
             </DivRight>
             {/* <Link id="adminLogout" to="/admin"></Link> */}
         </div>
