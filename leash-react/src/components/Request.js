@@ -251,6 +251,28 @@ export const Profile = () => {
         }
     }
 
+    function uploadButton(approval_status,position){
+        console.log(approval_status)
+        console.log(position)
+        if(approval_status==="pending" ||approval_status==="approved"){
+            return <></>
+        }else{
+            if(position==="file"){
+                return <div>
+                    <Button onClick={() => { pickFile() }}>Pick File</Button>
+                    <Button onClick={() => { removeFile() }}>Remove</Button>
+                    </div>
+            }else if (position==="picture") {
+                return <div>
+                <Button onClick={() => { pickPicture() }}>Pick Picture</Button>
+                <Button onClick={() => { removePicture() }}>Remove</Button><br />
+                </div>
+            }
+        }
+
+
+    }
+
     return (
         <>
         <div>
@@ -270,8 +292,7 @@ export const Profile = () => {
                     }}
                     style={{ display: 'none' }}
                 />
-                <Button onClick={() => { pickFile() }}>Pick File</Button>
-                <Button onClick={() => { removeFile() }}>Remove</Button>
+                {uploadButton(profile.approval_status,"file")}
             </Box>
             <Box>
                 <Text>Verified Picture</Text>
@@ -286,8 +307,7 @@ export const Profile = () => {
                     }}
                     style={{ display: 'none' }}
                 />
-                <Button onClick={() => { pickPicture() }}>Pick Picture</Button>
-                <Button onClick={() => { removePicture() }}>Remove</Button><br />
+                {uploadButton(profile.approval_status,"picture")}
             </Box>
         </VerifyContainer>
         {statusButton(profile.approval_status)}
